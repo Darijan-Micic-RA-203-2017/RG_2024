@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{6c26194f-d6fa-4a97-8186-d1988c64dd01}</ProjectGuid>
-    <RootNamespace>SmartRefrigerator</RootNamespace>
+    <ProjectGuid>{cfd70719-25e9-4b89-96d6-00112c756ca5}</ProjectGuid>
+    <RootNamespace>SmartRefrigerator2D</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
