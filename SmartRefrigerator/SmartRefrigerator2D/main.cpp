@@ -1,30 +1,10 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include "shader_program.hpp"
 
 int windowWidth = 800;
 int windowHeight = 600;
-
-// Vertex shader, the first stage of the graphics pipeline. Shaders are written in the GLSL language.
-const char *sourceCodeOfVertexShader = "#version 330 core\n\n"
-"layout (location = 0) in vec2 aPos;\n"
-"layout (location = 1) in vec3 aColor;\n\n"
-"out vec3 Color;\n\n"
-"void main()\n"
-"{"
-"	Color = aColor;\n\n"
-"	gl_Position = vec4(aPos, 0.0F, 1.0F);\n"
-"}\n"
-"\0";
-// Fragment shader, the fifth stage of the graphics pipeline. Shaders are written in the GLSL language.
-const char *sourceCodeOfFragmentShader = "#version 330 core\n\n"
-"in vec3 Color;\n\n"
-"out vec4 FragColor;\n\n"
-"void main()\n"
-"{"
-"	FragColor = vec4(Color, 1.0F);\n"
-"}\n"
-"\0";
 
 // The time difference (in seconds) between the end of renderings of the current frame and the previous frame.
 // All velocities should be multiplied with the delta time value. The result is that when we have a large delta time,
@@ -75,65 +55,16 @@ int main()
 		return 3;
 	}
 
-	// Create the vertex shader object.
-	unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
-	// Attach the source code of the vertex shader to its object.
-	glShaderSource(vertexShader, 1, &sourceCodeOfVertexShader, NULL);
-	// Dynamically compile the vertex shader at run-time.
-	glCompileShader(vertexShader);
-	// Check whether the compilation of vertex shader succeeded and print out the error if it did not.
-	int success;
-	char infoLog[512];
-	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-	if (success == 0)
+	// Compile the shaders and link the shader program using the helper "ShaderProgram" class.
+	ShaderProgram shaderProgram("vertex_shader_of_square.glsl", "fragment_shader_of_square.glsl");
+	if (shaderProgram.errorCode != 0)
 	{
-		glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-		std::cout << "Vertex shader was not compiled!\n" << infoLog << std::endl;
 		glfwTerminate();
 
-		return 4;
+		return shaderProgram.errorCode;
 	}
 
-	// Create the fragment shader object.
-	unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-	// Attach the source code of the fragment shader to its object.
-	glShaderSource(fragmentShader, 1, &sourceCodeOfFragmentShader, NULL);
-	// Dynamically compile the fragment shader at run-time.
-	glCompileShader(fragmentShader);
-	// Check whether the compilation of fragment shader succeeded and print out the error if it did not.
-	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-	if (success == 0)
-	{
-		glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-		std::cout << "Fragment shader was not compiled!\n" << infoLog << std::endl;
-		glfwTerminate();
-
-		return 5;
-	}
-
-	// Create the shader program object.
-	unsigned int shaderProgram = glCreateProgram();
-	// Attach the previously compiled shaders to the shader program.
-	glAttachShader(shaderProgram, vertexShader);
-	glAttachShader(shaderProgram, fragmentShader);
-	// Link previously compiled shaders into a program.
-	// The outputs of each shader are linked to the inputs of next shader.
-	glLinkProgram(shaderProgram);
-	// Check whether the linking of shader program succeeded and print out the error if it did not.
-	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-	if (success == 0)
-	{
-		glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-		std::cout << "Shader program was not linked!\n" << infoLog << std::endl;
-		glfwTerminate();
-
-		return 6;
-	}
-	// Delete shader objects after linking, they are no longer needed.
-	glDeleteShader(fragmentShader);
-	glDeleteShader(vertexShader);
-
-	// Vertices in normalized device coordinates system (from -1.0F to 1.0F).
+	// Vertices in the normalized device coordinates system (from -1.0F to 1.0F).
 	float verticesofSquare[] = {
 		// position     // color
 		-0.75F, -0.75F, 0.0F, 0.0F, 1.0F, 
@@ -174,8 +105,10 @@ int main()
 	glBindVertexArray(0U);
 
 	// Activate the desired shader program.
-	glUseProgram(shaderProgram);
+	// Every shader and rendering call from now on will use this shader program object.
+	shaderProgram.useProgram();
 
+	glClearColor(0.1F, 0.1F, 0.1F, 1.0F);
 	// Rendering loop.
 	while (glfwWindowShouldClose(window) == GLFW_FALSE)
 	{
@@ -188,7 +121,6 @@ int main()
 		processInput(window);
 
 		// Second part: rendering commands.
-		glClearColor(0.1F, 0.1F, 0.1F, 1.0F);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// Bind (assign) the desired VAO to OpenGL's context.

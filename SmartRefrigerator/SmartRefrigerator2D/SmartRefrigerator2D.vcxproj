@@ -128,7 +128,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="shader_program.hpp" />
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="vertex_shader_of_square.glsl" />
+    <None Include="fragment_shader_of_square.glsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

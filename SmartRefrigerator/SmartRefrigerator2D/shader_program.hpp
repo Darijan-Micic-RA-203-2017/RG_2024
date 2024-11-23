@@ -18,7 +18,7 @@ private:
 	void checkForCompilationOrLinkingErrors(unsigned int shaderOrProgram, std::string type)
 	{
 		int success;
-		char infoLog[512];
+		char infoLog[512U];
 		if (type != "Shader program")
 		{
 			glGetShaderiv(shaderOrProgram, GL_COMPILE_STATUS, &success);
@@ -54,7 +54,7 @@ private:
 		errorCode = 0;
 	}
 public:
-	unsigned int id = 0u;
+	unsigned int id = 0U;
 	int errorCode = 0;
 
 	ShaderProgram(const char *vertexShaderSourcePath, const char *fragmentShaderSourcePath)
