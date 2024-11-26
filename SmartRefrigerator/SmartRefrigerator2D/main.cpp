@@ -1,5 +1,6 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <Windows.h>
 #include <iostream>
 #include "shader_program.hpp"
 
@@ -12,11 +13,45 @@ int windowHeight = 600;
 // higher to balance it all out. When using this approach, it does not matter if the user has a very fast or slow PC,
 // the velocity will be balanced out accordingly so each user will have the same experience. 
 float deltaTime = 0.0F;
+// float frameRate = 0.0F;
+// The number of frames rendered in one second, a reciprocal value of delta time (1.0F / delta time).
+double frameRate = 0.0;
+// It is requested to limit the speed of rendering to 60 frames per second.
+const double desiredFrameRate = 60.0;
 // The time (in seconds) it took to render the previous frame.
 float previousFrameTime = 0.0F;
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void processInput(GLFWwindow *window);
+
+// REFERENCE: https://stackoverflow.com/questions/1739259/how-to-use-queryperformancecounter?noredirect=1&lq=1
+double clockFrequencyOfPC = 0.0;
+__int64 startingValueOfCounter = 0;
+double previousValueOfCounter = 0.0;
+
+void startCounter()
+{
+	LARGE_INTEGER li;
+	if (!QueryPerformanceFrequency(&li))
+	{
+		std::cout << "QueryPerformanceFrequency failed!" << std::endl;
+
+		return;
+	}
+
+	clockFrequencyOfPC = double(li.QuadPart);
+
+	QueryPerformanceCounter(&li);
+	startingValueOfCounter = li.QuadPart;
+}
+
+double getValueOfCounter()
+{
+	LARGE_INTEGER li;
+	QueryPerformanceCounter(&li);
+
+	return double(li.QuadPart - startingValueOfCounter) / clockFrequencyOfPC;
+}
 
 int main()
 {
@@ -109,24 +144,54 @@ int main()
 	shaderProgram.useProgram();
 
 	glClearColor(0.1F, 0.1F, 0.1F, 1.0F);
+
+	glfwSetTime(0.0);
+	// REFERENCE: https://stackoverflow.com/questions/1739259/how-to-use-queryperformancecounter?noredirect=1&lq=1
+	startCounter();
+
 	// Rendering loop.
 	while (glfwWindowShouldClose(window) == GLFW_FALSE)
 	{
 		// First part: calculate the new delta time and assign the current frame time to the previous frame time.
 		float currentFrameTime = static_cast<float>(glfwGetTime());
 		deltaTime = currentFrameTime - previousFrameTime;
+		// frameRate = 1.0F / deltaTime;
 		previousFrameTime = currentFrameTime;
+		std::cout << "-------------------------" << std::endl;
+		// std::cout << "             Delta time: " << deltaTime << " s." << std::endl;
+		// std::cout << " Frame rate (1 / delta): " << frameRate << " s^(-1)." << std::endl;
+		// std::cout << "    Previous frame time: " << previousFrameTime << " s." << std::endl;
+		/*
+		if (frameRate > 60.0f)
+		{
+			Sleep(500);
+		}
+		*/
 
 		// Second part: process the user's input.
 		processInput(window);
 
-		// Second part: rendering commands.
+		// Third part: rendering commands.
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// Bind (assign) the desired VAO to OpenGL's context.
 		glBindVertexArray(squareVAO);
 		// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+		double time = getValueOfCounter();
+		std::cout << "Counter (s): " << time << "\n";
+		frameRate = 1.0 / (time - previousValueOfCounter);
+		std::cout << "Frame rate (1 / counter): " << frameRate << " s^(-1)." << std::endl;
+		if (frameRate > desiredFrameRate + 10.0)
+		{
+			Sleep(350);
+		}
+		else if (frameRate > desiredFrameRate)
+		{
+			Sleep(150);
+		}
+		previousValueOfCounter = time;
 
 		// Fourth part: swap buffers, check for events and call the events if they occured.
 		glfwSwapBuffers(window);
