@@ -129,8 +129,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="shader_program.hpp" />
+    <ClInclude Include="stb_image.h" />
+    <ClInclude Include="texture.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="stb_image.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
