@@ -14,7 +14,7 @@ public:
 	unsigned int id = 0U;
 	int errorCode = 0;
 
-	Texture(const char* imagePath)
+	Texture(const char *imagePath)
 	{
 		// Tell the "stb_image.h" library to flip the y-axis during the image loading. This call is necessary because
 		// OpenGL expects the 0.0f coordinate on the y-axis to be on the bottom side of the image, but images
@@ -23,7 +23,8 @@ public:
 
 		// Load the image that will be used as a texture.
 		int textureImageWidth, textureImageHeight, numberOfColorChannelsInTextureImage;
-		unsigned char* pixels = stbi_load(imagePath, &textureImageWidth, &textureImageHeight, 
+		// int desiredNumberOfColorChannels = 4;
+		unsigned char *pixels = stbi_load(imagePath, &textureImageWidth, &textureImageHeight, 
 			&numberOfColorChannelsInTextureImage, 0);
 		if (pixels == NULL)
 		{
@@ -84,6 +85,9 @@ public:
 
 		// Free the image memory.
 		stbi_image_free(pixels);
+
+		// Unbind texture for safety reasons.
+		glBindTexture(GL_TEXTURE_2D, 0U);
 	}
 };
 #endif

@@ -3,6 +3,7 @@
 #include <Windows.h>
 #include <iostream>
 #include "shader_program.hpp"
+#include "texture.hpp"
 
 int windowWidth = 800;
 int windowHeight = 600;
@@ -90,45 +91,90 @@ int main()
 		return 3;
 	}
 
-	// Compile the shaders and link the shader program using the helper "ShaderProgram" class.
-	ShaderProgram shaderProgram("vertex_shader_of_square.glsl", "fragment_shader_of_square.glsl");
-	if (shaderProgram.errorCode != 0)
+	// Configure the global OpenGL state.
+	// Enable blending.
+	glEnable(GL_BLEND);
+	// Set the blending function. Its parameters:
+	// 1) the source color factor - the factor of the output variable of the fragment shader;
+	// 2) the destination color factor - the factor of the color of the fragment we are drawing over.
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	// Compile the shaders and link the shader programs using the helper "ShaderProgram" class.
+	ShaderProgram shaderProgram0("vertex_shader.glsl", "fragment_shader.glsl");
+	if (shaderProgram0.errorCode != 0)
 	{
 		glfwTerminate();
 
-		return shaderProgram.errorCode;
+		return shaderProgram0.errorCode;
+	}
+	ShaderProgram shaderProgram1("vertex_shader_of_square.glsl", "fragment_shader_of_square.glsl");
+	if (shaderProgram1.errorCode != 0)
+	{
+		glfwTerminate();
+
+		return shaderProgram1.errorCode;
 	}
 
 	// Vertices in the normalized device coordinates system (from -1.0F to 1.0F).
-	float verticesofSquare[] = {
-		// position     // color
-		-0.75F, -0.75F, 0.0F, 0.0F, 1.0F, 
-		 0.75F, -0.75F, 0.0F, 1.0F, 0.0F, 
-		-0.75F,  0.75F, 1.0F, 0.0F, 0.0F, 
-		 0.75F,  0.75F, 1.0F, 1.0F, 0.0F
+	float verticesOfAuthorSignature[] = {
+		// position      // color                // texture coordinates
+		0.100F, -0.975F, 0.1F, 0.1F, 0.1F, 1.0F, 0.0F, 0.0F, 
+		0.975F, -0.975F, 0.1F, 0.1F, 0.1F, 1.0F, 0.0F, 1.0F, 
+		0.100F, -0.825F, 0.1F, 0.1F, 0.1F, 1.0F, 1.0F, 0.0F, 
+		0.975F, -0.825F, 0.1F, 0.1F, 0.1F, 1.0F, 1.0F, 1.0F
+	};
+	float verticesOfRefrigerator[] = {
+		// position   // color
+		-0.8F, -0.8F, 0.0F, 0.0F, 1.0F, 1.0F, 
+		 0.8F, -0.8F, 0.0F, 1.0F, 0.0F, 1.0F, 
+		-0.8F,  0.8F, 1.0F, 0.0F, 0.0F, 1.0F, 
+		 0.8F,  0.8F, 1.0F, 1.0F, 0.0F, 1.0F
 	};
 
 	// Create memory on the GPU where vertex data and index data will be stored.
 	// Said data will be handled by VAO and vertex/element buffer objects inside that VAO.
 	// Core OpenGL REQUIRES the use of VAOs!
-	unsigned int squareVAO, squareVBO;
-	glGenVertexArrays(1, &squareVAO);
-	glGenBuffers(1, &squareVBO);
+	unsigned int authorSignatureVAO, refrigeratorVAO, authorSignatureVBO, refrigeratorVBO;
+	glGenVertexArrays(1, &authorSignatureVAO);
+	glGenVertexArrays(1, &refrigeratorVAO);
+	glGenBuffers(1, &authorSignatureVBO);
+	glGenBuffers(1, &refrigeratorVBO);
 
 	// Bind (assign) the newly created VAO to OpenGL's context.
-	glBindVertexArray(squareVAO);
+	glBindVertexArray(authorSignatureVAO);
 	// Bind (assign) the newly created VBO to OpenGL's context.
-	glBindBuffer(GL_ARRAY_BUFFER, squareVBO);
+	glBindBuffer(GL_ARRAY_BUFFER, authorSignatureVBO);
 	// Copy user-defined data into the currently bound buffer.
 	// Vertex data is now stored on the graphics card's memory.
-	glBufferData(GL_ARRAY_BUFFER, sizeof(verticesofSquare), verticesofSquare, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(verticesOfAuthorSignature), verticesOfAuthorSignature, GL_STATIC_DRAW);
 	// Tell OpenGL how it should interpret vertex data, per vertex attribute.
 	// Position attribute.
-	glVertexAttribPointer(0U, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*) 0);
+	glVertexAttribPointer(0U, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*) 0);
 	// Enable vertex's position attribute.
 	glEnableVertexAttribArray(0U);
 	// Color attribute.
-	glVertexAttribPointer(1U, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*) (2 * sizeof(float)));
+	glVertexAttribPointer(1U, 4, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*) (2 * sizeof(float)));
+	// Enable vertex's color attribute.
+	glEnableVertexAttribArray(1U);
+	// Texture coordinates attribute.
+	glVertexAttribPointer(2U, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*) (6 * sizeof(float)));
+	// Enable vertex's texture coordinates attribute.
+	glEnableVertexAttribArray(2U);
+
+	// Bind (assign) the newly created VAO to OpenGL's context.
+	glBindVertexArray(refrigeratorVAO);
+	// Bind (assign) the newly created VBO to OpenGL's context.
+	glBindBuffer(GL_ARRAY_BUFFER, refrigeratorVBO);
+	// Copy user-defined data into the currently bound buffer.
+	// Vertex data is now stored on the graphics card's memory.
+	glBufferData(GL_ARRAY_BUFFER, sizeof(verticesOfRefrigerator), verticesOfRefrigerator, GL_STATIC_DRAW);
+	// Tell OpenGL how it should interpret vertex data, per vertex attribute.
+	// Position attribute.
+	glVertexAttribPointer(0U, 2, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*) 0);
+	// Enable vertex's position attribute.
+	glEnableVertexAttribArray(0U);
+	// Color attribute.
+	glVertexAttribPointer(1U, 4, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*) (2 * sizeof(float)));
 	// Enable vertex's color attribute.
 	glEnableVertexAttribArray(1U);
 
@@ -139,9 +185,18 @@ int main()
 	glBindBuffer(GL_ARRAY_BUFFER, 0U);
 	glBindVertexArray(0U);
 
+	Texture authorSignatureTexture("Resources/RG_providno_ime_prezime_brojIndeksa_1280x128.png");
+	if (authorSignatureTexture.errorCode)
+	{
+		glfwTerminate();
+
+		return authorSignatureTexture.errorCode;
+	}
+
 	// Activate the desired shader program.
 	// Every shader and rendering call from now on will use this shader program object.
-	shaderProgram.useProgram();
+	shaderProgram0.useProgram();
+	shaderProgram0.setIntegerUniform("texture0", 0);
 
 	glClearColor(0.1F, 0.1F, 0.1F, 1.0F);
 
@@ -174,8 +229,27 @@ int main()
 		// Third part: rendering commands.
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		// Activate the desired shader program.
+		// Every shader and rendering call from now on will use this shader program object.
+		shaderProgram0.useProgram();
+
+		// Activate a texture unit (one of 16). After activating a texture unit, a subsequent "glBindTexture" call will
+		// bind that texture to the currently active texture unit. The texture unit "GL_TEXTURE0" is always active by
+		// default, so it is not necessary to manually activate any texture unit if only one texture is used.
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, authorSignatureTexture.id);
+
 		// Bind (assign) the desired VAO to OpenGL's context.
-		glBindVertexArray(squareVAO);
+		glBindVertexArray(authorSignatureVAO);
+		// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
+		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+		// Activate the desired shader program.
+		// Every shader and rendering call from now on will use this shader program object.
+		shaderProgram1.useProgram();
+
+		// Bind (assign) the desired VAO to OpenGL's context.
+		glBindVertexArray(refrigeratorVAO);
 		// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 

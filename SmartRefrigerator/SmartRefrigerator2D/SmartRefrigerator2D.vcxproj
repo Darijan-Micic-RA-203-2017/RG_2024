@@ -137,8 +137,13 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="vertex_shader.glsl" />
+    <None Include="fragment_shader.glsl" />
     <None Include="vertex_shader_of_square.glsl" />
     <None Include="fragment_shader_of_square.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\RG_providno_ime_prezime_brojIndeksa_1280x128.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
