@@ -4,6 +4,7 @@
 #include <iostream>
 #include "shader_program.hpp"
 #include "texture.hpp"
+#include "text.hpp"
 
 int windowWidth = 800;
 int windowHeight = 600;
@@ -114,6 +115,13 @@ int main()
 
 		return shaderProgram1.errorCode;
 	}
+	ShaderProgram shaderProgramForText("vertex_shader_of_text.glsl", "fragment_shader_of_text.glsl");
+	if (shaderProgramForText.errorCode != 0)
+	{
+		glfwTerminate();
+
+		return shaderProgramForText.errorCode;
+	}
 
 	// Vertices in the normalized device coordinates system (from -1.0F to 1.0F).
 	float verticesOfAuthorSignature[] = {
@@ -134,11 +142,13 @@ int main()
 	// Create memory on the GPU where vertex data and index data will be stored.
 	// Said data will be handled by VAO and vertex/element buffer objects inside that VAO.
 	// Core OpenGL REQUIRES the use of VAOs!
-	unsigned int authorSignatureVAO, refrigeratorVAO, authorSignatureVBO, refrigeratorVBO;
+	unsigned int authorSignatureVAO, refrigeratorVAO, textVAO, authorSignatureVBO, refrigeratorVBO, textVBO;
 	glGenVertexArrays(1, &authorSignatureVAO);
 	glGenVertexArrays(1, &refrigeratorVAO);
+	glGenVertexArrays(1, &textVAO);
 	glGenBuffers(1, &authorSignatureVBO);
 	glGenBuffers(1, &refrigeratorVBO);
+	glGenBuffers(1, &textVBO);
 
 	// Bind (assign) the newly created VAO to OpenGL's context.
 	glBindVertexArray(authorSignatureVAO);
@@ -149,15 +159,15 @@ int main()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(verticesOfAuthorSignature), verticesOfAuthorSignature, GL_STATIC_DRAW);
 	// Tell OpenGL how it should interpret vertex data, per vertex attribute.
 	// Position attribute.
-	glVertexAttribPointer(0U, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*) 0);
+	glVertexAttribPointer(0U, 2, GL_FLOAT, GL_FALSE, 8U * sizeof(float), (void*) 0U);
 	// Enable vertex's position attribute.
 	glEnableVertexAttribArray(0U);
 	// Color attribute.
-	glVertexAttribPointer(1U, 4, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*) (2 * sizeof(float)));
+	glVertexAttribPointer(1U, 4, GL_FLOAT, GL_FALSE, 8U * sizeof(float), (void*) (2U * sizeof(float)));
 	// Enable vertex's color attribute.
 	glEnableVertexAttribArray(1U);
 	// Texture coordinates attribute.
-	glVertexAttribPointer(2U, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*) (6 * sizeof(float)));
+	glVertexAttribPointer(2U, 2, GL_FLOAT, GL_FALSE, 8U * sizeof(float), (void*) (6U * sizeof(float)));
 	// Enable vertex's texture coordinates attribute.
 	glEnableVertexAttribArray(2U);
 
@@ -170,13 +180,26 @@ int main()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(verticesOfRefrigerator), verticesOfRefrigerator, GL_STATIC_DRAW);
 	// Tell OpenGL how it should interpret vertex data, per vertex attribute.
 	// Position attribute.
-	glVertexAttribPointer(0U, 2, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*) 0);
+	glVertexAttribPointer(0U, 2, GL_FLOAT, GL_FALSE, 6U * sizeof(float), (void*) 0U);
 	// Enable vertex's position attribute.
 	glEnableVertexAttribArray(0U);
 	// Color attribute.
-	glVertexAttribPointer(1U, 4, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*) (2 * sizeof(float)));
+	glVertexAttribPointer(1U, 4, GL_FLOAT, GL_FALSE, 6U * sizeof(float), (void*) (2U * sizeof(float)));
 	// Enable vertex's color attribute.
 	glEnableVertexAttribArray(1U);
+
+	// Bind (assign) the newly created VAO to OpenGL's context.
+	glBindVertexArray(textVAO);
+	// Bind (assign) the newly created VBO to OpenGL's context.
+	glBindBuffer(GL_ARRAY_BUFFER, textVBO);
+	// Copy user-defined data into the currently bound buffer.
+	// Vertex data is now stored on the graphics card's memory.
+	glBufferData(GL_ARRAY_BUFFER, 6U * 4U * sizeof(float), NULL, GL_DYNAMIC_DRAW); // For often updates of the content.
+	// Tell OpenGL how it should interpret vertex data, per vertex attribute.
+	// Position and texture coordinates (combined) attribute.
+	glVertexAttribPointer(0U, 4, GL_FLOAT, GL_FALSE, 4U * sizeof(float), (void*) 0U);
+	// Enable vertex's position and texture coordinates (combined) attribute.
+	glEnableVertexAttribArray(0U);
 
 	// Unbind VBO and VAO for safety reasons. This is not neccessary.
 	// VAO stores the glBindBuffer calls when the target is GL_ELEMENT_ARRAY_BUFFER.
@@ -186,17 +209,43 @@ int main()
 	glBindVertexArray(0U);
 
 	Texture authorSignatureTexture("Resources/RG_providno_ime_prezime_brojIndeksa_1280x128.png");
-	if (authorSignatureTexture.errorCode)
+	if (authorSignatureTexture.errorCode != 0)
 	{
 		glfwTerminate();
 
 		return authorSignatureTexture.errorCode;
 	}
 
+	Text authorSignatureText("Resources/Fonts/times.ttf", textVAO, textVBO);
+	if (authorSignatureText.errorCode != 0)
+	{
+		glfwTerminate();
+
+		return authorSignatureText.errorCode;
+	}
+
 	// Activate the desired shader program.
 	// Every shader and rendering call from now on will use this shader program object.
 	shaderProgram0.useProgram();
+	// Tell OpenGL to which texture unit each shader sampler belongs to, by setting each sampler.
 	shaderProgram0.setIntegerUniform("texture0", 0);
+	// Activate the desired shader program.
+	// Every shader and rendering call from now on will use this shader program object.
+	shaderProgramForText.useProgram();
+	// Tell OpenGL to which texture unit each shader sampler belongs to, by setting each sampler.
+	shaderProgramForText.setIntegerUniform("text", 0);
+
+	// Retrieve the location of the uniform variable "projectionMatrix" in the shader program for text.
+	// This doesn't require the activation of the shader program.
+	int locationOfProjectionMatrix = glGetUniformLocation(shaderProgramForText.id, "projectionMatrix");
+	// If the uniform variable's location wasn't found, the "glGetUniformLocation" function returns -1.
+	if (locationOfProjectionMatrix == -1)
+	{
+		std::cout << "Location of uniform variable \"projectionMatrix\" wasn't found!" << std::endl;
+		glfwTerminate();
+
+		return 11;
+	}
 
 	glClearColor(0.1F, 0.1F, 0.1F, 1.0F);
 
@@ -252,6 +301,27 @@ int main()
 		glBindVertexArray(refrigeratorVAO);
 		// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+		// Activate the desired shader program.
+		// Every shader and rendering call from now on will use this shader program object.
+		shaderProgramForText.useProgram();
+
+		// Text rendering usually does not require the use of the perspective projection. Therefore, an ortographic
+		// projection matrix will suffice. Using an orthographic projection matrix also allows all vertex coordinates to
+		// be specified in screen-space coordinates. In order to take advantage of this, the projection matrix needs to
+		// be set up this way: glm::mat4 projectionMatrix = glm::ortho(0.0F, windowWidth, 0.0F, windowHeight).
+		// The result is that coordinates can be specified with y-values ranging from the bottom part of the screen
+		// (0.0F) to the top part of the screen (window's height). The point (0.0F, 0.0F) now corresponds to the
+		// bottom-left corner.
+		glm::mat4 projectionMatrix = 
+			glm::ortho(0.0F, static_cast<float>(windowWidth), 0.0F, static_cast<float>(windowHeight));
+		// Set the projection matrix. This matrix changes each frame.
+		glUniformMatrix4fv(glGetUniformLocation(shaderProgramForText.id, "projectionMatrix"), 
+			1, GL_FALSE, &projectionMatrix[0U][0U]);
+
+		// Render author's signature in the bottom left corner of the screen space.
+		authorSignatureText.renderText(shaderProgramForText, "Darijan Micic, RA 203/2017", 
+			5.0F, 5.0F, 1.0F, glm::vec3(1.0F, 1.0F, 0.0F));
 
 		double time = getValueOfCounter();
 		std::cout << "Counter (s): " << time << "\n";
