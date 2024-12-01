@@ -15,7 +15,7 @@
     </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms;ttf</Extensions>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -44,23 +44,23 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="vertex_shader.glsl">
+    <None Include="vertex_shader_of_refrigerator.glsl">
       <Filter>Shader Files</Filter>
     </None>
-    <None Include="fragment_shader.glsl">
+    <None Include="fragment_shader_of_refrigerator.glsl">
       <Filter>Shader Files</Filter>
     </None>
-    <None Include="vertex_shader_of_square.glsl">
+    <None Include="vertex_shader_of_text.glsl">
       <Filter>Shader Files</Filter>
     </None>
-    <None Include="fragment_shader_of_square.glsl">
+    <None Include="fragment_shader_of_text.glsl">
       <Filter>Shader Files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Resources\RG_providno_ime_prezime_brojIndeksa_1280x128.png">
+    <Font Include="Resources\Fonts\times.ttf">
       <Filter>Resource Files</Filter>
-    </Image>
+    </Font>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

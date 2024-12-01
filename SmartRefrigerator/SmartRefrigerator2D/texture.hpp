@@ -86,7 +86,7 @@ public:
 		// Free the image memory.
 		stbi_image_free(pixels);
 
-		// Unbind texture for safety reasons.
+		// Unbind the texture for safety reasons.
 		glBindTexture(GL_TEXTURE_2D, 0U);
 	}
 };
