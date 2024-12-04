@@ -29,6 +29,8 @@
 *.la
 *.a
 *.lib
+# Except the ".lib" files in the "libs" directory.
+!SmartRefrigerator/SmartRefrigerator2D/libs/*.lib
 
 # Executables
 *.exe
@@ -81,11 +83,11 @@ $RECYCLE.BIN/
 mono_crash.*
 
 # Build results
-[Dd]ebug/
+[Dd]ebug/*
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
-x64/
+# x64/
 x86/
 [Ww][Ii][Nn]32/
 [Aa][Rr][Mm]/
@@ -140,6 +142,10 @@ StyleCopReport.xml
 *.meta
 *.iobj
 *.pdb
+# Except the "SmartRefrigerator/SmartRefrigerator2D/x64/Debug/freetyped.pdb" file.
+!freetyped.pdb
+# I added the ".idb" extension myself.
+*.idb
 *.ipdb
 *.pgc
 *.pgd
@@ -159,6 +165,10 @@ StyleCopReport.xml
 *.pidb
 *.svclog
 *.scc
+# I added the ".exe.recipe" extension myself.
+*.exe.recipe
+# I added the ".vcxproj.FileListAbsolute.txt" extension myself.
+*.vcxproj.FileListAbsolute.txt
 
 # Chutzpah Test files
 _Chutzpah*
