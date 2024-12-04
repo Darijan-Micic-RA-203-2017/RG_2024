@@ -1,8 +1,8 @@
 // By using these several preprocessor directives at the top of the header file, the compiler is informed to only
 // include and compile this header file if it hasn't been included yet. This applies even if multiple files include the
-// text header. This prevents linking conflicts.
-#ifndef TEXT_H
-#define TEXT_H
+// font header. This prevents linking conflicts.
+#ifndef FONT_H
+#define FONT_H
 
 #include <GL/glew.h>
 #include <glm/glm.hpp>
@@ -14,7 +14,7 @@
 #include <string>
 #include "shader_program.hpp"
 
-class Text
+class Font
 {
 private:
 	// Generate the texture for the loaded character glyph.
@@ -66,7 +66,7 @@ private:
 		characters.insert(std::pair<char, Character>(c, character));
 	}
 
-	void extractNecessaryInfoFromFaceOn(std::string pathOfFace)
+	void extractNecessaryInfoAboutFontFrom(std::string filePath)
 	{
 		// Initialize the FreeType library.
 		// All functions of this library return a value different than 0 whenever an error occurres.
@@ -86,7 +86,7 @@ private:
 		// can be procedurally generated based on the preferred font height the user would like to obtain them in.
 		// Using TrueType fonts enables easy rendering of character glyphs of various sizes without any loss of quality.
 		FT_Face face;
-		if (FT_New_Face(ft, pathOfFace.c_str(), 0L, &face))
+		if (FT_New_Face(ft, filePath.c_str(), 0L, &face))
 		{
 			std::cout << "Font was not loaded!" << std::endl;
 			FT_Done_Face(face);
@@ -98,7 +98,7 @@ private:
 
 		// Specify the size of glyphs (the pixel font size to be extracted from the face).
 		// Setting the width to 0U tells the face (font) to dynamically calculate the width based on the given height.
-		FT_Set_Pixel_Sizes(face, 0U, 48U);
+		FT_Set_Pixel_Sizes(face, 0U, 32U);
 
 		// Disable the byte-alignment restriction. If a single byte is used to represent each of the colors of a
 		// texture, one restriction of OpenGL needs to be taken care of. OpenGL requires that textures all have a 4-byte
@@ -135,7 +135,7 @@ private:
 		FT_Done_FreeType(ft);
 	}
 public:
-	std::string pathOfFace;
+	std::string filePath;
 	// Holds all state information relevant to a character as loaded using the FreeType library.
 	// It is possible to load a character glyph, retrieve its metrics and generate a texture each time a character needs
 	// to be rendered to the screen, but it would be inefficient to do this each frame. It is smarter to store the
@@ -158,13 +158,13 @@ public:
 	unsigned int VBO = 0U;
 	int errorCode = 0;
 
-	Text(std::string pathOfFace, unsigned int VAO, unsigned int VBO)
+	Font(std::string filePath, unsigned int VAO, unsigned int VBO)
 	{
-		this->pathOfFace = pathOfFace;
+		this->filePath = filePath;
 		this->VAO = VAO;
 		this->VBO = VBO;
 
-		extractNecessaryInfoFromFaceOn(pathOfFace);
+		extractNecessaryInfoAboutFontFrom(filePath);
 	}
 
 	// Renders text, with position (x, y) being the encompassing text quad's bottom left corner.
