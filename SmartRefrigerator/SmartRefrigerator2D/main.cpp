@@ -116,15 +116,16 @@ int main()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	// Compile the shaders and link the shader programs using the helper "ShaderProgram" class.
-	shaderProgramForRefrigerator = new ShaderProgram("vertex_shader_of_refrigerator.glsl", 
-		"fragment_shader_of_refrigerator.glsl");
+	shaderProgramForRefrigerator = new ShaderProgram("Shaders/Refrigerator/vertex_shader_of_refrigerator.glsl", 
+		"Shaders/Refrigerator/fragment_shader_of_refrigerator.glsl");
 	if (shaderProgramForRefrigerator->errorCode != 0)
 	{
 		glfwTerminate();
 
 		return shaderProgramForRefrigerator->errorCode;
 	}
-	shaderProgramForText = new ShaderProgram("vertex_shader_of_text.glsl", "fragment_shader_of_text.glsl");
+	shaderProgramForText = new ShaderProgram("Shaders/NonlogoText/vertex_shader_of_nonlogo_text.glsl", 
+		"Shaders/NonlogoText/fragment_shader_of_nonlogo_text.glsl");
 	if (shaderProgramForText->errorCode != 0)
 	{
 		glfwTerminate();

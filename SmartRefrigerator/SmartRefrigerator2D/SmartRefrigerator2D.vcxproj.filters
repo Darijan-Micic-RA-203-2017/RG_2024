@@ -44,16 +44,16 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="vertex_shader_of_refrigerator.glsl">
+    <None Include="Shaders\Refrigerator\vertex_shader_of_refrigerator.glsl">
       <Filter>Shader Files</Filter>
     </None>
-    <None Include="fragment_shader_of_refrigerator.glsl">
+    <None Include="Shaders\Refrigerator\fragment_shader_of_refrigerator.glsl">
       <Filter>Shader Files</Filter>
     </None>
-    <None Include="vertex_shader_of_text.glsl">
+    <None Include="Shaders\NonlogoText\vertex_shader_of_nonlogo_text.glsl">
       <Filter>Shader Files</Filter>
     </None>
-    <None Include="fragment_shader_of_text.glsl">
+    <None Include="Shaders\NonlogoText\fragment_shader_of_nonlogo_text.glsl">
       <Filter>Shader Files</Filter>
     </None>
   </ItemGroup>
