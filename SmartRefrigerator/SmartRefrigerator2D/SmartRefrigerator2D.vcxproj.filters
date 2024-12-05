@@ -56,6 +56,12 @@
     <None Include="Shaders\NonlogoText\fragment_shader_of_nonlogo_text.glsl">
       <Filter>Shader Files</Filter>
     </None>
+    <None Include="Shaders\LogoText\vertex_shader_of_logo_text.glsl">
+      <Filter>Shader Files</Filter>
+    </None>
+    <None Include="Shaders\LogoText\fragment_shader_of_logo_text.glsl">
+      <Filter>Shader Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Font Include="Resources\Fonts\times.ttf">

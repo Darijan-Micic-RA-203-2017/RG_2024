@@ -154,6 +154,8 @@
     <None Include="Shaders\Refrigerator\fragment_shader_of_refrigerator.glsl" />
     <None Include="Shaders\NonlogoText\vertex_shader_of_nonlogo_text.glsl" />
     <None Include="Shaders\NonlogoText\fragment_shader_of_nonlogo_text.glsl" />
+    <None Include="Shaders\LogoText\vertex_shader_of_logo_text.glsl" />
+    <None Include="Shaders\LogoText\fragment_shader_of_logo_text.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="Resources\Fonts\times.ttf" />

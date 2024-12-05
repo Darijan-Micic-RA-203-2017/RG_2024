@@ -30,7 +30,8 @@ float previousFrameTime = 0.0F;
 
 // Shader programs.
 ShaderProgram *shaderProgramForRefrigerator = NULL;
-ShaderProgram *shaderProgramForText = NULL;
+ShaderProgram *shaderProgramForNonlogoText = NULL;
+ShaderProgram *shaderProgramForLogoText = NULL;
 
 // The logo mode starts 5 seconds after the user last clicked on the refrigerator's graphic display and ends when the
 // user clicks on it again. Logo mode consists of showing the "LOK" company logo over the screen.
@@ -124,13 +125,21 @@ int main()
 
 		return shaderProgramForRefrigerator->errorCode;
 	}
-	shaderProgramForText = new ShaderProgram("Shaders/NonlogoText/vertex_shader_of_nonlogo_text.glsl", 
+	shaderProgramForNonlogoText = new ShaderProgram("Shaders/NonlogoText/vertex_shader_of_nonlogo_text.glsl", 
 		"Shaders/NonlogoText/fragment_shader_of_nonlogo_text.glsl");
-	if (shaderProgramForText->errorCode != 0)
+	if (shaderProgramForNonlogoText->errorCode != 0)
 	{
 		glfwTerminate();
 
-		return shaderProgramForText->errorCode;
+		return shaderProgramForNonlogoText->errorCode;
+	}
+	shaderProgramForLogoText = new ShaderProgram("Shaders/LogoText/vertex_shader_of_logo_text.glsl", 
+		"Shaders/LogoText/fragment_shader_of_logo_text.glsl");
+	if (shaderProgramForLogoText->errorCode != 0)
+	{
+		glfwTerminate();
+
+		return shaderProgramForLogoText->errorCode;
 	}
 
 	// Vertices in the normalized device coordinates system (from -1.0F to 1.0F).
@@ -203,16 +212,28 @@ int main()
 
 	// Activate the desired shader program.
 	// Every shader and rendering call from now on will use this shader program object.
-	shaderProgramForRefrigerator->useProgram();
+	shaderProgramForNonlogoText->useProgram();
+	// Tell OpenGL to which texture unit each shader sampler belongs to, by setting each sampler.
+	shaderProgramForNonlogoText->setIntegerUniform("text", 0);
+	// Retrieve the location of the uniform variable "projectionMatrix" in the shader program for nonlogo text.
+	// This doesn't require the activation of the shader program.
+	int locationOfProjectionMatrix = glGetUniformLocation(shaderProgramForNonlogoText->id, "projectionMatrix");
+	// If the uniform variable's location wasn't found, the "glGetUniformLocation" function returns -1.
+	if (locationOfProjectionMatrix == -1)
+	{
+		std::cout << "Location of uniform variable \"projectionMatrix\" wasn't found!" << std::endl;
+		glfwTerminate();
+
+		return 11;
+	}
 	// Activate the desired shader program.
 	// Every shader and rendering call from now on will use this shader program object.
-	shaderProgramForText->useProgram();
+	shaderProgramForLogoText->useProgram();
 	// Tell OpenGL to which texture unit each shader sampler belongs to, by setting each sampler.
-	shaderProgramForText->setIntegerUniform("text", 0);
-
-	// Retrieve the location of the uniform variable "projectionMatrix" in the shader program for text.
+	shaderProgramForLogoText->setIntegerUniform("text", 0);
+	// Retrieve the location of the uniform variable "projectionMatrix" in the shader program for logo text.
 	// This doesn't require the activation of the shader program.
-	int locationOfProjectionMatrix = glGetUniformLocation(shaderProgramForText->id, "projectionMatrix");
+	locationOfProjectionMatrix = glGetUniformLocation(shaderProgramForLogoText->id, "projectionMatrix");
 	// If the uniform variable's location wasn't found, the "glGetUniformLocation" function returns -1.
 	if (locationOfProjectionMatrix == -1)
 	{
@@ -262,9 +283,7 @@ int main()
 		{
 			// Activate the desired shader program.
 			// Every shader and rendering call from now on will use this shader program object.
-			shaderProgramForText->useProgram();
-			// Update the logo mode uniform.
-			shaderProgramForText->setBoolUniform("logoModeTurnedOn", true);
+			shaderProgramForLogoText->useProgram();
 
 			// Text rendering usually does not require the use of the perspective projection. Therefore, an ortographic
 			// projection matrix will suffice. Using an orthographic projection matrix also allows all vertex
@@ -277,16 +296,16 @@ int main()
 			glm::mat4 projectionMatrix = 
 				glm::ortho(0.0F, static_cast<float>(windowWidth), 0.0F, static_cast<float>(windowHeight));
 			// Set the projection matrix. This matrix changes each frame.
-			glUniformMatrix4fv(glGetUniformLocation(shaderProgramForText->id, "projectionMatrix"), 
+			glUniformMatrix4fv(glGetUniformLocation(shaderProgramForLogoText->id, "projectionMatrix"), 
 				1, GL_FALSE, &projectionMatrix[0U][0U]);
 
 			// Change the color of the "LOK" company's logo from blue to purple.
 			float redColorAmount = abs(sin(currentFrameTime));
 			// Update the red color amount uniform.
-			shaderProgramForText->setFloatUniform("redColorAmount", redColorAmount);
+			shaderProgramForLogoText->setFloatUniform("redColorAmount", redColorAmount);
 
 			// Render the "LOK" company's logo, scale it 4 times and paint it blue.
-			timesNewRomanFont.renderText(*shaderProgramForText, "LOK", 0.275F * windowWidth, 0.4F * windowHeight, 
+			timesNewRomanFont.renderText(*shaderProgramForLogoText, "LOK", 0.275F * windowWidth, 0.4F * windowHeight, 
 				4.0F, glm::vec3(0.0F, 0.0F, 1.0F));
 		}
 		else
@@ -294,8 +313,6 @@ int main()
 			// Activate the desired shader program.
 			// Every shader and rendering call from now on will use this shader program object.
 			shaderProgramForRefrigerator->useProgram();
-			// Update the logo mode uniform.
-			shaderProgramForText->setBoolUniform("logoModeTurnedOn", false);
 
 			// Bind (assign) the desired VAO to OpenGL's context.
 			glBindVertexArray(refrigeratorVAO);
@@ -305,7 +322,7 @@ int main()
 
 			// Activate the desired shader program.
 			// Every shader and rendering call from now on will use this shader program object.
-			shaderProgramForText->useProgram();
+			shaderProgramForNonlogoText->useProgram();
 
 			// Text rendering usually does not require the use of the perspective projection. Therefore, an ortographic
 			// projection matrix will suffice. Using an orthographic projection matrix also allows all vertex coordinates to
@@ -317,7 +334,7 @@ int main()
 			glm::mat4 projectionMatrix = 
 				glm::ortho(0.0F, static_cast<float>(windowWidth), 0.0F, static_cast<float>(windowHeight));
 			// Set the projection matrix. This matrix changes each frame.
-			glUniformMatrix4fv(glGetUniformLocation(shaderProgramForText->id, "projectionMatrix"), 
+			glUniformMatrix4fv(glGetUniformLocation(shaderProgramForNonlogoText->id, "projectionMatrix"), 
 				1, GL_FALSE, &projectionMatrix[0U][0U]);
 
 			// REFERENCE: https://labex.io/tutorials/c-creating-a-simple-clock-animation-using-opengl-298829
@@ -347,12 +364,12 @@ int main()
 				hoursAsString.append(":").append(minutesAsString).append(":").append(secondsAsString);
 
 			// Render the current time in the digital clock's space and paint it white.
-			timesNewRomanFont.renderText(*shaderProgramForText, currentTimeAsString, 
+			timesNewRomanFont.renderText(*shaderProgramForNonlogoText, currentTimeAsString, 
 				0.1175F * windowWidth, 0.8325F * windowHeight, 0.666667F, glm::vec3(1.0F, 1.0F, 1.0F));
 		}
 
 		// Render the author's signature in the bottom left corner of the screen space and paint it yellow.
-		timesNewRomanFont.renderText(*shaderProgramForText, "Darijan Micic, RA 203/2017", 
+		timesNewRomanFont.renderText(*shaderProgramForNonlogoText, "Darijan Micic, RA 203/2017", 
 			glm::max(0.0125F * windowWidth, 10.0F), glm::max(0.016667F * windowHeight, 10.0F), 
 			0.666667F, glm::vec3(1.0F, 1.0F, 0.0F));
 
@@ -379,7 +396,8 @@ int main()
 
 	// REFERENCE: https://www.geeksforgeeks.org/destructors-c/
 	// De-allocate shader programs using their destructors.
-	delete shaderProgramForText;
+	delete shaderProgramForLogoText;
+	delete shaderProgramForNonlogoText;
 	delete shaderProgramForRefrigerator;
 
 	// Terminate the GLFW library, which frees up all allocated resources.
@@ -425,13 +443,13 @@ void processInput(GLFWwindow *window)
 	{
 		// Activate the desired shader program.
 		// Every shader and rendering call from now on will use this shader program object.
-		shaderProgramForText->useProgram();
+		shaderProgramForLogoText->useProgram();
 
 		// Reset everything related to the logo.
 		if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
 		{
 			// Reset the red color amount uniform.
-			shaderProgramForText->setFloatUniform("redColorAmount", 0.0F);
+			shaderProgramForLogoText->setFloatUniform("redColorAmount", 0.0F);
 
 			return;
 		}
@@ -440,7 +458,7 @@ void processInput(GLFWwindow *window)
 		{
 			float redColorAmount = abs(sin(currentFrameTime));
 			// Update the red color amount uniform.
-			shaderProgramForText->setFloatUniform("redColorAmount", redColorAmount);
+			shaderProgramForLogoText->setFloatUniform("redColorAmount", redColorAmount);
 
 			return;
 		}

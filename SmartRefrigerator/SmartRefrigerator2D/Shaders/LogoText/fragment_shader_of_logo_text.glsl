@@ -9,6 +9,9 @@ uniform sampler2D text;
 // Color uniform for adjusting the text's final color.
 uniform vec3 colorOfText;
 
+// Change the color of the "LOK" company's logo from blue to purple over time by adding the red component.
+uniform float redColorAmount;
+
 void main()
 {
 	// Sampling the color value of the bitmap texture is the first step.
@@ -19,4 +22,6 @@ void main()
 	vec4 sampledColor = vec4(1.0F, 1.0F, 1.0F, texture(text, TexCoords).r);
 	// Finally, the samled RGB color is multiplied by the "colorOfText" uniform to get the resulting text color.
 	FragColor = vec4(colorOfText, 1.0F) * sampledColor;
+
+	FragColor.r = redColorAmount;
 }
