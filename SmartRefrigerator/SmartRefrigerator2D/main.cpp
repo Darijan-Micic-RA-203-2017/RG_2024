@@ -174,10 +174,10 @@ int main()
 		   0.2F,   0.75F, 0.5F,  0.5F,  0.5F, 1.0F, 
 		  0.12F,    0.7F, 1.0F,  1.0F,  1.0F, 1.0F, // line representing the "-" sign itself
 		  0.18F,    0.7F, 1.0F,  1.0F,  1.0F, 1.0F, 
-		  0.25F,  0.625F, 0.0F, 0.75F, 0.75F, 1.0F, // freezing chamber temperature widget
-		   0.6F,  0.625F, 0.0F, 0.75F, 0.75F, 1.0F, 
-		  0.25F,  0.775F, 0.0F, 0.75F, 0.75F, 1.0F, 
-		   0.6F,  0.775F, 0.0F, 0.75F, 0.75F, 1.0F, 
+		 0.225F,  0.625F, 0.0F, 0.75F, 0.75F, 1.0F, // freezing chamber temperature widget
+		 0.625F,  0.625F, 0.0F, 0.75F, 0.75F, 1.0F, 
+		 0.225F,  0.775F, 0.0F, 0.75F, 0.75F, 1.0F, 
+		 0.625F,  0.775F, 0.0F, 0.75F, 0.75F, 1.0F, 
 		  0.65F,   0.65F, 0.5F,  0.5F,  0.5F, 1.0F, // "+" button, right of freezing chamber temperature widget
 		  0.75F,   0.65F, 0.5F,  0.5F,  0.5F, 1.0F, 
 		  0.65F,   0.75F, 0.5F,  0.5F,  0.5F, 1.0F, 
@@ -185,7 +185,25 @@ int main()
 		  0.67F,    0.7F, 1.0F,  1.0F,  1.0F, 1.0F, // lines representing the "+" sign itself
 		  0.73F,    0.7F, 1.0F,  1.0F,  1.0F, 1.0F, 
 		   0.7F,   0.67F, 1.0F,  1.0F,  1.0F, 1.0F, 
-		   0.7F,   0.73F, 1.0F,  1.0F,  1.0F, 1.0F
+		   0.7F,   0.73F, 1.0F,  1.0F,  1.0F, 1.0F, 
+		   0.1F,   0.45F, 0.5F,  0.5F,  0.5F, 1.0F, // "-" button, left of refrigerating chamber temperature widget
+		   0.2F,   0.45F, 0.5F,  0.5F,  0.5F, 1.0F, 
+		   0.1F,   0.55F, 0.5F,  0.5F,  0.5F, 1.0F, 
+		   0.2F,   0.55F, 0.5F,  0.5F,  0.5F, 1.0F, 
+		  0.12F,    0.5F, 1.0F,  1.0F,  1.0F, 1.0F, // line representing the "-" sign itself
+		  0.18F,    0.5F, 1.0F,  1.0F,  1.0F, 1.0F, 
+		 0.225F,  0.425F, 0.0F, 0.75F, 0.75F, 1.0F, // refrigerating chamber temperature widget
+		 0.625F,  0.425F, 0.0F, 0.75F, 0.75F, 1.0F, 
+		 0.225F,  0.575F, 0.0F, 0.75F, 0.75F, 1.0F, 
+		 0.625F,  0.575F, 0.0F, 0.75F, 0.75F, 1.0F, 
+		  0.65F,   0.45F, 0.5F,  0.5F,  0.5F, 1.0F, // "+" button, right of refrigerating chamber temperature widget
+		  0.75F,   0.45F, 0.5F,  0.5F,  0.5F, 1.0F, 
+		  0.65F,   0.55F, 0.5F,  0.5F,  0.5F, 1.0F, 
+		  0.75F,   0.55F, 0.5F,  0.5F,  0.5F, 1.0F, 
+		  0.67F,    0.5F, 1.0F,  1.0F,  1.0F, 1.0F, // lines representing the "+" sign itself
+		  0.73F,    0.5F, 1.0F,  1.0F,  1.0F, 1.0F, 
+		   0.7F,   0.47F, 1.0F,  1.0F,  1.0F, 1.0F, 
+		   0.7F,   0.53F, 1.0F,  1.0F,  1.0F, 1.0F
 	};
 
 	// Create memory on the GPU where vertex data and index data will be stored.
@@ -403,6 +421,11 @@ int main()
 			glDrawArrays(GL_TRIANGLE_STRIP, 14, 4); // freezing chamber temperature widget
 			glDrawArrays(GL_TRIANGLE_STRIP, 18, 4); // "+" button, left of freezing chamber temperature widget
 			glDrawArrays(GL_LINES, 22, 4);          // line representing the "+" sign itself
+			glDrawArrays(GL_TRIANGLE_STRIP, 26, 4);  // "-" button, left of refrigerating chamber temperature widget
+			glDrawArrays(GL_LINES, 30, 2);          // line representing the "-" sign itself
+			glDrawArrays(GL_TRIANGLE_STRIP, 32, 4); // refrigerating chamber temperature widget
+			glDrawArrays(GL_TRIANGLE_STRIP, 36, 4); // "+" button, left of refrigerating chamber temperature widget
+			glDrawArrays(GL_LINES, 40, 4);          // line representing the "+" sign itself
 
 			// Activate the desired shader program.
 			// Every shader and rendering call from now on will use this shader program object.
