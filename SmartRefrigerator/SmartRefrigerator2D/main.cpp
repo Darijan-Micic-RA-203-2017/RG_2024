@@ -164,10 +164,28 @@ int main()
 		-0.8F,    0.8F,   1.0F,  0.0F,  0.0F, 1.0F, 
 		 0.8F,    0.8F,   1.0F,  1.0F,  0.0F, 1.0F, 
 		// (0.1125F + 0.0050F = 0.1175F) * windowWidth, 0.8325F * windowHeight
-		-0.775F,  0.625F, 0.0F, 0.25F, 0.75F, 1.0F, // digital clock rectangle widget
-		-0.475F,  0.625F, 0.0F, 0.25F, 0.75F, 1.0F, 
-		-0.775F,  0.775F, 0.0F, 0.25F, 0.75F, 1.0F, 
-		-0.475F,  0.775F, 0.0F, 0.25F, 0.75F, 1.0F
+		-0.775F,  0.625F, 0.0F, 0.75F, 0.75F, 1.0F, // digital clock rectangle widget
+		-0.475F,  0.625F, 0.0F, 0.75F, 0.75F, 1.0F, 
+		-0.775F,  0.775F, 0.0F, 0.75F, 0.75F, 1.0F, 
+		-0.475F,  0.775F, 0.0F, 0.75F, 0.75F, 1.0F, 
+		   0.1F,   0.65F, 0.5F,  0.5F,  0.5F, 1.0F, // "-" button, left of freezing chamber temperature widget
+		   0.2F,   0.65F, 0.5F,  0.5F,  0.5F, 1.0F, 
+		   0.1F,   0.75F, 0.5F,  0.5F,  0.5F, 1.0F, 
+		   0.2F,   0.75F, 0.5F,  0.5F,  0.5F, 1.0F, 
+		  0.12F,    0.7F, 1.0F,  1.0F,  1.0F, 1.0F, // line representing the "-" sign itself
+		  0.18F,    0.7F, 1.0F,  1.0F,  1.0F, 1.0F, 
+		  0.25F,  0.625F, 0.0F, 0.75F, 0.75F, 1.0F, // freezing chamber temperature widget
+		   0.6F,  0.625F, 0.0F, 0.75F, 0.75F, 1.0F, 
+		  0.25F,  0.775F, 0.0F, 0.75F, 0.75F, 1.0F, 
+		   0.6F,  0.775F, 0.0F, 0.75F, 0.75F, 1.0F, 
+		  0.65F,   0.65F, 0.5F,  0.5F,  0.5F, 1.0F, // "+" button, right of freezing chamber temperature widget
+		  0.75F,   0.65F, 0.5F,  0.5F,  0.5F, 1.0F, 
+		  0.65F,   0.75F, 0.5F,  0.5F,  0.5F, 1.0F, 
+		  0.75F,   0.75F, 0.5F,  0.5F,  0.5F, 1.0F, 
+		  0.67F,    0.7F, 1.0F,  1.0F,  1.0F, 1.0F, // lines representing the "+" sign itself
+		  0.73F,    0.7F, 1.0F,  1.0F,  1.0F, 1.0F, 
+		   0.7F,   0.67F, 1.0F,  1.0F,  1.0F, 1.0F, 
+		   0.7F,   0.73F, 1.0F,  1.0F,  1.0F, 1.0F
 	};
 
 	// Create memory on the GPU where vertex data and index data will be stored.
@@ -378,8 +396,13 @@ int main()
 			// Bind (assign) the desired VAO to OpenGL's context.
 			glBindVertexArray(refrigeratorVAO);
 			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
-			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4); // outer borders of refrigerator
-			glDrawArrays(GL_TRIANGLE_STRIP, 4, 4); // digital clock rectangle widget
+			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);  // outer borders of refrigerator
+			glDrawArrays(GL_TRIANGLE_STRIP, 4, 4);  // digital clock rectangle widget
+			glDrawArrays(GL_TRIANGLE_STRIP, 8, 4);  // "-" button, left of freezing chamber temperature widget
+			glDrawArrays(GL_LINES, 12, 2);          // line representing the "-" sign itself
+			glDrawArrays(GL_TRIANGLE_STRIP, 14, 4); // freezing chamber temperature widget
+			glDrawArrays(GL_TRIANGLE_STRIP, 18, 4); // "+" button, left of freezing chamber temperature widget
+			glDrawArrays(GL_LINES, 22, 4);          // line representing the "+" sign itself
 
 			// Activate the desired shader program.
 			// Every shader and rendering call from now on will use this shader program object.
