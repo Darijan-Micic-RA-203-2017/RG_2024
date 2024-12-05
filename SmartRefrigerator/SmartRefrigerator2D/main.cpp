@@ -437,6 +437,8 @@ void processInput(GLFWwindow *window)
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 	{
 		glfwSetWindowShouldClose(window, GLFW_TRUE);
+
+		return;
 	}
 
 	if (logoModeTurnedOn)
@@ -448,6 +450,8 @@ void processInput(GLFWwindow *window)
 		// Reset everything related to the logo.
 		if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
 		{
+			// Reset the logo needs to pulse uniform.
+			shaderProgramForLogoText->setBoolUniform("logoNeedsToPulse", false);
 			// Reset the red color amount uniform.
 			shaderProgramForLogoText->setFloatUniform("redColorAmount", 0.0F);
 
@@ -456,7 +460,9 @@ void processInput(GLFWwindow *window)
 		// Change the color of the "LOK" company's logo from blue to purple.
 		if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
 		{
-			float redColorAmount = abs(sin(currentFrameTime));
+			// Update the logo needs to pulse uniform.
+			shaderProgramForLogoText->setBoolUniform("logoNeedsToPulse", true);
+			float redColorAmount = glm::abs(glm::sin(currentFrameTime));
 			// Update the red color amount uniform.
 			shaderProgramForLogoText->setFloatUniform("redColorAmount", redColorAmount);
 

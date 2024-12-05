@@ -9,6 +9,8 @@ uniform sampler2D text;
 // Color uniform for adjusting the text's final color.
 uniform vec3 colorOfText;
 
+// Pressing the "2" key should start the color pulsing of the "LOK" company's logo.
+uniform bool logoNeedsToPulse;
 // Change the color of the "LOK" company's logo from blue to purple over time by adding the red component.
 uniform float redColorAmount;
 
@@ -23,5 +25,12 @@ void main()
 	// Finally, the samled RGB color is multiplied by the "colorOfText" uniform to get the resulting text color.
 	FragColor = vec4(colorOfText, 1.0F) * sampledColor;
 
-	FragColor.r = redColorAmount;
+	if (logoNeedsToPulse)
+	{
+		FragColor.r = redColorAmount;
+	}
+	else
+	{
+		FragColor.r = 0.0F;
+	}
 }
