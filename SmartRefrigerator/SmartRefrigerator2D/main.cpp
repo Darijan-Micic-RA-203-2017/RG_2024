@@ -39,10 +39,13 @@ bool logoModeTurnedOn = true;
 // Pressing the "2" key should start the color pulsing of the "LOK" company's logo.
 bool logoNeedsToPulse = false;
 float redColorComponentForPulsing = 0.0F;
-// Pressing the "3" key should start the movement the "LOK" company's logo to the right. Once it reaches the right edge
-// of the window, it should appear on the left edge of the window.
+// Pressing the "3" key should start the movement of the "LOK" company's logo to the right. Once it reaches the right
+// edge of the window, it should appear on the left edge of the window.
 bool logoNeedsToMoveRight = false;
-float bottomLeftCornerOfLogoText = 0.275F * windowWidth;
+float bottomLeftXOfLogoText = 0.275F * windowWidth;
+// Pressing the "4" key should start the movement of the "LOK" company's logo in a circle.
+bool logoNeedsToMoveInCircle = false;
+float bottomLeftYOfLogoText = 0.4F * windowHeight;
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void mouse_button_callback(GLFWwindow *window, int button, int action, int mods);
@@ -316,19 +319,25 @@ int main()
 			if (logoNeedsToMoveRight)
 			{
 				// Move the "LOK" company's logo to the right.
-				bottomLeftCornerOfLogoText += 3.0F * glm::abs(sin(currentFrameTime));
+				bottomLeftXOfLogoText += 3.0F * glm::abs(sin(currentFrameTime));
 				// Make the logo emerge on the opposite side of the screen space when the screen space's boundaries are
 				// crossed.
-				if (bottomLeftCornerOfLogoText > windowWidth)
+				if (bottomLeftXOfLogoText > windowWidth)
 				{
-					bottomLeftCornerOfLogoText = 0.0F;
+					bottomLeftXOfLogoText = 0.0F;
 				}
+			}
+			if (logoNeedsToMoveInCircle)
+			{
+				// Move the "LOK" company's logo in a circle.
+				float r = glm::min(windowWidth, windowHeight) / 5.0F;
+				bottomLeftXOfLogoText = r * glm::cos(3.0F * currentFrameTime) + 0.225F * windowWidth;
+				bottomLeftYOfLogoText = r * glm::sin(3.0F * currentFrameTime) + 0.4F * windowHeight;
 			}
 
 			// Render the "LOK" company's logo, scale it 4 times and paint it blue.
 			timesNewRomanFont.renderText(*shaderProgramForLogoText, "LOK", 
-				bottomLeftCornerOfLogoText, 0.4F * windowHeight, 
-				4.0F, glm::vec3(0.0F, 0.0F, 1.0F));
+				bottomLeftXOfLogoText, bottomLeftYOfLogoText, 4.0F, glm::vec3(0.0F, 0.0F, 1.0F));
 		}
 		else
 		{
@@ -479,8 +488,10 @@ void processInput(GLFWwindow *window)
 			shaderProgramForLogoText->setFloatUniform("redColorComponentForPulsing", redColorComponentForPulsing);
 			// Reset the logo needs to move right uniform and its associated value.
 			logoNeedsToMoveRight = false;
-			shaderProgramForLogoText->setBoolUniform("logoNeedsToMoveRight", logoNeedsToMoveRight);
-			bottomLeftCornerOfLogoText = 0.275F * windowWidth;
+			bottomLeftXOfLogoText = 0.275F * windowWidth;
+			// Reset the logo needs to move in circle uniform and its associated value.
+			logoNeedsToMoveInCircle = false;
+			bottomLeftYOfLogoText = 0.4F * windowHeight;
 
 			return;
 		}
@@ -489,8 +500,10 @@ void processInput(GLFWwindow *window)
 		{
 			// Reset the logo needs to move right uniform and its associated value.
 			logoNeedsToMoveRight = false;
-			shaderProgramForLogoText->setBoolUniform("logoNeedsToMoveRight", logoNeedsToMoveRight);
-			bottomLeftCornerOfLogoText = 0.275F * windowWidth;
+			bottomLeftXOfLogoText = 0.275F * windowWidth;
+			// Reset the logo needs to move in circle uniform and its associated value.
+			logoNeedsToMoveInCircle = false;
+			bottomLeftYOfLogoText = 0.4F * windowHeight;
 
 			// Update the logo needs to pulse uniform.
 			logoNeedsToPulse = true;
@@ -507,10 +520,31 @@ void processInput(GLFWwindow *window)
 			shaderProgramForLogoText->setBoolUniform("logoNeedsToPulse", logoNeedsToPulse);
 			redColorComponentForPulsing = 0.0F;
 			shaderProgramForLogoText->setFloatUniform("redColorComponentForPulsing", redColorComponentForPulsing);
+			// Reset the logo needs to move in circle uniform and its associated value.
+			logoNeedsToMoveInCircle = false;
+			bottomLeftXOfLogoText = 0.275F * windowWidth;
+			bottomLeftYOfLogoText = 0.4F * windowHeight;
 
 			// Update the logo needs to move right uniform.
 			logoNeedsToMoveRight = true;
-			shaderProgramForLogoText->setBoolUniform("logoNeedsToMoveRight", logoNeedsToMoveRight);
+
+			return;
+		}
+		// Move the "LOK" company's logo in a circle.
+		if (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS)
+		{
+			// Reset the logo needs to pulse uniform and its associated value.
+			logoNeedsToPulse = false;
+			shaderProgramForLogoText->setBoolUniform("logoNeedsToPulse", logoNeedsToPulse);
+			redColorComponentForPulsing = 0.0F;
+			shaderProgramForLogoText->setFloatUniform("redColorComponentForPulsing", redColorComponentForPulsing);
+			// Reset the logo needs to move right uniform and its associated value.
+			logoNeedsToMoveRight = false;
+			bottomLeftXOfLogoText = 0.275F * windowWidth;
+			bottomLeftYOfLogoText = 0.4F * windowHeight;
+
+			// Update the logo needs to move in circle uniform.
+			logoNeedsToMoveInCircle = true;
 
 			return;
 		}
