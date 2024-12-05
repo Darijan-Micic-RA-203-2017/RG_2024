@@ -11,8 +11,8 @@ uniform vec3 colorOfText;
 
 // Pressing the "2" key should start the color pulsing of the "LOK" company's logo.
 uniform bool logoNeedsToPulse;
-// Change the color of the "LOK" company's logo from blue to purple over time by adding the red component.
-uniform float redColorAmount;
+// Change the color of the "LOK" company's logo from blue to purple over time by changing the red component.
+uniform float redColorComponentForPulsing;
 
 void main()
 {
@@ -27,7 +27,7 @@ void main()
 
 	if (logoNeedsToPulse)
 	{
-		FragColor.r = redColorAmount;
+		FragColor.r = redColorComponentForPulsing;
 	}
 	else
 	{

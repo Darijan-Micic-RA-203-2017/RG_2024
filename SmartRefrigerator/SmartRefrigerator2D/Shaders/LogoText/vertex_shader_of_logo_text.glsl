@@ -14,9 +14,23 @@ out vec2 TexCoords;
 // the top part of the screen (window's height). The point (0.0F, 0.0F) now corresponds to the bottom-left corner.
 uniform mat4 projectionMatrix;
 
+// Pressing the "3" key should start the movement of the "LOK" company's logo to the right.
+uniform bool logoNeedsToMoveRight;
+// Move the "LOK" company's logo to the right. Once it reaches the right edge of the window, it should appear on the
+// left edge of the window.
+uniform float movementOfLogoOnXAxis;
+
 void main()
 {
 	TexCoords = vertex.zw;
 
-	gl_Position = projectionMatrix * vec4(vertex.xy, 0.0F, 1.0F);
+	if (logoNeedsToMoveRight)
+	{
+		float positionOnXAxis = vertex.x + movementOfLogoOnXAxis;
+		gl_Position = projectionMatrix * vec4(positionOnXAxis, vertex.y, 0.0F, 1.0F);
+	}
+	else
+	{
+		gl_Position = projectionMatrix * vec4(vertex.xy, 0.0F, 1.0F);
+	}
 }

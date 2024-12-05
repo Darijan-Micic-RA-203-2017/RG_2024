@@ -36,6 +36,13 @@ ShaderProgram *shaderProgramForLogoText = NULL;
 // The logo mode starts 5 seconds after the user last clicked on the refrigerator's graphic display and ends when the
 // user clicks on it again. Logo mode consists of showing the "LOK" company logo over the screen.
 bool logoModeTurnedOn = true;
+// Pressing the "2" key should start the color pulsing of the "LOK" company's logo.
+bool logoNeedsToPulse = false;
+float redColorComponentForPulsing = 0.0F;
+// Pressing the "3" key should start the movement the "LOK" company's logo to the right. Once it reaches the right edge
+// of the window, it should appear on the left edge of the window.
+bool logoNeedsToMoveRight = false;
+float movementOfLogoOnXAxis = 0.0F;
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void mouse_button_callback(GLFWwindow *window, int button, int action, int mods);
@@ -299,10 +306,26 @@ int main()
 			glUniformMatrix4fv(glGetUniformLocation(shaderProgramForLogoText->id, "projectionMatrix"), 
 				1, GL_FALSE, &projectionMatrix[0U][0U]);
 
-			// Change the color of the "LOK" company's logo from blue to purple.
-			float redColorAmount = abs(sin(currentFrameTime));
-			// Update the red color amount uniform.
-			shaderProgramForLogoText->setFloatUniform("redColorAmount", redColorAmount);
+			if (logoNeedsToPulse)
+			{
+				// Change the color of the "LOK" company's logo from blue to purple.
+				redColorComponentForPulsing = glm::abs(glm::sin(currentFrameTime));
+				// Update the red color component for pulsing uniform.
+				shaderProgramForLogoText->setFloatUniform("redColorComponentForPulsing", redColorComponentForPulsing);
+			}
+			if (logoNeedsToMoveRight)
+			{
+				// Move the "LOK" company's logo to the right.
+				movementOfLogoOnXAxis += 1.25F * glm::abs(sin(currentFrameTime));
+				// Make the logo emerge on the opposite side of the screen space when the screen space's boundaries are
+				// crossed.
+				if (movementOfLogoOnXAxis > 1.0F)
+				{
+					movementOfLogoOnXAxis = -1.0F;
+				}
+				// Update the movement of logo on x-axis uniform.
+				shaderProgramForLogoText->setFloatUniform("movementOfLogoOnXAxis", movementOfLogoOnXAxis);
+			}
 
 			// Render the "LOK" company's logo, scale it 4 times and paint it blue.
 			timesNewRomanFont.renderText(*shaderProgramForLogoText, "LOK", 0.275F * windowWidth, 0.4F * windowHeight, 
@@ -450,21 +473,47 @@ void processInput(GLFWwindow *window)
 		// Reset everything related to the logo.
 		if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
 		{
-			// Reset the logo needs to pulse uniform.
-			shaderProgramForLogoText->setBoolUniform("logoNeedsToPulse", false);
-			// Reset the red color amount uniform.
-			shaderProgramForLogoText->setFloatUniform("redColorAmount", 0.0F);
+			// Reset the logo needs to pulse uniform and its associated value.
+			logoNeedsToPulse = false;
+			shaderProgramForLogoText->setBoolUniform("logoNeedsToPulse", logoNeedsToPulse);
+			redColorComponentForPulsing = 0.0F;
+			shaderProgramForLogoText->setFloatUniform("redColorComponentForPulsing", redColorComponentForPulsing);
+			// Reset the logo needs to move right uniform and its associated value.
+			logoNeedsToMoveRight = false;
+			shaderProgramForLogoText->setBoolUniform("logoNeedsToMoveRight", logoNeedsToMoveRight);
+			movementOfLogoOnXAxis = 0.0F;
+			shaderProgramForLogoText->setFloatUniform("movementOfLogoOnXAxis", movementOfLogoOnXAxis);
 
 			return;
 		}
-		// Change the color of the "LOK" company's logo from blue to purple.
+		// Pulse the color of the "LOK" company's logo. In other words, change it from blue to purple over time.
 		if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
 		{
+			// Reset the logo needs to move right uniform and its associated value.
+			logoNeedsToMoveRight = false;
+			shaderProgramForLogoText->setBoolUniform("logoNeedsToMoveRight", logoNeedsToMoveRight);
+			movementOfLogoOnXAxis = 0.0F;
+			shaderProgramForLogoText->setFloatUniform("movementOfLogoOnXAxis", movementOfLogoOnXAxis);
+
 			// Update the logo needs to pulse uniform.
-			shaderProgramForLogoText->setBoolUniform("logoNeedsToPulse", true);
-			float redColorAmount = glm::abs(glm::sin(currentFrameTime));
-			// Update the red color amount uniform.
-			shaderProgramForLogoText->setFloatUniform("redColorAmount", redColorAmount);
+			logoNeedsToPulse = true;
+			shaderProgramForLogoText->setBoolUniform("logoNeedsToPulse", logoNeedsToPulse);
+
+			return;
+		}
+		// Move the "LOK" company's logo to the right. Once it reaches the right edge of the window, it appears on the
+		// left edge of the window.
+		if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS)
+		{
+			// Reset the logo needs to pulse uniform and its associated value.
+			logoNeedsToPulse = false;
+			shaderProgramForLogoText->setBoolUniform("logoNeedsToPulse", logoNeedsToPulse);
+			redColorComponentForPulsing = 0.0F;
+			shaderProgramForLogoText->setFloatUniform("redColorComponentForPulsing", redColorComponentForPulsing);
+
+			// Update the logo needs to move right uniform.
+			logoNeedsToMoveRight = true;
+			shaderProgramForLogoText->setBoolUniform("logoNeedsToMoveRight", logoNeedsToMoveRight);
 
 			return;
 		}
