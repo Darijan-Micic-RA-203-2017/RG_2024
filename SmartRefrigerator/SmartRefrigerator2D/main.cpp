@@ -324,10 +324,12 @@ int main()
 			deltaTime = currentFrameTime - previousFrameTime;
 			previousFrameTime = currentFrameTime;
 		}
+		/*
 		std::cout << "-------------------------" << std::endl;
 		std::cout << "             Delta time: " << deltaTime << " s." << std::endl;
 		std::cout << " Frame rate (1 / delta): " << frameRate << " s^(-1)." << std::endl;
 		std::cout << "    Previous frame time: " << previousFrameTime << " s." << std::endl;
+		*/
 		/*
 		if (frameRate > 60.0f)
 		{
@@ -561,8 +563,36 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 		if (logoModeTurnedOn)
 		{
 			logoModeTurnedOn = false;
+			graphicalModeTurnedOn = true;
 
 			return;
+		}
+
+		if (graphicalModeTurnedOn)
+		{
+			float temperatureOffset = 0.1F;
+			if (mods == GLFW_MOD_CONTROL)
+			{
+				temperatureOffset = 1.0F;
+			}
+			if (mods == GLFW_MOD_SHIFT)
+			{
+				temperatureOffset = 5.0F;
+			}
+			double xpos, ypos;
+			glfwGetCursorPos(window, &xpos, &ypos);
+			std::cout << "Cursor pos (x, y): (" << xpos << ", " << ypos << ")." << std::endl;
+			if (xpos >= 0.55 * windowWidth && xpos <= 0.6 * windowWidth 
+				&& ypos >= 0.125 * windowHeight && ypos <= 0.175 * windowHeight)
+			{
+				currentTemperatureOfFreezingChamber -= temperatureOffset;
+				if (currentTemperatureOfFreezingChamber < minTemperatureOfFreezingChamber)
+				{
+					currentTemperatureOfFreezingChamber = minTemperatureOfFreezingChamber;
+				}
+
+				return;
+			}
 		}
 	}
 }
