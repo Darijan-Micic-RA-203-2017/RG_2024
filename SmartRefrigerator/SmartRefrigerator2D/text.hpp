@@ -40,7 +40,7 @@ private:
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 		// Generate a texture using the previously created 8-bit grayscale bitmap image.
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, face->glyph->bitmap.width, face->glyph->bitmap.rows, 0, GL_RED,
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, face->glyph->bitmap.width, face->glyph->bitmap.rows, 0, GL_RED, 
 			GL_UNSIGNED_BYTE, face->glyph->bitmap.buffer);
 		// The bitmap generated from the glyph is a grayscale 8-bit image, where each color is represented by a single
 		// byte. For this reason, it is needed to store each byte of the bitmap buffer as the texture's single color
@@ -54,12 +54,12 @@ private:
 	void storeCharacter(unsigned char c, unsigned int textureID, FT_Face face)
 	{
 		Character character = {
-			textureID,
+			textureID, 
 			// Width and height of the bitmap (in pixels).
-			glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
+			glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows), 
 			// Horizontal position ("bearingX") of the bitmap relative to the origin (in pixels).
 			// Vertical position ("bearingY") of the bitmap relative to the baseline (in pixels).
-			glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
+			glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top), 
 			// Horizontal distance ("advance") from the origin to the origin of the next glyph (in 1/64th pixels).
 			static_cast<unsigned int>(face->glyph->advance.x)
 		};
@@ -98,7 +98,7 @@ private:
 
 		// Specify the size of glyphs (the pixel font size to be extracted from the face).
 		// Setting the width to 0U tells the face (font) to dynamically calculate the width based on the given height.
-		FT_Set_Pixel_Sizes(face, 0U, 32U);
+		FT_Set_Pixel_Sizes(face, 0U, 48U);
 
 		// Disable the byte-alignment restriction. If a single byte is used to represent each of the colors of a
 		// texture, one restriction of OpenGL needs to be taken care of. OpenGL requires that textures all have a 4-byte
@@ -198,12 +198,12 @@ public:
 			// to draw a rectangle and 4 columns because each vertex contains position (2 coordinates - x and y) and
 			// texture coordiantes (2 coordiantes - s and t).
 			float vertices[6][4] = {
-				{ xPos,         yPos + height, 0.0F, 0.0F },
-				{ xPos,         yPos,          0.0F, 1.0F },
-				{ xPos + width, yPos,          1.0F, 1.0F },
+				{ xPos,         yPos + height, 0.0F, 0.0F }, 
+				{ xPos,         yPos,          0.0F, 1.0F }, 
+				{ xPos + width, yPos,          1.0F, 1.0F }, 
 
-				{ xPos,         yPos + height, 0.0F, 0.0F },
-				{ xPos + width, yPos,          1.0F, 1.0F },
+				{ xPos,         yPos + height, 0.0F, 0.0F }, 
+				{ xPos + width, yPos,          1.0F, 1.0F }, 
 				{ xPos + width, yPos + height, 1.0F, 0.0F }
 			};
 			// Render the glyph texture over the quad.

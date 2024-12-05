@@ -26,7 +26,12 @@ const double desiredFrameRate = 60.0;
 // The time (in seconds) it took to render the previous frame.
 float previousFrameTime = 0.0F;
 
+// The logo mode starts 5 seconds after the user last clicked on the refrigerator's graphic display and ends when the
+// user clicks on it again. Logo mode consists of showing the "LOK" company logo over the screen.
+bool logoModeTurnedOn = true;
+
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
+void mouse_button_callback(GLFWwindow *window, int button, int action, int mods);
 void processInput(GLFWwindow *window);
 
 // REFERENCE: https://stackoverflow.com/questions/1739259/how-to-use-queryperformancecounter?noredirect=1&lq=1
@@ -85,6 +90,7 @@ int main()
 
 	// Register the callback functions.
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+	glfwSetMouseButtonCallback(window, mouse_button_callback);
 
 	// Initialize the GLEW library.
 	if (glewInit() != GLEW_OK)
@@ -211,21 +217,6 @@ int main()
 	glClearColor(0.1F, 0.1F, 0.1F, 1.0F);
 	// REFERENCE: https://stackoverflow.com/questions/1739259/how-to-use-queryperformancecounter?noredirect=1&lq=1
 	// startCounter();
-
-	/* Resenje FPS-a od Veljka Vulina:
-		float current = glfwGetTime();
-		float deltaTime = current - last;
-		last = current;
-		float frameTime = 1.0 / 60.0;
-
-		if (deltaTime < frameTime) {
-			glfwWaitEventsTimeout(frameTime - deltaTime);
-			current = glfwGetTime();
-			deltaTime = current - last;
-
-		}
-		last = current;
-	*/
 	glfwSetTime(0.0);
 	// Rendering loop.
 	while (glfwWindowShouldClose(window) == GLFW_FALSE)
@@ -259,67 +250,93 @@ int main()
 		// Third part: rendering commands.
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		// Activate the desired shader program.
-		// Every shader and rendering call from now on will use this shader program object.
-		shaderProgramForRefrigerator.useProgram();
-
-		// Bind (assign) the desired VAO to OpenGL's context.
-		glBindVertexArray(refrigeratorVAO);
-		// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
-		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4); // outer borders of refrigerator
-		glDrawArrays(GL_TRIANGLE_STRIP, 4, 4); // digital clock rectangle widget
-
-		// Activate the desired shader program.
-		// Every shader and rendering call from now on will use this shader program object.
-		shaderProgramForText.useProgram();
-
-		// Text rendering usually does not require the use of the perspective projection. Therefore, an ortographic
-		// projection matrix will suffice. Using an orthographic projection matrix also allows all vertex coordinates to
-		// be specified in screen-space coordinates. In order to take advantage of this, the projection matrix needs to
-		// be set up this way: glm::mat4 projectionMatrix = glm::ortho(0.0F, windowWidth, 0.0F, windowHeight).
-		// The result is that coordinates can be specified with y-values ranging from the bottom part of the screen
-		// (0.0F) to the top part of the screen (window's height). The point (0.0F, 0.0F) now corresponds to the
-		// bottom-left corner.
-		glm::mat4 projectionMatrix = 
-			glm::ortho(0.0F, static_cast<float>(windowWidth), 0.0F, static_cast<float>(windowHeight));
-		// Set the projection matrix. This matrix changes each frame.
-		glUniformMatrix4fv(glGetUniformLocation(shaderProgramForText.id, "projectionMatrix"), 
-			1, GL_FALSE, &projectionMatrix[0U][0U]);
-
-		// REFERENCE: https://labex.io/tutorials/c-creating-a-simple-clock-animation-using-opengl-298829
-		time_t rawTime;
-		struct tm* timeInfo;
-		time(&rawTime);
-		timeInfo = localtime(&rawTime);
-		int hours = timeInfo->tm_hour;
-		int minutes = timeInfo->tm_min;
-		int seconds = timeInfo->tm_sec;
-		std::string hoursAsString = std::to_string(hours);
-		if (hours < 10)
+		if (logoModeTurnedOn)
 		{
-			hoursAsString.insert(0, "0");
-		}
-		std::string minutesAsString = std::to_string(minutes);
-		if (minutes < 10)
-		{
-			minutesAsString.insert(0, "0");
-		}
-		std::string secondsAsString = std::to_string(seconds);
-		if (seconds < 10)
-		{
-			secondsAsString.insert(0, "0");
-		}
-		std::string currentTimeAsString = 
-			hoursAsString.append(":").append(minutesAsString).append(":").append(secondsAsString);
+			// Activate the desired shader program.
+			// Every shader and rendering call from now on will use this shader program object.
+			shaderProgramForText.useProgram();
 
-		// Render the current time in the digital clock's space and paint it white.
-		timesNewRomanFont.renderText(shaderProgramForText, currentTimeAsString, 
-			0.1175F * windowWidth, 0.8325F * windowHeight, 1.0F, glm::vec3(1.0F, 1.0F, 1.0F));
+			// Text rendering usually does not require the use of the perspective projection. Therefore, an ortographic
+			// projection matrix will suffice. Using an orthographic projection matrix also allows all vertex coordinates to
+			// be specified in screen-space coordinates. In order to take advantage of this, the projection matrix needs to
+			// be set up this way: glm::mat4 projectionMatrix = glm::ortho(0.0F, windowWidth, 0.0F, windowHeight).
+			// The result is that coordinates can be specified with y-values ranging from the bottom part of the screen
+			// (0.0F) to the top part of the screen (window's height). The point (0.0F, 0.0F) now corresponds to the
+			// bottom-left corner.
+			glm::mat4 projectionMatrix = 
+				glm::ortho(0.0F, static_cast<float>(windowWidth), 0.0F, static_cast<float>(windowHeight));
+			// Set the projection matrix. This matrix changes each frame.
+			glUniformMatrix4fv(glGetUniformLocation(shaderProgramForText.id, "projectionMatrix"), 
+				1, GL_FALSE, &projectionMatrix[0U][0U]);
+
+			// Render the "LOK" company's logo, scale it 4 times and paint it blue.
+			timesNewRomanFont.renderText(shaderProgramForText, "LOK", 0.275F * windowWidth, 0.4F * windowHeight, 
+				4.0F, glm::vec3(0.0F, 0.0F, 1.0F));
+		}
+		else
+		{
+			// Activate the desired shader program.
+			// Every shader and rendering call from now on will use this shader program object.
+			shaderProgramForRefrigerator.useProgram();
+
+			// Bind (assign) the desired VAO to OpenGL's context.
+			glBindVertexArray(refrigeratorVAO);
+			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
+			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4); // outer borders of refrigerator
+			glDrawArrays(GL_TRIANGLE_STRIP, 4, 4); // digital clock rectangle widget
+
+			// Activate the desired shader program.
+			// Every shader and rendering call from now on will use this shader program object.
+			shaderProgramForText.useProgram();
+
+			// Text rendering usually does not require the use of the perspective projection. Therefore, an ortographic
+			// projection matrix will suffice. Using an orthographic projection matrix also allows all vertex coordinates to
+			// be specified in screen-space coordinates. In order to take advantage of this, the projection matrix needs to
+			// be set up this way: glm::mat4 projectionMatrix = glm::ortho(0.0F, windowWidth, 0.0F, windowHeight).
+			// The result is that coordinates can be specified with y-values ranging from the bottom part of the screen
+			// (0.0F) to the top part of the screen (window's height). The point (0.0F, 0.0F) now corresponds to the
+			// bottom-left corner.
+			glm::mat4 projectionMatrix = 
+				glm::ortho(0.0F, static_cast<float>(windowWidth), 0.0F, static_cast<float>(windowHeight));
+			// Set the projection matrix. This matrix changes each frame.
+			glUniformMatrix4fv(glGetUniformLocation(shaderProgramForText.id, "projectionMatrix"), 
+				1, GL_FALSE, &projectionMatrix[0U][0U]);
+
+			// REFERENCE: https://labex.io/tutorials/c-creating-a-simple-clock-animation-using-opengl-298829
+			time_t rawTime;
+			struct tm* timeInfo;
+			time(&rawTime);
+			timeInfo = localtime(&rawTime);
+			int hours = timeInfo->tm_hour;
+			int minutes = timeInfo->tm_min;
+			int seconds = timeInfo->tm_sec;
+			std::string hoursAsString = std::to_string(hours);
+			if (hours < 10)
+			{
+				hoursAsString.insert(0, "0");
+			}
+			std::string minutesAsString = std::to_string(minutes);
+			if (minutes < 10)
+			{
+				minutesAsString.insert(0, "0");
+			}
+			std::string secondsAsString = std::to_string(seconds);
+			if (seconds < 10)
+			{
+				secondsAsString.insert(0, "0");
+			}
+			std::string currentTimeAsString = 
+				hoursAsString.append(":").append(minutesAsString).append(":").append(secondsAsString);
+
+			// Render the current time in the digital clock's space and paint it white.
+			timesNewRomanFont.renderText(shaderProgramForText, currentTimeAsString, 
+				0.1175F * windowWidth, 0.8325F * windowHeight, 0.666667F, glm::vec3(1.0F, 1.0F, 1.0F));
+		}
 
 		// Render the author's signature in the bottom left corner of the screen space and paint it yellow.
 		timesNewRomanFont.renderText(shaderProgramForText, "Darijan Micic, RA 203/2017", 
 			glm::max(0.0125F * windowWidth, 10.0F), glm::max(0.016667F * windowHeight, 10.0F), 
-			1.0F, glm::vec3(1.0F, 1.0F, 0.0F));
+			0.666667F, glm::vec3(1.0F, 1.0F, 0.0F));
 
 		/*
 		double time = getValueOfCounter();
@@ -357,6 +374,20 @@ void framebuffer_size_callback(GLFWwindow *window, int width, int height)
 	windowHeight = height;
 
 	glViewport(0, 0, width, height);
+}
+
+// Funtion that processes clicking on mouse buttons.
+void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+{
+	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
+	{
+		if (logoModeTurnedOn)
+		{
+			logoModeTurnedOn = false;
+
+			return;
+		}
+	}
 }
 
 // Input processing function.
