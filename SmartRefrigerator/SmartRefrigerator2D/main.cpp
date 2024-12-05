@@ -582,12 +582,8 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 			double xpos, ypos;
 			glfwGetCursorPos(window, &xpos, &ypos);
 			std::cout << "Cursor pos (x, y): (" << xpos << ", " << ypos << ")." << std::endl;
-			/*
-			0.1F, 0.65F, 0.5F, 0.5F, 0.5F, 1.0F, // "-" button, left of freezing chamber temperature widget
-			0.2F, 0.65F, 0.5F, 0.5F, 0.5F, 1.0F,
-			0.1F, 0.75F, 0.5F, 0.5F, 0.5F, 1.0F,
-			0.2F, 0.75F, 0.5F, 0.5F, 0.5F, 1.0F,
-			*/
+
+			// "-" button, left of freezing chamber temperature widget
 			if (xpos >= 0.55 * windowWidth && xpos <= 0.6 * windowWidth 
 				&& ypos >= 0.125 * windowHeight && ypos <= 0.175 * windowHeight)
 			{
@@ -599,12 +595,7 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 
 				return;
 			}
-			/*
-			0.65F,   0.65F, 0.5F,  0.5F,  0.5F, 1.0F, // "+" button, right of freezing chamber temperature widget
-			0.75F,   0.65F, 0.5F,  0.5F,  0.5F, 1.0F, 
-			0.65F,   0.75F, 0.5F,  0.5F,  0.5F, 1.0F, 
-			0.75F,   0.75F, 0.5F,  0.5F,  0.5F, 1.0F, 
-			*/
+			// "+" button, right of freezing chamber temperature widget
 			if (xpos >= 0.825 * windowWidth && xpos <= 0.875 * windowWidth 
 				&& ypos >= 0.125 * windowHeight && ypos <= 0.175 * windowHeight)
 			{
@@ -616,12 +607,7 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 
 				return;
 			}
-			/*
-			0.1F,   0.45F, 0.5F,  0.5F,  0.5F, 1.0F, // "-" button, left of refrigerating chamber temperature widget
-			0.2F,   0.45F, 0.5F,  0.5F,  0.5F, 1.0F, 
-			0.1F,   0.55F, 0.5F,  0.5F,  0.5F, 1.0F, 
-			0.2F,   0.55F, 0.5F,  0.5F,  0.5F, 1.0F, 
-			*/
+			// "-" button, left of refrigerating chamber temperature widget
 			if (xpos >= 0.55 * windowWidth && xpos <= 0.6 * windowWidth 
 				&& ypos >= 0.225 * windowHeight && ypos <= 0.275 * windowHeight)
 			{
@@ -633,12 +619,7 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 
 				return;
 			}
-			/*
-			0.65F,   0.45F, 0.5F,  0.5F,  0.5F, 1.0F, // "+" button, right of refrigerating chamber temperature widget
-			0.75F,   0.45F, 0.5F,  0.5F,  0.5F, 1.0F, 
-			0.65F,   0.55F, 0.5F,  0.5F,  0.5F, 1.0F, 
-			0.75F,   0.55F, 0.5F,  0.5F,  0.5F, 1.0F, 
-			*/
+			// "+" button, right of refrigerating chamber temperature widget
 			if (xpos >= 0.825 * windowWidth && xpos <= 0.875 * windowWidth 
 				&& ypos >= 0.225 * windowHeight && ypos <= 0.275 * windowHeight)
 			{
