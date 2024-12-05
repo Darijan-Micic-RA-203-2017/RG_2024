@@ -151,6 +151,12 @@ public:
 		glDeleteShader(vertexShader);
 	}
 
+	// REFERENCE: https://www.geeksforgeeks.org/destructors-c/
+	virtual ~ShaderProgram()
+	{
+		glDeleteProgram(id);
+	}
+
 	// Utility function for using (activating) the shader program.
 	void useProgram()
 	{
