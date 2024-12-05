@@ -1,3 +1,5 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <Windows.h>
@@ -15,9 +17,10 @@ int windowHeight = 600;
 // higher to balance it all out. When using this approach, it does not matter if the user has a very fast or slow PC,
 // the velocity will be balanced out accordingly so each user will have the same experience. 
 float deltaTime = 0.0F;
-// float frameRate = 0.0F;
+float frameRate = 0.0F;
 // The number of frames rendered in one second, a reciprocal value of delta time (1.0F / delta time).
-double frameRate = 0.0;
+// double frameRate = 0.0;
+const float desiredFPS = 0.016667F; // 1 / 60
 // It is requested to limit the speed of rendering to 60 frames per second.
 const double desiredFrameRate = 60.0;
 // The time (in seconds) it took to render the previous frame.
@@ -118,11 +121,16 @@ int main()
 
 	// Vertices in the normalized device coordinates system (from -1.0F to 1.0F).
 	float verticesOfRefrigerator[] = {
-		// position   // color
-		-0.8F, -0.8F, 0.0F, 0.0F, 1.0F, 1.0F, 
-		 0.8F, -0.8F, 0.0F, 1.0F, 0.0F, 1.0F, 
-		-0.8F,  0.8F, 1.0F, 0.0F, 0.0F, 1.0F, 
-		 0.8F,  0.8F, 1.0F, 1.0F, 0.0F, 1.0F
+		// position       // color
+		-0.8F,   -0.8F,   0.0F,  0.0F,  1.0F, 1.0F, // outer borders of refrigerator
+		 0.8F,   -0.8F,   0.0F,  1.0F,  0.0F, 1.0F, 
+		-0.8F,    0.8F,   1.0F,  0.0F,  0.0F, 1.0F, 
+		 0.8F,    0.8F,   1.0F,  1.0F,  0.0F, 1.0F, 
+		// (0.1125F + 0.0250F = 0.1375F) * windowWidth, 0.8325F * windowHeight
+		-0.775F,  0.625F, 0.0F, 0.25F, 0.75F, 1.0F, // digital clock rectangle widget
+		-0.475F,  0.625F, 0.0F, 0.25F, 0.75F, 1.0F, 
+		-0.775F,  0.775F, 0.0F, 0.25F, 0.75F, 1.0F, 
+		-0.475F,  0.775F, 0.0F, 0.25F, 0.75F, 1.0F
 	};
 
 	// Create memory on the GPU where vertex data and index data will be stored.
@@ -171,12 +179,12 @@ int main()
 	glBindBuffer(GL_ARRAY_BUFFER, 0U);
 	glBindVertexArray(0U);
 
-	Text authorSignatureText("Resources/Fonts/times.ttf", textVAO, textVBO);
-	if (authorSignatureText.errorCode != 0)
+	Font timesNewRomanFont("Resources/Fonts/times.ttf", textVAO, textVBO);
+	if (timesNewRomanFont.errorCode != 0)
 	{
 		glfwTerminate();
 
-		return authorSignatureText.errorCode;
+		return timesNewRomanFont.errorCode;
 	}
 
 	// Activate the desired shader program.
@@ -201,23 +209,43 @@ int main()
 	}
 
 	glClearColor(0.1F, 0.1F, 0.1F, 1.0F);
-
-	glfwSetTime(0.0);
 	// REFERENCE: https://stackoverflow.com/questions/1739259/how-to-use-queryperformancecounter?noredirect=1&lq=1
-	startCounter();
+	// startCounter();
 
+	/* Resenje FPS-a od Veljka Vulina:
+		float current = glfwGetTime();
+		float deltaTime = current - last;
+		last = current;
+		float frameTime = 1.0 / 60.0;
+
+		if (deltaTime < frameTime) {
+			glfwWaitEventsTimeout(frameTime - deltaTime);
+			current = glfwGetTime();
+			deltaTime = current - last;
+
+		}
+		last = current;
+	*/
+	glfwSetTime(0.0);
 	// Rendering loop.
 	while (glfwWindowShouldClose(window) == GLFW_FALSE)
 	{
 		// First part: calculate the new delta time and assign the current frame time to the previous frame time.
 		float currentFrameTime = static_cast<float>(glfwGetTime());
 		deltaTime = currentFrameTime - previousFrameTime;
-		// frameRate = 1.0F / deltaTime;
+		float frameRate = 1.0F / deltaTime;
 		previousFrameTime = currentFrameTime;
+		if (deltaTime < desiredFPS)
+		{
+			glfwWaitEventsTimeout(desiredFPS - deltaTime);
+			currentFrameTime = static_cast<float>(glfwGetTime());
+			deltaTime = currentFrameTime - previousFrameTime;
+			previousFrameTime = currentFrameTime;
+		}
 		std::cout << "-------------------------" << std::endl;
-		// std::cout << "             Delta time: " << deltaTime << " s." << std::endl;
-		// std::cout << " Frame rate (1 / delta): " << frameRate << " s^(-1)." << std::endl;
-		// std::cout << "    Previous frame time: " << previousFrameTime << " s." << std::endl;
+		std::cout << "             Delta time: " << deltaTime << " s." << std::endl;
+		std::cout << " Frame rate (1 / delta): " << frameRate << " s^(-1)." << std::endl;
+		std::cout << "    Previous frame time: " << previousFrameTime << " s." << std::endl;
 		/*
 		if (frameRate > 60.0f)
 		{
@@ -238,7 +266,8 @@ int main()
 		// Bind (assign) the desired VAO to OpenGL's context.
 		glBindVertexArray(refrigeratorVAO);
 		// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
-		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4); // outer borders of refrigerator
+		glDrawArrays(GL_TRIANGLE_STRIP, 4, 4); // digital clock rectangle widget
 
 		// Activate the desired shader program.
 		// Every shader and rendering call from now on will use this shader program object.
@@ -257,10 +286,27 @@ int main()
 		glUniformMatrix4fv(glGetUniformLocation(shaderProgramForText.id, "projectionMatrix"), 
 			1, GL_FALSE, &projectionMatrix[0U][0U]);
 
-		// Render author's signature in the bottom left corner of the screen space.
-		authorSignatureText.renderText(shaderProgramForText, "Darijan Micic, RA 203/2017", 
-			5.0F, 5.0F, 1.0F, glm::vec3(1.0F, 1.0F, 0.0F));
+		// REFERENCE: https://labex.io/tutorials/c-creating-a-simple-clock-animation-using-opengl-298829
+		time_t rawTime;
+		struct tm* timeInfo;
+		time(&rawTime);
+		timeInfo = localtime(&rawTime);
+		int hours = timeInfo->tm_hour;
+		int minutes = timeInfo->tm_min;
+		int seconds = timeInfo->tm_sec;
+		std::string currentTime = std::to_string(hours).append(":")
+			.append(std::to_string(minutes)).append(":").append(std::to_string(seconds));
 
+		// Render the current time in the digital clock's space and paint it white.
+		timesNewRomanFont.renderText(shaderProgramForText, currentTime, 0.1375F * windowWidth, 0.8325F * windowHeight, 
+			1.0F, glm::vec3(1.0F, 1.0F, 1.0F));
+
+		// Render the author's signature in the bottom left corner of the screen space and paint it yellow.
+		timesNewRomanFont.renderText(shaderProgramForText, "Darijan Micic, RA 203/2017", 
+			glm::max(0.0125F * windowWidth, 10.0F), glm::max(0.016667F * windowHeight, 10.0F), 
+			1.0F, glm::vec3(1.0F, 1.0F, 0.0F));
+
+		/*
 		double time = getValueOfCounter();
 		std::cout << "Counter (s): " << time << "\n";
 		frameRate = 1.0 / (time - previousValueOfCounter);
@@ -274,6 +320,7 @@ int main()
 			Sleep(150);
 		}
 		previousValueOfCounter = time;
+		*/
 
 		// Fourth part: swap buffers, check for events and call the events if they occured.
 		glfwSwapBuffers(window);
