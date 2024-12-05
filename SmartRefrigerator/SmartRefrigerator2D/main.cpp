@@ -126,7 +126,7 @@ int main()
 		 0.8F,   -0.8F,   0.0F,  1.0F,  0.0F, 1.0F, 
 		-0.8F,    0.8F,   1.0F,  0.0F,  0.0F, 1.0F, 
 		 0.8F,    0.8F,   1.0F,  1.0F,  0.0F, 1.0F, 
-		// (0.1125F + 0.0250F = 0.1375F) * windowWidth, 0.8325F * windowHeight
+		// (0.1125F + 0.0050F = 0.1175F) * windowWidth, 0.8325F * windowHeight
 		-0.775F,  0.625F, 0.0F, 0.25F, 0.75F, 1.0F, // digital clock rectangle widget
 		-0.475F,  0.625F, 0.0F, 0.25F, 0.75F, 1.0F, 
 		-0.775F,  0.775F, 0.0F, 0.25F, 0.75F, 1.0F, 
@@ -294,12 +294,27 @@ int main()
 		int hours = timeInfo->tm_hour;
 		int minutes = timeInfo->tm_min;
 		int seconds = timeInfo->tm_sec;
-		std::string currentTime = std::to_string(hours).append(":")
-			.append(std::to_string(minutes)).append(":").append(std::to_string(seconds));
+		std::string hoursAsString = std::to_string(hours);
+		if (hours < 10)
+		{
+			hoursAsString.insert(0, "0");
+		}
+		std::string minutesAsString = std::to_string(minutes);
+		if (minutes < 10)
+		{
+			minutesAsString.insert(0, "0");
+		}
+		std::string secondsAsString = std::to_string(seconds);
+		if (seconds < 10)
+		{
+			secondsAsString.insert(0, "0");
+		}
+		std::string currentTimeAsString = 
+			hoursAsString.append(":").append(minutesAsString).append(":").append(secondsAsString);
 
 		// Render the current time in the digital clock's space and paint it white.
-		timesNewRomanFont.renderText(shaderProgramForText, currentTime, 0.1375F * windowWidth, 0.8325F * windowHeight, 
-			1.0F, glm::vec3(1.0F, 1.0F, 1.0F));
+		timesNewRomanFont.renderText(shaderProgramForText, currentTimeAsString, 
+			0.1175F * windowWidth, 0.8325F * windowHeight, 1.0F, glm::vec3(1.0F, 1.0F, 1.0F));
 
 		// Render the author's signature in the bottom left corner of the screen space and paint it yellow.
 		timesNewRomanFont.renderText(shaderProgramForText, "Darijan Micic, RA 203/2017", 
