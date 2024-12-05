@@ -42,7 +42,7 @@ float redColorComponentForPulsing = 0.0F;
 // Pressing the "3" key should start the movement the "LOK" company's logo to the right. Once it reaches the right edge
 // of the window, it should appear on the left edge of the window.
 bool logoNeedsToMoveRight = false;
-float movementOfLogoOnXAxis = 0.0F;
+float bottomLeftCornerOfLogoText = 0.275F * windowWidth;
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void mouse_button_callback(GLFWwindow *window, int button, int action, int mods);
@@ -316,19 +316,18 @@ int main()
 			if (logoNeedsToMoveRight)
 			{
 				// Move the "LOK" company's logo to the right.
-				movementOfLogoOnXAxis += 1.25F * glm::abs(sin(currentFrameTime));
+				bottomLeftCornerOfLogoText += 3.0F * glm::abs(sin(currentFrameTime));
 				// Make the logo emerge on the opposite side of the screen space when the screen space's boundaries are
 				// crossed.
-				if (movementOfLogoOnXAxis > 1.0F)
+				if (bottomLeftCornerOfLogoText > windowWidth)
 				{
-					movementOfLogoOnXAxis = -1.0F;
+					bottomLeftCornerOfLogoText = 0.0F;
 				}
-				// Update the movement of logo on x-axis uniform.
-				shaderProgramForLogoText->setFloatUniform("movementOfLogoOnXAxis", movementOfLogoOnXAxis);
 			}
 
 			// Render the "LOK" company's logo, scale it 4 times and paint it blue.
-			timesNewRomanFont.renderText(*shaderProgramForLogoText, "LOK", 0.275F * windowWidth, 0.4F * windowHeight, 
+			timesNewRomanFont.renderText(*shaderProgramForLogoText, "LOK", 
+				bottomLeftCornerOfLogoText, 0.4F * windowHeight, 
 				4.0F, glm::vec3(0.0F, 0.0F, 1.0F));
 		}
 		else
@@ -481,8 +480,7 @@ void processInput(GLFWwindow *window)
 			// Reset the logo needs to move right uniform and its associated value.
 			logoNeedsToMoveRight = false;
 			shaderProgramForLogoText->setBoolUniform("logoNeedsToMoveRight", logoNeedsToMoveRight);
-			movementOfLogoOnXAxis = 0.0F;
-			shaderProgramForLogoText->setFloatUniform("movementOfLogoOnXAxis", movementOfLogoOnXAxis);
+			bottomLeftCornerOfLogoText = 0.275F * windowWidth;
 
 			return;
 		}
@@ -492,8 +490,7 @@ void processInput(GLFWwindow *window)
 			// Reset the logo needs to move right uniform and its associated value.
 			logoNeedsToMoveRight = false;
 			shaderProgramForLogoText->setBoolUniform("logoNeedsToMoveRight", logoNeedsToMoveRight);
-			movementOfLogoOnXAxis = 0.0F;
-			shaderProgramForLogoText->setFloatUniform("movementOfLogoOnXAxis", movementOfLogoOnXAxis);
+			bottomLeftCornerOfLogoText = 0.275F * windowWidth;
 
 			// Update the logo needs to pulse uniform.
 			logoNeedsToPulse = true;
