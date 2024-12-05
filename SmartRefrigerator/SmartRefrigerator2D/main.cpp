@@ -51,6 +51,16 @@ bool logoNowNeedsToMoveTowardsLeftEdge = true;
 float bottomLeftXOfLogoText = 0.275F * windowWidth;
 float bottomLeftYOfLogoText = 0.4F * windowHeight;
 
+// The graphical mode starts after the user clicks anywhere on the screen during the logo mode. Graphic mode consists of
+// showing the temperature widgets for the freezing and the refrigerating chamber and the digital clock.
+bool graphicalModeTurnedOn = false;
+const float minTemperatureOfFreezingChamber = -40.0F;
+float currentTemperatureOfFreezingChamber = -29.0F;
+const float maxTemperatureOfFreezingChamber = -18.0F;
+const float minTemperatureOfRefrigeratingChamber = 0.0F;
+float currentTemperatureOfRefrigeratingChamber = 3.5F;
+const float maxTemperatureOfRefrigeratingChamber = 7.0F;
+
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void mouse_button_callback(GLFWwindow *window, int button, int action, int mods);
 void processInput(GLFWwindow *window);
@@ -174,6 +184,7 @@ int main()
 		   0.2F,   0.75F, 0.5F,  0.5F,  0.5F, 1.0F, 
 		  0.12F,    0.7F, 1.0F,  1.0F,  1.0F, 1.0F, // line representing the "-" sign itself
 		  0.18F,    0.7F, 1.0F,  1.0F,  1.0F, 1.0F, 
+		// (0.2250F + 0.4425F = 0.6675F) * windowWidth, 0.8325F * windowHeight
 		 0.225F,  0.625F, 0.0F, 0.75F, 0.75F, 1.0F, // freezing chamber temperature widget
 		 0.625F,  0.625F, 0.0F, 0.75F, 0.75F, 1.0F, 
 		 0.225F,  0.775F, 0.0F, 0.75F, 0.75F, 1.0F, 
@@ -192,6 +203,7 @@ int main()
 		   0.2F,   0.55F, 0.5F,  0.5F,  0.5F, 1.0F, 
 		  0.12F,    0.5F, 1.0F,  1.0F,  1.0F, 1.0F, // line representing the "-" sign itself
 		  0.18F,    0.5F, 1.0F,  1.0F,  1.0F, 1.0F, 
+		// (0.2250F + 0.4625F = 0.6875F) * windowWidth, 0.7325F * windowHeight
 		 0.225F,  0.425F, 0.0F, 0.75F, 0.75F, 1.0F, // refrigerating chamber temperature widget
 		 0.625F,  0.425F, 0.0F, 0.75F, 0.75F, 1.0F, 
 		 0.225F,  0.575F, 0.0F, 0.75F, 0.75F, 1.0F, 
@@ -469,10 +481,27 @@ int main()
 			}
 			std::string currentTimeAsString = 
 				hoursAsString.append(":").append(minutesAsString).append(":").append(secondsAsString);
-
-			// Render the current time in the digital clock's space and paint it white.
+			// Render the current time in the digital clock's space, scale it 2/3 times and paint it white.
 			timesNewRomanFont.renderText(*shaderProgramForNonlogoText, currentTimeAsString, 
 				0.1175F * windowWidth, 0.8325F * windowHeight, 0.666667F, glm::vec3(1.0F, 1.0F, 1.0F));
+
+			std::string currentTemperatureOfFreezingChamberAsString = 
+				std::to_string(currentTemperatureOfFreezingChamber);
+			currentTemperatureOfFreezingChamberAsString = currentTemperatureOfFreezingChamberAsString
+				.substr(0, currentTemperatureOfFreezingChamberAsString.size() - 5U);
+			// Render the current temperature of the freezing chamber in its widget's space, scale it 2/3 times and
+			// paint it white.
+			timesNewRomanFont.renderText(*shaderProgramForNonlogoText, currentTemperatureOfFreezingChamberAsString, 
+				0.6675F * windowWidth, 0.8325F * windowHeight, 0.666667F, glm::vec3(1.0F, 1.0F, 1.0F));
+
+			std::string currentTemperatureOfRefrigeratingChamberAsString = 
+				std::to_string(currentTemperatureOfRefrigeratingChamber);
+			currentTemperatureOfRefrigeratingChamberAsString = currentTemperatureOfRefrigeratingChamberAsString
+				.substr(0, currentTemperatureOfRefrigeratingChamberAsString.size() - 5U);
+			// Render the current temperature of the refrigerating chamber in its widget's space, scale it 2/3 times and
+			// paint it white.
+			timesNewRomanFont.renderText(*shaderProgramForNonlogoText, currentTemperatureOfRefrigeratingChamberAsString, 
+				0.6875F * windowWidth, 0.7325F * windowHeight, 0.666667F, glm::vec3(1.0F, 1.0F, 1.0F));
 		}
 
 		// Render the author's signature in the bottom left corner of the screen space and paint it yellow.
