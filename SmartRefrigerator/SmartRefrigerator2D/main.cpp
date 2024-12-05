@@ -520,8 +520,9 @@ void processInput(GLFWwindow *window)
 			logoNeedsToMoveRight = false;
 			// Reset the logo needs to move in circle global variable and its associates.
 			logoNeedsToMoveInCircle = false;
-			// Reset the logo needs to move left-right between edges global variable and its associates.
+			// Reset the logo needs to move left-right between edges global variable and uniform and its associates.
 			logoNeedsToMoveLeftRightBetweenEdges = false;
+			shaderProgramForLogoText->setBoolUniform("logoNeedsToMoveLeftRightBetweenEdges", logoNeedsToMoveLeftRightBetweenEdges);
 			logoNowNeedsToMoveTowardsLeftEdge = true;
 			bottomLeftXOfLogoText = 0.275F * windowWidth;
 			bottomLeftYOfLogoText = 0.4F * windowHeight;
@@ -535,8 +536,9 @@ void processInput(GLFWwindow *window)
 			logoNeedsToMoveRight = false;
 			// Reset the logo needs to move in circle global variable and its associates.
 			logoNeedsToMoveInCircle = false;
-			// Reset the logo needs to move left-right between edges global variable and its associates.
+			// Reset the logo needs to move left-right between edges global variable and uniform and its associates.
 			logoNeedsToMoveLeftRightBetweenEdges = false;
+			shaderProgramForLogoText->setBoolUniform("logoNeedsToMoveLeftRightBetweenEdges", logoNeedsToMoveLeftRightBetweenEdges);
 			logoNowNeedsToMoveTowardsLeftEdge = true;
 			bottomLeftXOfLogoText = 0.275F * windowWidth;
 			bottomLeftYOfLogoText = 0.4F * windowHeight;
@@ -558,8 +560,9 @@ void processInput(GLFWwindow *window)
 			shaderProgramForLogoText->setFloatUniform("redColorComponentForPulsing", redColorComponentForPulsing);
 			// Reset the logo needs to move in circle global variable and its associates.
 			logoNeedsToMoveInCircle = false;
-			// Reset the logo needs to move left-right between edges global variable and its associates.
+			// Reset the logo needs to move left-right between edges global variable and uniform and its associates.
 			logoNeedsToMoveLeftRightBetweenEdges = false;
+			shaderProgramForLogoText->setBoolUniform("logoNeedsToMoveLeftRightBetweenEdges", logoNeedsToMoveLeftRightBetweenEdges);
 			logoNowNeedsToMoveTowardsLeftEdge = true;
 			bottomLeftXOfLogoText = 0.275F * windowWidth;
 			bottomLeftYOfLogoText = 0.4F * windowHeight;
@@ -579,8 +582,9 @@ void processInput(GLFWwindow *window)
 			shaderProgramForLogoText->setFloatUniform("redColorComponentForPulsing", redColorComponentForPulsing);
 			// Reset the logo needs to move right global variable and its associates.
 			logoNeedsToMoveRight = false;
-			// Reset the logo needs to move left-right between edges global variable and its associates.
+			// Reset the logo needs to move left-right between edges global variable and uniform and its associates.
 			logoNeedsToMoveLeftRightBetweenEdges = false;
+			shaderProgramForLogoText->setBoolUniform("logoNeedsToMoveLeftRightBetweenEdges", logoNeedsToMoveLeftRightBetweenEdges);
 			logoNowNeedsToMoveTowardsLeftEdge = true;
 			bottomLeftXOfLogoText = 0.275F * windowWidth;
 			bottomLeftYOfLogoText = 0.4F * windowHeight;
@@ -606,8 +610,9 @@ void processInput(GLFWwindow *window)
 			bottomLeftXOfLogoText = 0.275F * windowWidth;
 			bottomLeftYOfLogoText = 0.4F * windowHeight;
 
-			// Update the logo needs to move left-right between edges global variable and its associate.
+			// Update the logo needs to move left-right between edges global variable and uniform and its associate.
 			logoNeedsToMoveLeftRightBetweenEdges = true;
+			shaderProgramForLogoText->setBoolUniform("logoNeedsToMoveLeftRightBetweenEdges", logoNeedsToMoveLeftRightBetweenEdges);
 			logoNowNeedsToMoveTowardsLeftEdge = true;
 
 			return;

@@ -1,6 +1,7 @@
 #version 330 core
 
 in vec2 TexCoords;
+in float OpacityFactorOfDistanceFromVerticalEdges;
 
 out vec4 FragColor;
 
@@ -13,6 +14,9 @@ uniform vec3 colorOfText;
 uniform bool logoNeedsToPulse;
 // Change the color of the "LOK" company's logo from blue to purple over time by changing the red component.
 uniform float redColorComponentForPulsing;
+// Pressing the "5" key should start the movement of the "LOK" company's logo from left to right and vice-versa between
+// the window's edges. The closer the logo is to one of the edges, the more transparent it should be.
+uniform bool logoNeedsToMoveLeftRightBetweenEdges;
 
 void main()
 {
@@ -29,8 +33,19 @@ void main()
 	{
 		FragColor.r = redColorComponentForPulsing;
 	}
-	else
+	if (logoNeedsToMoveLeftRightBetweenEdges)
 	{
-		FragColor.r = 0.0F;
+		if (FragColor.a > 0.0F)
+		{
+			FragColor.a -= OpacityFactorOfDistanceFromVerticalEdges;
+			if (FragColor.a <= 0.0F)
+			{
+				FragColor.a = 0.1F;
+			}
+			if (FragColor.a > 1.0F)
+			{
+				FragColor.a = 1.0F;
+			}
+		}
 	}
 }
