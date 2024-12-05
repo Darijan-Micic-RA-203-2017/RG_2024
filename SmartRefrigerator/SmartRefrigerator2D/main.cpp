@@ -616,6 +616,23 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 
 				return;
 			}
+			/*
+			0.1F,   0.45F, 0.5F,  0.5F,  0.5F, 1.0F, // "-" button, left of refrigerating chamber temperature widget
+			0.2F,   0.45F, 0.5F,  0.5F,  0.5F, 1.0F, 
+			0.1F,   0.55F, 0.5F,  0.5F,  0.5F, 1.0F, 
+			0.2F,   0.55F, 0.5F,  0.5F,  0.5F, 1.0F, 
+			*/
+			if (xpos >= 0.55 * windowWidth && xpos <= 0.6 * windowWidth 
+				&& ypos >= 0.225 * windowHeight && ypos <= 0.275 * windowHeight)
+			{
+				currentTemperatureOfRefrigeratingChamber -= temperatureOffset;
+				if (currentTemperatureOfRefrigeratingChamber < minTemperatureOfRefrigeratingChamber)
+				{
+					currentTemperatureOfRefrigeratingChamber = minTemperatureOfRefrigeratingChamber;
+				}
+
+				return;
+			}
 		}
 	}
 }
