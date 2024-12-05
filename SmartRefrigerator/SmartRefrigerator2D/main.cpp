@@ -42,9 +42,13 @@ float redColorComponentForPulsing = 0.0F;
 // Pressing the "3" key should start the movement of the "LOK" company's logo to the right. Once it reaches the right
 // edge of the window, it should appear on the left edge of the window.
 bool logoNeedsToMoveRight = false;
-float bottomLeftXOfLogoText = 0.275F * windowWidth;
 // Pressing the "4" key should start the movement of the "LOK" company's logo in a circle.
 bool logoNeedsToMoveInCircle = false;
+// Pressing the "5" key should start the movement of the "LOK" company's logo from left to right and vice-versa between
+// the window's edges. The closer the logo is to one of the edges, the more transparent it should be.
+bool logoNeedsToMoveLeftRightBetweenEdges = false;
+bool logoNowNeedsToMoveTowardsLeftEdge = true;
+float bottomLeftXOfLogoText = 0.275F * windowWidth;
 float bottomLeftYOfLogoText = 0.4F * windowHeight;
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
@@ -334,6 +338,32 @@ int main()
 				bottomLeftXOfLogoText = r * glm::cos(3.0F * currentFrameTime) + 0.225F * windowWidth;
 				bottomLeftYOfLogoText = r * glm::sin(3.0F * currentFrameTime) + 0.4F * windowHeight;
 			}
+			if (logoNeedsToMoveLeftRightBetweenEdges)
+			{
+				// Move the "LOK" company's logo from left to right and vice-versa between the window's edges.
+				// The closer the logo is to one of the edges, the more transparent it should be.
+				float translationAmount = 3.0F * glm::abs(sin(currentFrameTime));
+				if (logoNowNeedsToMoveTowardsLeftEdge)
+				{
+					bottomLeftXOfLogoText -= translationAmount;
+					// Make the logo turn around when the screen space's boundaries are touched.
+					if (bottomLeftXOfLogoText < 0.0F)
+					{
+						logoNowNeedsToMoveTowardsLeftEdge = !logoNowNeedsToMoveTowardsLeftEdge;
+						bottomLeftXOfLogoText = 0.0F;
+					}
+				}
+				else
+				{
+					bottomLeftXOfLogoText += translationAmount;
+					// Make the logo turn around when the screen space's boundaries are touched.
+					if (bottomLeftXOfLogoText > 0.5F * windowWidth)
+					{
+						logoNowNeedsToMoveTowardsLeftEdge = !logoNowNeedsToMoveTowardsLeftEdge;
+						bottomLeftXOfLogoText = 0.5F * windowWidth;
+					}
+				}
+			}
 
 			// Render the "LOK" company's logo, scale it 4 times and paint it blue.
 			timesNewRomanFont.renderText(*shaderProgramForLogoText, "LOK", 
@@ -481,16 +511,19 @@ void processInput(GLFWwindow *window)
 		// Reset everything related to the logo.
 		if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
 		{
-			// Reset the logo needs to pulse uniform and its associated value.
+			// Reset the logo needs to pulse global variable and uniform and its associates.
 			logoNeedsToPulse = false;
 			shaderProgramForLogoText->setBoolUniform("logoNeedsToPulse", logoNeedsToPulse);
 			redColorComponentForPulsing = 0.0F;
 			shaderProgramForLogoText->setFloatUniform("redColorComponentForPulsing", redColorComponentForPulsing);
-			// Reset the logo needs to move right uniform and its associated value.
+			// Reset the logo needs to move right global variable and its associates.
 			logoNeedsToMoveRight = false;
-			bottomLeftXOfLogoText = 0.275F * windowWidth;
-			// Reset the logo needs to move in circle uniform and its associated value.
+			// Reset the logo needs to move in circle global variable and its associates.
 			logoNeedsToMoveInCircle = false;
+			// Reset the logo needs to move left-right between edges global variable and its associates.
+			logoNeedsToMoveLeftRightBetweenEdges = false;
+			logoNowNeedsToMoveTowardsLeftEdge = true;
+			bottomLeftXOfLogoText = 0.275F * windowWidth;
 			bottomLeftYOfLogoText = 0.4F * windowHeight;
 
 			return;
@@ -498,14 +531,17 @@ void processInput(GLFWwindow *window)
 		// Pulse the color of the "LOK" company's logo. In other words, change it from blue to purple over time.
 		if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
 		{
-			// Reset the logo needs to move right uniform and its associated value.
+			// Reset the logo needs to move right global variable and its associates.
 			logoNeedsToMoveRight = false;
-			bottomLeftXOfLogoText = 0.275F * windowWidth;
-			// Reset the logo needs to move in circle uniform and its associated value.
+			// Reset the logo needs to move in circle global variable and its associates.
 			logoNeedsToMoveInCircle = false;
+			// Reset the logo needs to move left-right between edges global variable and its associates.
+			logoNeedsToMoveLeftRightBetweenEdges = false;
+			logoNowNeedsToMoveTowardsLeftEdge = true;
+			bottomLeftXOfLogoText = 0.275F * windowWidth;
 			bottomLeftYOfLogoText = 0.4F * windowHeight;
 
-			// Update the logo needs to pulse uniform.
+			// Update the logo needs to pulse global variable and uniform.
 			logoNeedsToPulse = true;
 			shaderProgramForLogoText->setBoolUniform("logoNeedsToPulse", logoNeedsToPulse);
 
@@ -515,17 +551,20 @@ void processInput(GLFWwindow *window)
 		// left edge of the window.
 		if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS)
 		{
-			// Reset the logo needs to pulse uniform and its associated value.
+			// Reset the logo needs to pulse global variable and uniform and its associates.
 			logoNeedsToPulse = false;
 			shaderProgramForLogoText->setBoolUniform("logoNeedsToPulse", logoNeedsToPulse);
 			redColorComponentForPulsing = 0.0F;
 			shaderProgramForLogoText->setFloatUniform("redColorComponentForPulsing", redColorComponentForPulsing);
-			// Reset the logo needs to move in circle uniform and its associated value.
+			// Reset the logo needs to move in circle global variable and its associates.
 			logoNeedsToMoveInCircle = false;
+			// Reset the logo needs to move left-right between edges global variable and its associates.
+			logoNeedsToMoveLeftRightBetweenEdges = false;
+			logoNowNeedsToMoveTowardsLeftEdge = true;
 			bottomLeftXOfLogoText = 0.275F * windowWidth;
 			bottomLeftYOfLogoText = 0.4F * windowHeight;
 
-			// Update the logo needs to move right uniform.
+			// Update the logo needs to move right global variable.
 			logoNeedsToMoveRight = true;
 
 			return;
@@ -533,18 +572,43 @@ void processInput(GLFWwindow *window)
 		// Move the "LOK" company's logo in a circle.
 		if (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS)
 		{
-			// Reset the logo needs to pulse uniform and its associated value.
+			// Reset the logo needs to pulse global variable and uniform and its associates.
 			logoNeedsToPulse = false;
 			shaderProgramForLogoText->setBoolUniform("logoNeedsToPulse", logoNeedsToPulse);
 			redColorComponentForPulsing = 0.0F;
 			shaderProgramForLogoText->setFloatUniform("redColorComponentForPulsing", redColorComponentForPulsing);
-			// Reset the logo needs to move right uniform and its associated value.
+			// Reset the logo needs to move right global variable and its associates.
 			logoNeedsToMoveRight = false;
+			// Reset the logo needs to move left-right between edges global variable and its associates.
+			logoNeedsToMoveLeftRightBetweenEdges = false;
+			logoNowNeedsToMoveTowardsLeftEdge = true;
 			bottomLeftXOfLogoText = 0.275F * windowWidth;
 			bottomLeftYOfLogoText = 0.4F * windowHeight;
 
-			// Update the logo needs to move in circle uniform.
+			// Update the logo needs to move in circle global variable.
 			logoNeedsToMoveInCircle = true;
+
+			return;
+		}
+		// Move the "LOK" company's logo from left to right and vice-versa between the window's edges. The closer the
+		// logo is to one of the edges, the more transparent it should be.
+		if (glfwGetKey(window, GLFW_KEY_5) == GLFW_PRESS)
+		{
+			// Reset the logo needs to pulse global variable and uniform and its associates.
+			logoNeedsToPulse = false;
+			shaderProgramForLogoText->setBoolUniform("logoNeedsToPulse", logoNeedsToPulse);
+			redColorComponentForPulsing = 0.0F;
+			shaderProgramForLogoText->setFloatUniform("redColorComponentForPulsing", redColorComponentForPulsing);
+			// Reset the logo needs to move right global variable and its associates.
+			logoNeedsToMoveRight = false;
+			// Reset the logo needs to move in circle global variable and its associates.
+			logoNeedsToMoveInCircle = false;
+			bottomLeftXOfLogoText = 0.275F * windowWidth;
+			bottomLeftYOfLogoText = 0.4F * windowHeight;
+
+			// Update the logo needs to move left-right between edges global variable and its associate.
+			logoNeedsToMoveLeftRightBetweenEdges = true;
+			logoNowNeedsToMoveTowardsLeftEdge = true;
 
 			return;
 		}
