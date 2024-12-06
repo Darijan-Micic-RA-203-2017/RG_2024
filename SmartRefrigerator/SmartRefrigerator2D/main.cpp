@@ -35,7 +35,7 @@ ShaderProgram *shaderProgramForLogoText = NULL;
 
 // The logo mode starts 5 seconds after the user last clicked on the refrigerator's graphic display and ends when the
 // user clicks on it again. Logo mode consists of showing the "LOK" company logo over the screen.
-bool logoModeTurnedOn = true;
+bool logoModeTurnedOn = false;
 // Pressing the "2" key should start the color pulsing of the "LOK" company's logo.
 bool logoNeedsToPulse = false;
 float redColorComponentForPulsing = 0.0F;
@@ -51,9 +51,11 @@ bool logoNowNeedsToMoveTowardsLeftEdge = true;
 float bottomLeftXOfLogoText = 0.275F * windowWidth;
 float bottomLeftYOfLogoText = 0.4F * windowHeight;
 
-// The graphical mode starts after the user clicks anywhere on the screen during the logo mode. Graphic mode consists of
-// showing the temperature widgets for the freezing and the refrigerating chamber and the digital clock.
-bool graphicalModeTurnedOn = false;
+// The graphical mode is the initial mode of the application. It also starts after the user clicks anywhere on the
+// screen during the logo mode. Graphic mode consists of showing the temperature widgets for the freezing and the
+// refrigerating chamber and the digital clock.
+bool graphicalModeTurnedOn = true;
+float timeWhenGraphicalModeWasActivated = 0.0F;
 const float minTemperatureOfFreezingChamber = -40.0F;
 float currentTemperatureOfFreezingChamber = -29.0F;
 const float maxTemperatureOfFreezingChamber = -18.0F;
@@ -324,12 +326,10 @@ int main()
 			deltaTime = currentFrameTime - previousFrameTime;
 			previousFrameTime = currentFrameTime;
 		}
-		/*
 		std::cout << "-------------------------" << std::endl;
 		std::cout << "             Delta time: " << deltaTime << " s." << std::endl;
 		std::cout << " Frame rate (1 / delta): " << frameRate << " s^(-1)." << std::endl;
 		std::cout << "    Previous frame time: " << previousFrameTime << " s." << std::endl;
-		*/
 		/*
 		if (frameRate > 60.0f)
 		{
@@ -504,6 +504,14 @@ int main()
 			// paint it white.
 			timesNewRomanFont.renderText(*shaderProgramForNonlogoText, currentTemperatureOfRefrigeratingChamberAsString, 
 				0.6875F * windowWidth, 0.7325F * windowHeight, 0.666667F, glm::vec3(1.0F, 1.0F, 1.0F));
+
+			// If 5 seconds have passed since the graphical mode was activated and no left click was registered, the
+			// application should switch to the logo mode.
+			if (currentFrameTime - timeWhenGraphicalModeWasActivated > 5.0F)
+			{
+				logoModeTurnedOn = true;
+				graphicalModeTurnedOn = false;
+			}
 		}
 
 		// Render the author's signature in the bottom left corner of the screen space and paint it yellow.
@@ -564,12 +572,17 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 		{
 			logoModeTurnedOn = false;
 			graphicalModeTurnedOn = true;
+			// Initialize the graphical mode activation timestamp with the current time.
+			timeWhenGraphicalModeWasActivated = static_cast<float>(glfwGetTime());
 
 			return;
 		}
 
 		if (graphicalModeTurnedOn)
 		{
+			// Update the graphical mode activation timestamp with the current time on every left click.
+			timeWhenGraphicalModeWasActivated = static_cast<float>(glfwGetTime());
+
 			float temperatureOffset = 0.1F;
 			if (mods == GLFW_MOD_CONTROL)
 			{
@@ -579,10 +592,10 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 			{
 				temperatureOffset = 5.0F;
 			}
+
 			double xpos, ypos;
 			glfwGetCursorPos(window, &xpos, &ypos);
-			std::cout << "Cursor pos (x, y): (" << xpos << ", " << ypos << ")." << std::endl;
-
+			// std::cout << "Cursor pos (x, y): (" << xpos << ", " << ypos << ")." << std::endl;
 			// "-" button, left of freezing chamber temperature widget
 			if (xpos >= 0.55 * windowWidth && xpos <= 0.6 * windowWidth 
 				&& ypos >= 0.125 * windowHeight && ypos <= 0.175 * windowHeight)
