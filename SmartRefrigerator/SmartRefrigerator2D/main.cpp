@@ -65,6 +65,10 @@ const float minTemperatureOfRefrigeratingChamber = 0.0F;
 float currentTemperatureOfRefrigeratingChamber = 3.5F;
 const float maxTemperatureOfRefrigeratingChamber = 7.0F;
 
+// The see-through mode starts after the user clicks on that mode activation button during the graphical mode.
+// See-through mode consists of showing the groceries inside the smart refrigerator.
+float seeThroughModeTurnedOn = false;
+
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void mouse_button_callback(GLFWwindow *window, int button, int action, int mods);
 void processInput(GLFWwindow *window);
@@ -408,10 +412,12 @@ int main()
 			deltaTime = currentFrameTime - previousFrameTime;
 			previousFrameTime = currentFrameTime;
 		}
+		/*
 		std::cout << "-------------------------" << std::endl;
 		std::cout << "             Delta time: " << deltaTime << " s." << std::endl;
 		std::cout << " Frame rate (1 / delta): " << frameRate << " s^(-1)." << std::endl;
 		std::cout << "    Previous frame time: " << previousFrameTime << " s." << std::endl;
+		*/
 		/*
 		if (frameRate > 60.0f)
 		{
@@ -627,6 +633,7 @@ int main()
 			{
 				logoModeTurnedOn = true;
 				graphicalModeTurnedOn = false;
+				seeThroughModeTurnedOn = false;
 			}
 		}
 
@@ -699,6 +706,27 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 			// Update the graphical mode activation timestamp with the current time on every left click.
 			timeWhenGraphicalModeWasActivated = static_cast<float>(glfwGetTime());
 
+			double xpos, ypos;
+			glfwGetCursorPos(window, &xpos, &ypos);
+			std::cout << "Cursor pos (x, y): (" << xpos << ", " << ypos << ")." << std::endl;
+			if (seeThroughModeTurnedOn)
+			{
+				std::cout << "See-through mode turned ON!" << std::endl;
+			}
+			else
+			{
+				std::cout << "See-through mode turned OFF!" << std::endl;
+			}
+
+			// see-through mode activation button
+			if (xpos >= 0.1125 * windowWidth && xpos <= 0.2625 * windowWidth 
+				&& ypos >= 0.225 * windowHeight && ypos <= 0.275 * windowHeight)
+			{
+				seeThroughModeTurnedOn = true;
+
+				return;
+			}
+
 			float temperatureOffset = 0.1F;
 			if (mods == GLFW_MOD_CONTROL)
 			{
@@ -708,10 +736,6 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 			{
 				temperatureOffset = 5.0F;
 			}
-
-			double xpos, ypos;
-			glfwGetCursorPos(window, &xpos, &ypos);
-			// std::cout << "Cursor pos (x, y): (" << xpos << ", " << ypos << ")." << std::endl;
 			// "-" button, left of freezing chamber temperature widget
 			if (xpos >= 0.55 * windowWidth && xpos <= 0.6 * windowWidth 
 				&& ypos >= 0.125 * windowHeight && ypos <= 0.175 * windowHeight)
