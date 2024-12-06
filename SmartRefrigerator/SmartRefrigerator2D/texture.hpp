@@ -89,5 +89,11 @@ public:
 		// Unbind the texture for safety reasons.
 		glBindTexture(GL_TEXTURE_2D, 0U);
 	}
+
+	// REFERENCE: https://www.geeksforgeeks.org/destructors-c/
+	virtual ~Texture()
+	{
+		glDeleteTextures(1, &id);
+	}
 };
 #endif

@@ -29,6 +29,7 @@ const double desiredFrameRate = 60.0;
 float previousFrameTime = 0.0F;
 
 // Shader programs.
+ShaderProgram *shaderProgramForGroceries = NULL;
 ShaderProgram *shaderProgramForRefrigerator = NULL;
 ShaderProgram *shaderProgramForNonlogoText = NULL;
 ShaderProgram *shaderProgramForLogoText = NULL;
@@ -56,6 +57,7 @@ float bottomLeftYOfLogoText = 0.4F * windowHeight;
 // refrigerating chamber and the digital clock.
 bool graphicalModeTurnedOn = true;
 float timeWhenGraphicalModeWasActivated = 0.0F;
+bool groceryInsideFreezer = false;
 const float minTemperatureOfFreezingChamber = -40.0F;
 float currentTemperatureOfFreezingChamber = -29.0F;
 const float maxTemperatureOfFreezingChamber = -18.0F;
@@ -143,6 +145,14 @@ int main()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	// Compile the shaders and link the shader programs using the helper "ShaderProgram" class.
+	shaderProgramForGroceries = new ShaderProgram("Shaders/Groceries/vertex_shader_of_groceries.glsl", 
+		"Shaders/Groceries/fragment_shader_of_groceries.glsl");
+	if (shaderProgramForGroceries->errorCode != 0)
+	{
+		glfwTerminate();
+
+		return shaderProgramForGroceries->errorCode;
+	}
 	shaderProgramForRefrigerator = new ShaderProgram("Shaders/Refrigerator/vertex_shader_of_refrigerator.glsl", 
 		"Shaders/Refrigerator/fragment_shader_of_refrigerator.glsl");
 	if (shaderProgramForRefrigerator->errorCode != 0)
@@ -169,6 +179,17 @@ int main()
 	}
 
 	// Vertices in the normalized device coordinates system (from -1.0F to 1.0F).
+	float verticesOfGroceries[] = {
+		// position  // texture coordinates
+		-0.6F, 0.0F, 0.0F, 0.0F, // left fish sticks package
+		-0.2F, 0.0F, 1.0F, 0.0F, 
+		-0.6F, 0.4F, 0.0F, 1.0F, 
+		-0.2F, 0.4F, 1.0F, 1.0F, 
+		-0.1F, 0.0F, 0.0F, 0.0F, // right fish sticks package
+		 0.3F, 0.0F, 1.0F, 0.0F, 
+		-0.1F, 0.4F, 0.0F, 1.0F, 
+		 0.3F, 0.4F, 1.0F, 1.0F
+	};
 	float verticesOfRefrigerator[] = {
 		// position       // color
 		-0.8F,   -0.8F,   0.0F,  0.0F,  1.0F, 1.0F, // outer borders of refrigerator
@@ -223,11 +244,30 @@ int main()
 	// Create memory on the GPU where vertex data and index data will be stored.
 	// Said data will be handled by VAO and vertex/element buffer objects inside that VAO.
 	// Core OpenGL REQUIRES the use of VAOs!
-	unsigned int refrigeratorVAO, textVAO, refrigeratorVBO, textVBO;
+	unsigned int groceriesVAO, refrigeratorVAO, textVAO, groceriesVBO, refrigeratorVBO, textVBO;
+	glGenVertexArrays(1, &groceriesVAO);
 	glGenVertexArrays(1, &refrigeratorVAO);
 	glGenVertexArrays(1, &textVAO);
+	glGenBuffers(1, &groceriesVBO);
 	glGenBuffers(1, &refrigeratorVBO);
 	glGenBuffers(1, &textVBO);
+
+	// Bind (assign) the newly created VAO to OpenGL's context.
+	glBindVertexArray(groceriesVAO);
+	// Bind (assign) the newly created VBO to OpenGL's context.
+	glBindBuffer(GL_ARRAY_BUFFER, groceriesVBO);
+	// Copy user-defined data into the currently bound buffer.
+	// Vertex data is now stored on the graphics card's memory.
+	glBufferData(GL_ARRAY_BUFFER, sizeof(verticesOfGroceries), verticesOfGroceries, GL_STATIC_DRAW);
+	// Tell OpenGL how it should interpret vertex data, per vertex attribute.
+	// Position attribute.
+	glVertexAttribPointer(0U, 2, GL_FLOAT, GL_FALSE, 4U * sizeof(float), (void*) 0U);
+	// Enable vertex's position attribute.
+	glEnableVertexAttribArray(0U);
+	// Texture coordinates attribute.
+	glVertexAttribPointer(1U, 2, GL_FLOAT, GL_FALSE, 4U * sizeof(float), (void*) (2U * sizeof(float)));
+	// Enable vertex's texture coodinates attribute.
+	glEnableVertexAttribArray(1U);
 
 	// Bind (assign) the newly created VAO to OpenGL's context.
 	glBindVertexArray(refrigeratorVAO);
@@ -266,6 +306,23 @@ int main()
 	glBindBuffer(GL_ARRAY_BUFFER, 0U);
 	glBindVertexArray(0U);
 
+	// Generate textures, set their wrapping and filtering parameters, load the images-to-become-textures from
+	// the file system and generate all the required mipmaps using the helper class.
+	Texture fishSticksPackage("Resources/Images/Fish_sticks_package.png");
+	if (fishSticksPackage.errorCode)
+	{
+		glfwTerminate();
+
+		return fishSticksPackage.errorCode;
+	}
+	Texture milkCartonBox("Resources/Images/Milk_carton_box.png");
+	if (milkCartonBox.errorCode)
+	{
+		glfwTerminate();
+
+		return milkCartonBox.errorCode;
+	}
+
 	Font timesNewRomanFont("Resources/Fonts/times.ttf", textVAO, textVBO);
 	if (timesNewRomanFont.errorCode != 0)
 	{
@@ -273,6 +330,13 @@ int main()
 
 		return timesNewRomanFont.errorCode;
 	}
+
+	// Activate the desired shader program.
+	// Every shader and rendering call from now on will use this shader program object.
+	shaderProgramForGroceries->useProgram();
+	// Tell OpenGL to which texture unit each shader sampler belongs to, by setting each sampler.
+	shaderProgramForGroceries->setIntegerUniform("fishSticksPackage", 0);
+	shaderProgramForGroceries->setIntegerUniform("milkCartonBox", 1);
 
 	// Activate the desired shader program.
 	// Every shader and rendering call from now on will use this shader program object.
@@ -504,6 +568,30 @@ int main()
 			// paint it white.
 			timesNewRomanFont.renderText(*shaderProgramForNonlogoText, currentTemperatureOfRefrigeratingChamberAsString, 
 				0.6875F * windowWidth, 0.7325F * windowHeight, 0.666667F, glm::vec3(1.0F, 1.0F, 1.0F));
+
+			// Activate the desired shader program.
+			// Every shader and rendering call from now on will use this shader program object.
+			shaderProgramForGroceries->useProgram();
+
+			// Activate the texture unit (one of 16). After activating a texture unit, a subsequent "glBindTexture"
+			// call will bind that texture to the currently active texture unit. The texture unit "GL_TEXTURE0" is
+			// always active by default, so it isn't necessary to manually activate any texture unit if only one texture
+			// is used.
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, fishSticksPackage.id);
+			glActiveTexture(GL_TEXTURE1);
+			glBindTexture(GL_TEXTURE_2D, milkCartonBox.id);
+
+			// Bind (assign) the desired VAO to OpenGL's context.
+			glBindVertexArray(groceriesVAO);
+
+			// Set the grocery inside freezer uniform.
+			groceryInsideFreezer = true;
+			shaderProgramForGroceries->setBoolUniform("groceryInsideFreezer", groceryInsideFreezer);
+
+			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
+			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4); // left fish sticks package
+			glDrawArrays(GL_TRIANGLE_STRIP, 4, 4); // right fish sticks package
 
 			// If 5 seconds have passed since the graphical mode was activated and no left click was registered, the
 			// application should switch to the logo mode.

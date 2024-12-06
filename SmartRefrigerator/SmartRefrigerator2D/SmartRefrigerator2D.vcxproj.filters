@@ -44,6 +44,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Shaders\Groceries\vertex_shader_of_groceries.glsl">
+      <Filter>Shader Files</Filter>
+    </None>
+    <None Include="Shaders\Groceries\fragment_shader_of_groceries.glsl">
+      <Filter>Shader Files</Filter>
+    </None>
     <None Include="Shaders\Refrigerator\vertex_shader_of_refrigerator.glsl">
       <Filter>Shader Files</Filter>
     </None>
@@ -62,6 +68,14 @@
     <None Include="Shaders\LogoText\fragment_shader_of_logo_text.glsl">
       <Filter>Shader Files</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\Images\Fish_sticks_package.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\Images\Milk_carton_box.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Font Include="Resources\Fonts\times.ttf">
