@@ -50,6 +50,12 @@
     <None Include="Shaders\Groceries\fragment_shader_of_groceries.glsl">
       <Filter>Shader Files</Filter>
     </None>
+    <None Include="Shaders\Chamber\vertex_shader_of_chamber.glsl">
+      <Filter>Shader Files</Filter>
+    </None>
+    <None Include="Shaders\Chamber\fragment_shader_of_chamber.glsl">
+      <Filter>Shader Files</Filter>
+    </None>
     <None Include="Shaders\Refrigerator\vertex_shader_of_refrigerator.glsl">
       <Filter>Shader Files</Filter>
     </None>

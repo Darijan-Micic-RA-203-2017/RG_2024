@@ -30,6 +30,7 @@ float previousFrameTime = 0.0F;
 
 // Shader programs.
 ShaderProgram *shaderProgramForGroceries = NULL;
+ShaderProgram *shaderProgramForChambers = NULL;
 ShaderProgram *shaderProgramForRefrigerator = NULL;
 ShaderProgram *shaderProgramForNonlogoText = NULL;
 ShaderProgram *shaderProgramForLogoText = NULL;
@@ -157,6 +158,14 @@ int main()
 
 		return shaderProgramForGroceries->errorCode;
 	}
+	shaderProgramForChambers = new ShaderProgram("Shaders/Chamber/vertex_shader_of_chamber.glsl", 
+		"Shaders/Chamber/fragment_shader_of_chamber.glsl");
+	if (shaderProgramForChambers->errorCode != 0)
+	{
+		glfwTerminate();
+
+		return shaderProgramForChambers->errorCode;
+	}
 	shaderProgramForRefrigerator = new ShaderProgram("Shaders/Refrigerator/vertex_shader_of_refrigerator.glsl", 
 		"Shaders/Refrigerator/fragment_shader_of_refrigerator.glsl");
 	if (shaderProgramForRefrigerator->errorCode != 0)
@@ -204,73 +213,87 @@ int main()
 		 0.05F, -0.3F, 0.0F, 1.0F, 
 		 0.45F, -0.3F, 1.0F, 1.0F
 	};
+	float verticesOfChambers[] = {
+		// position     // color
+		-0.5F,  -0.24F, 0.0F,  0.0F,  1.0F, 0.25F, // see-through, blue-tinted freezing chamber plastic
+		 0.5F,  -0.24F, 0.0F,  0.0F,  1.0F, 0.25F, 
+		-0.5F,   0.24F, 0.0F,  0.0F,  1.0F, 0.25F, 
+		 0.5F,   0.24F, 0.0F,  0.0F,  1.0F, 0.25F, 
+		-0.5F,  -0.74F, 0.0F,  0.0F,  1.0F, 0.25F, // see-through, blue-tinted refrigerating chamber plastic
+		 0.5F,  -0.74F, 0.0F,  0.0F,  1.0F, 0.25F, 
+		-0.5F,  -0.26F, 0.0F,  0.0F,  1.0F, 0.25F, 
+		 0.5F,  -0.26F, 0.0F,  0.0F,  1.0F, 0.25F
+	};
 	float verticesOfRefrigerator[] = {
 		// position       // color
-		-0.8F,   -0.8F,   0.9F,  0.9F,  0.9F, 1.0F, // outer borders of refrigerator
-		 0.8F,   -0.8F,   0.9F,  0.9F,  0.9F, 1.0F, 
-		-0.8F,    0.8F,   0.9F,  0.9F,  0.9F, 1.0F, 
-		 0.8F,    0.8F,   0.9F,  0.9F,  0.9F, 1.0F, 
+		  -0.8F,   -0.8F, 0.9F,  0.9F,  0.9F,  0.5F, // outer borders of refrigerator
+		   0.8F,   -0.8F, 0.9F,  0.9F,  0.9F,  0.5F, 
+		  -0.8F,    0.8F, 0.9F,  0.9F,  0.9F,  0.5F, 
+		   0.8F,    0.8F, 0.9F,  0.9F,  0.9F,  0.5F, 
 		// (0.1125F + 0.0050F = 0.1175F) * windowWidth, 0.8325F * windowHeight
-		-0.775F,  0.625F, 0.0F, 0.75F, 0.75F, 1.0F, // digital clock rectangle widget
-		-0.475F,  0.625F, 0.0F, 0.75F, 0.75F, 1.0F, 
-		-0.775F,  0.775F, 0.0F, 0.75F, 0.75F, 1.0F, 
-		-0.475F,  0.775F, 0.0F, 0.75F, 0.75F, 1.0F, 
-		-0.775F,   0.45F, 0.5F,  0.5F,  0.5F, 1.0F, // see-through mode activation button
-		-0.475F,   0.45F, 0.5F,  0.5F,  0.5F, 1.0F, 
-		-0.775F,   0.55F, 0.5F,  0.5F,  0.5F, 1.0F, 
-		-0.475F,   0.55F, 0.5F,  0.5F,  0.5F, 1.0F, 
-		-0.725F,   0.47F, 1.0F,  1.0F,  1.0F, 1.0F, // rectangle simbol on the see-through mode activation button
-		-0.525F,   0.47F, 1.0F,  1.0F,  1.0F, 1.0F, 
-		-0.725F,   0.53F, 1.0F,  1.0F,  1.0F, 1.0F, 
-		-0.525F,   0.53F, 1.0F,  1.0F,  1.0F, 1.0F, 
-		   0.1F,   0.65F, 0.5F,  0.5F,  0.5F, 1.0F, // "-" button, left of freezing chamber temperature widget
-		   0.2F,   0.65F, 0.5F,  0.5F,  0.5F, 1.0F, 
-		   0.1F,   0.75F, 0.5F,  0.5F,  0.5F, 1.0F, 
-		   0.2F,   0.75F, 0.5F,  0.5F,  0.5F, 1.0F, 
-		  0.12F,    0.7F, 1.0F,  1.0F,  1.0F, 1.0F, // line representing the "-" sign itself
-		  0.18F,    0.7F, 1.0F,  1.0F,  1.0F, 1.0F, 
+		-0.775F,  0.625F, 0.0F, 0.75F, 0.75F,  1.0F, // digital clock rectangle widget
+		-0.475F,  0.625F, 0.0F, 0.75F, 0.75F,  1.0F, 
+		-0.775F,  0.775F, 0.0F, 0.75F, 0.75F,  1.0F, 
+		-0.475F,  0.775F, 0.0F, 0.75F, 0.75F,  1.0F, 
+		-0.775F,   0.45F, 0.5F,  0.5F,  0.5F,  1.0F, // see-through mode activation button
+		-0.475F,   0.45F, 0.5F,  0.5F,  0.5F,  1.0F, 
+		-0.775F,   0.55F, 0.5F,  0.5F,  0.5F,  1.0F, 
+		-0.475F,   0.55F, 0.5F,  0.5F,  0.5F,  1.0F, 
+		-0.725F,   0.47F, 1.0F,  1.0F,  1.0F,  1.0F, // rectangle simbol on the see-through mode activation button
+		-0.525F,   0.47F, 1.0F,  1.0F,  1.0F,  1.0F, 
+		-0.725F,   0.53F, 1.0F,  1.0F,  1.0F,  1.0F, 
+		-0.525F,   0.53F, 1.0F,  1.0F,  1.0F,  1.0F, 
+		   0.1F,   0.65F, 0.5F,  0.5F,  0.5F,  1.0F, // "-" button, left of freezing chamber temperature widget
+		   0.2F,   0.65F, 0.5F,  0.5F,  0.5F,  1.0F, 
+		   0.1F,   0.75F, 0.5F,  0.5F,  0.5F,  1.0F, 
+		   0.2F,   0.75F, 0.5F,  0.5F,  0.5F,  1.0F, 
+		  0.12F,    0.7F, 1.0F,  1.0F,  1.0F,  1.0F, // line representing the "-" sign itself
+		  0.18F,    0.7F, 1.0F,  1.0F,  1.0F,  1.0F, 
 		// (0.2250F + 0.4425F = 0.6675F) * windowWidth, 0.8325F * windowHeight
-		 0.225F,  0.625F, 0.0F, 0.75F, 0.75F, 1.0F, // freezing chamber temperature widget
-		 0.625F,  0.625F, 0.0F, 0.75F, 0.75F, 1.0F, 
-		 0.225F,  0.775F, 0.0F, 0.75F, 0.75F, 1.0F, 
-		 0.625F,  0.775F, 0.0F, 0.75F, 0.75F, 1.0F, 
-		  0.65F,   0.65F, 0.5F,  0.5F,  0.5F, 1.0F, // "+" button, right of freezing chamber temperature widget
-		  0.75F,   0.65F, 0.5F,  0.5F,  0.5F, 1.0F, 
-		  0.65F,   0.75F, 0.5F,  0.5F,  0.5F, 1.0F, 
-		  0.75F,   0.75F, 0.5F,  0.5F,  0.5F, 1.0F, 
-		  0.67F,    0.7F, 1.0F,  1.0F,  1.0F, 1.0F, // lines representing the "+" sign itself
-		  0.73F,    0.7F, 1.0F,  1.0F,  1.0F, 1.0F, 
-		   0.7F,   0.67F, 1.0F,  1.0F,  1.0F, 1.0F, 
-		   0.7F,   0.73F, 1.0F,  1.0F,  1.0F, 1.0F, 
-		   0.1F,   0.45F, 0.5F,  0.5F,  0.5F, 1.0F, // "-" button, left of refrigerating chamber temperature widget
-		   0.2F,   0.45F, 0.5F,  0.5F,  0.5F, 1.0F, 
-		   0.1F,   0.55F, 0.5F,  0.5F,  0.5F, 1.0F, 
-		   0.2F,   0.55F, 0.5F,  0.5F,  0.5F, 1.0F, 
-		  0.12F,    0.5F, 1.0F,  1.0F,  1.0F, 1.0F, // line representing the "-" sign itself
-		  0.18F,    0.5F, 1.0F,  1.0F,  1.0F, 1.0F, 
+		 0.225F,  0.625F, 0.0F, 0.75F, 0.75F,  1.0F, // freezing chamber temperature widget
+		 0.625F,  0.625F, 0.0F, 0.75F, 0.75F,  1.0F, 
+		 0.225F,  0.775F, 0.0F, 0.75F, 0.75F,  1.0F, 
+		 0.625F,  0.775F, 0.0F, 0.75F, 0.75F,  1.0F, 
+		  0.65F,   0.65F, 0.5F,  0.5F,  0.5F,  1.0F, // "+" button, right of freezing chamber temperature widget
+		  0.75F,   0.65F, 0.5F,  0.5F,  0.5F,  1.0F, 
+		  0.65F,   0.75F, 0.5F,  0.5F,  0.5F,  1.0F, 
+		  0.75F,   0.75F, 0.5F,  0.5F,  0.5F,  1.0F, 
+		  0.67F,    0.7F, 1.0F,  1.0F,  1.0F,  1.0F, // lines representing the "+" sign itself
+		  0.73F,    0.7F, 1.0F,  1.0F,  1.0F,  1.0F, 
+		   0.7F,   0.67F, 1.0F,  1.0F,  1.0F,  1.0F, 
+		   0.7F,   0.73F, 1.0F,  1.0F,  1.0F,  1.0F, 
+		   0.1F,   0.45F, 0.5F,  0.5F,  0.5F,  1.0F, // "-" button, left of refrigerating chamber temperature widget
+		   0.2F,   0.45F, 0.5F,  0.5F,  0.5F,  1.0F, 
+		   0.1F,   0.55F, 0.5F,  0.5F,  0.5F,  1.0F, 
+		   0.2F,   0.55F, 0.5F,  0.5F,  0.5F,  1.0F, 
+		  0.12F,    0.5F, 1.0F,  1.0F,  1.0F,  1.0F, // line representing the "-" sign itself
+		  0.18F,    0.5F, 1.0F,  1.0F,  1.0F,  1.0F, 
 		// (0.2250F + 0.4625F = 0.6875F) * windowWidth, 0.7325F * windowHeight
-		 0.225F,  0.425F, 0.0F, 0.75F, 0.75F, 1.0F, // refrigerating chamber temperature widget
-		 0.625F,  0.425F, 0.0F, 0.75F, 0.75F, 1.0F, 
-		 0.225F,  0.575F, 0.0F, 0.75F, 0.75F, 1.0F, 
-		 0.625F,  0.575F, 0.0F, 0.75F, 0.75F, 1.0F, 
-		  0.65F,   0.45F, 0.5F,  0.5F,  0.5F, 1.0F, // "+" button, right of refrigerating chamber temperature widget
-		  0.75F,   0.45F, 0.5F,  0.5F,  0.5F, 1.0F, 
-		  0.65F,   0.55F, 0.5F,  0.5F,  0.5F, 1.0F, 
-		  0.75F,   0.55F, 0.5F,  0.5F,  0.5F, 1.0F, 
-		  0.67F,    0.5F, 1.0F,  1.0F,  1.0F, 1.0F, // lines representing the "+" sign itself
-		  0.73F,    0.5F, 1.0F,  1.0F,  1.0F, 1.0F, 
-		   0.7F,   0.47F, 1.0F,  1.0F,  1.0F, 1.0F, 
-		   0.7F,   0.53F, 1.0F,  1.0F,  1.0F, 1.0F
+		 0.225F,  0.425F, 0.0F, 0.75F, 0.75F,  1.0F, // refrigerating chamber temperature widget
+		 0.625F,  0.425F, 0.0F, 0.75F, 0.75F,  1.0F, 
+		 0.225F,  0.575F, 0.0F, 0.75F, 0.75F,  1.0F, 
+		 0.625F,  0.575F, 0.0F, 0.75F, 0.75F,  1.0F, 
+		  0.65F,   0.45F, 0.5F,  0.5F,  0.5F,  1.0F, // "+" button, right of refrigerating chamber temperature widget
+		  0.75F,   0.45F, 0.5F,  0.5F,  0.5F,  1.0F, 
+		  0.65F,   0.55F, 0.5F,  0.5F,  0.5F,  1.0F, 
+		  0.75F,   0.55F, 0.5F,  0.5F,  0.5F,  1.0F, 
+		  0.67F,    0.5F, 1.0F,  1.0F,  1.0F,  1.0F, // lines representing the "+" sign itself
+		  0.73F,    0.5F, 1.0F,  1.0F,  1.0F,  1.0F, 
+		   0.7F,   0.47F, 1.0F,  1.0F,  1.0F,  1.0F, 
+		   0.7F,   0.53F, 1.0F,  1.0F,  1.0F,  1.0F
 	};
 
 	// Create memory on the GPU where vertex data and index data will be stored.
 	// Said data will be handled by VAO and vertex/element buffer objects inside that VAO.
 	// Core OpenGL REQUIRES the use of VAOs!
-	unsigned int groceriesVAO, refrigeratorVAO, textVAO, groceriesVBO, refrigeratorVBO, textVBO;
+	unsigned int groceriesVAO, chambersVAO, refrigeratorVAO, textVAO;
 	glGenVertexArrays(1, &groceriesVAO);
+	glGenVertexArrays(1, &chambersVAO);
 	glGenVertexArrays(1, &refrigeratorVAO);
 	glGenVertexArrays(1, &textVAO);
+	unsigned int groceriesVBO, chambersVBO, refrigeratorVBO, textVBO;
 	glGenBuffers(1, &groceriesVBO);
+	glGenBuffers(1, &chambersVBO);
 	glGenBuffers(1, &refrigeratorVBO);
 	glGenBuffers(1, &textVBO);
 
@@ -289,6 +312,23 @@ int main()
 	// Texture coordinates attribute.
 	glVertexAttribPointer(1U, 2, GL_FLOAT, GL_FALSE, 4U * sizeof(float), (void*) (2U * sizeof(float)));
 	// Enable vertex's texture coodinates attribute.
+	glEnableVertexAttribArray(1U);
+
+	// Bind (assign) the newly created VAO to OpenGL's context.
+	glBindVertexArray(chambersVAO);
+	// Bind (assign) the newly created VBO to OpenGL's context.
+	glBindBuffer(GL_ARRAY_BUFFER, chambersVBO);
+	// Copy user-defined data into the currently bound buffer.
+	// Vertex data is now stored on the graphics card's memory.
+	glBufferData(GL_ARRAY_BUFFER, sizeof(verticesOfChambers), verticesOfChambers, GL_STATIC_DRAW);
+	// Tell OpenGL how it should interpret vertex data, per vertex attribute.
+	// Position attribute.
+	glVertexAttribPointer(0U, 2, GL_FLOAT, GL_FALSE, 6U * sizeof(float), (void*) 0U);
+	// Enable vertex's position attribute.
+	glEnableVertexAttribArray(0U);
+	// Color attribute.
+	glVertexAttribPointer(1U, 4, GL_FLOAT, GL_FALSE, 6U * sizeof(float), (void*) (2U * sizeof(float)));
+	// Enable vertex's color attribute.
 	glEnableVertexAttribArray(1U);
 
 	// Bind (assign) the newly created VAO to OpenGL's context.
@@ -412,12 +452,10 @@ int main()
 			deltaTime = currentFrameTime - previousFrameTime;
 			previousFrameTime = currentFrameTime;
 		}
-		/*
 		std::cout << "-------------------------" << std::endl;
 		std::cout << "             Delta time: " << deltaTime << " s." << std::endl;
 		std::cout << " Frame rate (1 / delta): " << frameRate << " s^(-1)." << std::endl;
 		std::cout << "    Previous frame time: " << previousFrameTime << " s." << std::endl;
-		*/
 		/*
 		if (frameRate > 60.0f)
 		{
@@ -511,12 +549,54 @@ int main()
 		{
 			// Activate the desired shader program.
 			// Every shader and rendering call from now on will use this shader program object.
-			shaderProgramForRefrigerator->useProgram();
+			shaderProgramForGroceries->useProgram();
+
+			// Activate the texture unit (one of 16). After activating a texture unit, a subsequent "glBindTexture"
+			// call will bind that texture to the currently active texture unit. The texture unit "GL_TEXTURE0" is
+			// always active by default, so it isn't necessary to manually activate any texture unit if only one texture
+			// is used.
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, fishSticksPackage.id);
+			glActiveTexture(GL_TEXTURE1);
+			glBindTexture(GL_TEXTURE_2D, milkCartonBox.id);
+
+			// Bind (assign) the desired VAO to OpenGL's context.
+			glBindVertexArray(groceriesVAO);
+
+			// Set the grocery inside freezer uniform.
+			groceryInsideFreezer = !groceryInsideFreezer;
+			shaderProgramForGroceries->setBoolUniform("groceryInsideFreezer", groceryInsideFreezer);
+
+			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
+			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4); // left fish sticks package
+			glDrawArrays(GL_TRIANGLE_STRIP, 4, 4); // right fish sticks package
+
+			// Set the grocery inside freezer uniform.
+			groceryInsideFreezer = !groceryInsideFreezer;
+			shaderProgramForGroceries->setBoolUniform("groceryInsideFreezer", groceryInsideFreezer);
+
+			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
+			glDrawArrays(GL_TRIANGLE_STRIP, 8, 4);  // left milk carton box
+			glDrawArrays(GL_TRIANGLE_STRIP, 12, 4); // right milk carton box
+
+			// Activate the desired shader program.
+			// Every shader and rendering call from now on will use this shader program object.
+			shaderProgramForChambers->useProgram();
+
+			// Set the current temperatures of each chamber uniforms.
+			shaderProgramForChambers->setBoolUniform(
+				"currentTemperatureOfFreezingChamber", currentTemperatureOfFreezingChamber);
+			shaderProgramForChambers->setBoolUniform(
+				"currentTemperatureOfRefrigeratingChamber", currentTemperatureOfRefrigeratingChamber);
+
+			// Bind (assign) the desired VAO to OpenGL's context.
+			glBindVertexArray(chambersVAO);
+			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
+			glDrawArrays(GL_TRIANGLE_STRIP, 0, 8);
 
 			// Bind (assign) the desired VAO to OpenGL's context.
 			glBindVertexArray(refrigeratorVAO);
 			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
-			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);  // outer borders of refrigerator
 			glDrawArrays(GL_TRIANGLE_STRIP, 4, 4);  // digital clock rectangle widget
 			glDrawArrays(GL_TRIANGLE_STRIP, 8, 4);  // see-through mode activation button
 			glDrawArrays(GL_TRIANGLE_STRIP, 12, 4); // rectangle simbol on the see-through mode activation button
@@ -530,6 +610,7 @@ int main()
 			glDrawArrays(GL_TRIANGLE_STRIP, 40, 4); // refrigerating chamber temperature widget
 			glDrawArrays(GL_TRIANGLE_STRIP, 44, 4); // "+" button, left of refrigerating chamber temperature widget
 			glDrawArrays(GL_LINES, 48, 4);          // line representing the "+" sign itself
+			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);  // outer borders of refrigerator
 
 			// Activate the desired shader program.
 			// Every shader and rendering call from now on will use this shader program object.
@@ -595,45 +676,20 @@ int main()
 			timesNewRomanFont.renderText(*shaderProgramForNonlogoText, currentTemperatureOfRefrigeratingChamberAsString, 
 				0.6875F * windowWidth, 0.7325F * windowHeight, 0.666667F, glm::vec3(1.0F, 1.0F, 1.0F));
 
-			// Activate the desired shader program.
-			// Every shader and rendering call from now on will use this shader program object.
-			shaderProgramForGroceries->useProgram();
-
-			// Activate the texture unit (one of 16). After activating a texture unit, a subsequent "glBindTexture"
-			// call will bind that texture to the currently active texture unit. The texture unit "GL_TEXTURE0" is
-			// always active by default, so it isn't necessary to manually activate any texture unit if only one texture
-			// is used.
-			glActiveTexture(GL_TEXTURE0);
-			glBindTexture(GL_TEXTURE_2D, fishSticksPackage.id);
-			glActiveTexture(GL_TEXTURE1);
-			glBindTexture(GL_TEXTURE_2D, milkCartonBox.id);
-
-			// Bind (assign) the desired VAO to OpenGL's context.
-			glBindVertexArray(groceriesVAO);
-
-			// Set the grocery inside freezer uniform.
-			groceryInsideFreezer = !groceryInsideFreezer;
-			shaderProgramForGroceries->setBoolUniform("groceryInsideFreezer", groceryInsideFreezer);
-
-			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
-			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4); // left fish sticks package
-			glDrawArrays(GL_TRIANGLE_STRIP, 4, 4); // right fish sticks package
-
-			// Set the grocery inside freezer uniform.
-			groceryInsideFreezer = !groceryInsideFreezer;
-			shaderProgramForGroceries->setBoolUniform("groceryInsideFreezer", groceryInsideFreezer);
-
-			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
-			glDrawArrays(GL_TRIANGLE_STRIP, 8, 4);  // left milk carton box
-			glDrawArrays(GL_TRIANGLE_STRIP, 12, 4); // right milk carton box
-
 			// If 5 seconds have passed since the graphical mode was activated and no left click was registered, the
 			// application should switch to the logo mode.
 			if (currentFrameTime - timeWhenGraphicalModeWasActivated > 5.0F)
 			{
 				logoModeTurnedOn = true;
 				graphicalModeTurnedOn = false;
+
+				// Activate the desired shader program.
+				// Every shader and rendering call from now on will use this shader program object.
+				shaderProgramForChambers->useProgram();
+
+				// Update see-through mode global varible and uniform.
 				seeThroughModeTurnedOn = false;
+				shaderProgramForChambers->setBoolUniform("seeThroughModeTurnedOn", seeThroughModeTurnedOn);
 			}
 		}
 
@@ -668,6 +724,8 @@ int main()
 	delete shaderProgramForLogoText;
 	delete shaderProgramForNonlogoText;
 	delete shaderProgramForRefrigerator;
+	delete shaderProgramForChambers;
+	delete shaderProgramForGroceries;
 
 	// Terminate the GLFW library, which frees up all allocated resources.
 	glfwTerminate();
@@ -708,21 +766,19 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 
 			double xpos, ypos;
 			glfwGetCursorPos(window, &xpos, &ypos);
-			std::cout << "Cursor pos (x, y): (" << xpos << ", " << ypos << ")." << std::endl;
-			if (seeThroughModeTurnedOn)
-			{
-				std::cout << "See-through mode turned ON!" << std::endl;
-			}
-			else
-			{
-				std::cout << "See-through mode turned OFF!" << std::endl;
-			}
+			// std::cout << "Cursor pos (x, y): (" << xpos << ", " << ypos << ")." << std::endl;
 
 			// see-through mode activation button
 			if (xpos >= 0.1125 * windowWidth && xpos <= 0.2625 * windowWidth 
 				&& ypos >= 0.225 * windowHeight && ypos <= 0.275 * windowHeight)
 			{
-				seeThroughModeTurnedOn = true;
+				// Activate the desired shader program.
+				// Every shader and rendering call from now on will use this shader program object.
+				shaderProgramForChambers->useProgram();
+
+				// Update see-through mode global varible and uniform.
+				seeThroughModeTurnedOn = !seeThroughModeTurnedOn;
+				shaderProgramForChambers->setBoolUniform("seeThroughModeTurnedOn", seeThroughModeTurnedOn);
 
 				return;
 			}

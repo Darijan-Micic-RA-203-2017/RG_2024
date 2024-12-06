@@ -152,6 +152,8 @@
   <ItemGroup>
     <None Include="Shaders\Groceries\vertex_shader_of_groceries.glsl" />
     <None Include="Shaders\Groceries\fragment_shader_of_groceries.glsl" />
+    <None Include="Shaders\Chamber\vertex_shader_of_chamber.glsl" />
+    <None Include="Shaders\Chamber\fragment_shader_of_chamber.glsl" />
     <None Include="Shaders\Refrigerator\vertex_shader_of_refrigerator.glsl" />
     <None Include="Shaders\Refrigerator\fragment_shader_of_refrigerator.glsl" />
     <None Include="Shaders\NonlogoText\vertex_shader_of_nonlogo_text.glsl" />
