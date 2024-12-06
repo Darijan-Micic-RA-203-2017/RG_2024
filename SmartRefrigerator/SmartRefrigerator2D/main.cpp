@@ -181,21 +181,31 @@ int main()
 	// Vertices in the normalized device coordinates system (from -1.0F to 1.0F).
 	float verticesOfGroceries[] = {
 		// position  // texture coordinates
-		-0.6F, 0.0F, 0.0F, 0.0F, // left fish sticks package
-		-0.2F, 0.0F, 1.0F, 0.0F, 
-		-0.6F, 0.4F, 0.0F, 1.0F, 
-		-0.2F, 0.4F, 1.0F, 1.0F, 
-		-0.1F, 0.0F, 0.0F, 0.0F, // right fish sticks package
-		 0.3F, 0.0F, 1.0F, 0.0F, 
-		-0.1F, 0.4F, 0.0F, 1.0F, 
-		 0.3F, 0.4F, 1.0F, 1.0F
+		// in the freezing chamber
+		-0.45F, -0.2F, 0.0F, 0.0F, // left fish sticks package
+		-0.05F, -0.2F, 1.0F, 0.0F, 
+		-0.45F,  0.2F, 0.0F, 1.0F, 
+		-0.05F,  0.2F, 1.0F, 1.0F, 
+		 0.05F, -0.2F, 0.0F, 0.0F, // right fish sticks package
+		 0.45F, -0.2F, 1.0F, 0.0F, 
+		 0.05F,  0.2F, 0.0F, 1.0F, 
+		 0.45F,  0.2F, 1.0F, 1.0F, 
+		// in the refrigerating chamber
+		-0.45F, -0.7F, 0.0F, 0.0F, // left milk carton box
+		-0.05F, -0.7F, 1.0F, 0.0F, 
+		-0.45F, -0.3F, 0.0F, 1.0F, 
+		-0.05F, -0.3F, 1.0F, 1.0F, 
+		 0.05F, -0.7F, 0.0F, 0.0F, // right milk carton box
+		 0.45F, -0.7F, 1.0F, 0.0F, 
+		 0.05F, -0.3F, 0.0F, 1.0F, 
+		 0.45F, -0.3F, 1.0F, 1.0F
 	};
 	float verticesOfRefrigerator[] = {
 		// position       // color
-		-0.8F,   -0.8F,   0.0F,  0.0F,  1.0F, 1.0F, // outer borders of refrigerator
-		 0.8F,   -0.8F,   0.0F,  1.0F,  0.0F, 1.0F, 
-		-0.8F,    0.8F,   1.0F,  0.0F,  0.0F, 1.0F, 
-		 0.8F,    0.8F,   1.0F,  1.0F,  0.0F, 1.0F, 
+		-0.8F,   -0.8F,   0.9F,  0.9F,  0.9F, 1.0F, // outer borders of refrigerator
+		 0.8F,   -0.8F,   0.9F,  0.9F,  0.9F, 1.0F, 
+		-0.8F,    0.8F,   0.9F,  0.9F,  0.9F, 1.0F, 
+		 0.8F,    0.8F,   0.9F,  0.9F,  0.9F, 1.0F, 
 		// (0.1125F + 0.0050F = 0.1175F) * windowWidth, 0.8325F * windowHeight
 		-0.775F,  0.625F, 0.0F, 0.75F, 0.75F, 1.0F, // digital clock rectangle widget
 		-0.475F,  0.625F, 0.0F, 0.75F, 0.75F, 1.0F, 
@@ -586,12 +596,20 @@ int main()
 			glBindVertexArray(groceriesVAO);
 
 			// Set the grocery inside freezer uniform.
-			groceryInsideFreezer = true;
+			groceryInsideFreezer = !groceryInsideFreezer;
 			shaderProgramForGroceries->setBoolUniform("groceryInsideFreezer", groceryInsideFreezer);
 
 			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
 			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4); // left fish sticks package
 			glDrawArrays(GL_TRIANGLE_STRIP, 4, 4); // right fish sticks package
+
+			// Set the grocery inside freezer uniform.
+			groceryInsideFreezer = !groceryInsideFreezer;
+			shaderProgramForGroceries->setBoolUniform("groceryInsideFreezer", groceryInsideFreezer);
+
+			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
+			glDrawArrays(GL_TRIANGLE_STRIP, 8, 4);  // left milk carton box
+			glDrawArrays(GL_TRIANGLE_STRIP, 12, 4); // right milk carton box
 
 			// If 5 seconds have passed since the graphical mode was activated and no left click was registered, the
 			// application should switch to the logo mode.
