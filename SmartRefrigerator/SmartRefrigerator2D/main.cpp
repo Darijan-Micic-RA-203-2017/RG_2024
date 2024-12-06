@@ -2,7 +2,6 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <Windows.h>
 #include <iostream>
 #include "shader_program.hpp"
 #include "texture.hpp"
@@ -20,11 +19,7 @@ float currentFrameTime = 0.0F;
 // the velocity will be balanced out accordingly so each user will have the same experience. 
 float deltaTime = 0.0F;
 float frameRate = 0.0F;
-// The number of frames rendered in one second, a reciprocal value of delta time (1.0F / delta time).
-// double frameRate = 0.0;
-const float desiredFPS = 0.016667F; // 1 / 60
-// It is requested to limit the speed of rendering to 60 frames per second.
-const double desiredFrameRate = 60.0;
+const float desiredMaxDeltaTime = 0.016667F; // 1 / 60
 // The time (in seconds) it took to render the previous frame.
 float previousFrameTime = 0.0F;
 
@@ -73,35 +68,6 @@ float seeThroughModeTurnedOn = false;
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void mouse_button_callback(GLFWwindow *window, int button, int action, int mods);
 void processInput(GLFWwindow *window);
-
-// REFERENCE: https://stackoverflow.com/questions/1739259/how-to-use-queryperformancecounter?noredirect=1&lq=1
-double clockFrequencyOfPC = 0.0;
-__int64 startingValueOfCounter = 0;
-double previousValueOfCounter = 0.0;
-
-void startCounter()
-{
-	LARGE_INTEGER li;
-	if (!QueryPerformanceFrequency(&li))
-	{
-		std::cout << "QueryPerformanceFrequency failed!" << std::endl;
-
-		return;
-	}
-
-	clockFrequencyOfPC = double(li.QuadPart);
-
-	QueryPerformanceCounter(&li);
-	startingValueOfCounter = li.QuadPart;
-}
-
-double getValueOfCounter()
-{
-	LARGE_INTEGER li;
-	QueryPerformanceCounter(&li);
-
-	return double(li.QuadPart - startingValueOfCounter) / clockFrequencyOfPC;
-}
 
 int main()
 {
@@ -434,8 +400,7 @@ int main()
 	}
 
 	glClearColor(0.1F, 0.1F, 0.1F, 1.0F);
-	// REFERENCE: https://stackoverflow.com/questions/1739259/how-to-use-queryperformancecounter?noredirect=1&lq=1
-	// startCounter();
+
 	glfwSetTime(0.0);
 	// Rendering loop.
 	while (glfwWindowShouldClose(window) == GLFW_FALSE)
@@ -443,11 +408,11 @@ int main()
 		// First part: calculate the new delta time and assign the current frame time to the previous frame time.
 		currentFrameTime = static_cast<float>(glfwGetTime());
 		deltaTime = currentFrameTime - previousFrameTime;
-		float frameRate = 1.0F / deltaTime;
+		frameRate = 1.0F / deltaTime;
 		previousFrameTime = currentFrameTime;
-		if (deltaTime < desiredFPS)
+		if (deltaTime < desiredMaxDeltaTime)
 		{
-			glfwWaitEventsTimeout(desiredFPS - deltaTime);
+			glfwWaitEventsTimeout(desiredMaxDeltaTime - deltaTime);
 			currentFrameTime = static_cast<float>(glfwGetTime());
 			deltaTime = currentFrameTime - previousFrameTime;
 			previousFrameTime = currentFrameTime;
@@ -456,12 +421,6 @@ int main()
 		std::cout << "             Delta time: " << deltaTime << " s." << std::endl;
 		std::cout << " Frame rate (1 / delta): " << frameRate << " s^(-1)." << std::endl;
 		std::cout << "    Previous frame time: " << previousFrameTime << " s." << std::endl;
-		/*
-		if (frameRate > 60.0f)
-		{
-			Sleep(500);
-		}
-		*/
 
 		// Second part: process the user's input.
 		processInput(window);
@@ -693,26 +652,11 @@ int main()
 			}
 		}
 
-		// Render the author's signature in the bottom left corner of the screen space and paint it yellow.
+		// Render the author's signature in the bottom left corner of the screen space, scale it 2/3 times and paint it
+		// yellow.
 		timesNewRomanFont.renderText(*shaderProgramForNonlogoText, "Darijan Micic, RA 203/2017", 
 			glm::max(0.0125F * windowWidth, 10.0F), glm::max(0.016667F * windowHeight, 10.0F), 
 			0.666667F, glm::vec3(1.0F, 1.0F, 0.0F));
-
-		/*
-		double time = getValueOfCounter();
-		std::cout << "Counter (s): " << time << "\n";
-		frameRate = 1.0 / (time - previousValueOfCounter);
-		std::cout << "Frame rate (1 / counter): " << frameRate << " s^(-1)." << std::endl;
-		if (frameRate > desiredFrameRate + 10.0)
-		{
-			Sleep(350);
-		}
-		else if (frameRate > desiredFrameRate)
-		{
-			Sleep(150);
-		}
-		previousValueOfCounter = time;
-		*/
 
 		// Fourth part: swap buffers, check for events and call the events if they occured.
 		glfwSwapBuffers(window);
