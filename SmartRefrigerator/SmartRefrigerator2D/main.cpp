@@ -211,6 +211,14 @@ int main()
 		-0.475F,  0.625F, 0.0F, 0.75F, 0.75F, 1.0F, 
 		-0.775F,  0.775F, 0.0F, 0.75F, 0.75F, 1.0F, 
 		-0.475F,  0.775F, 0.0F, 0.75F, 0.75F, 1.0F, 
+		-0.775F,   0.45F, 0.5F,  0.5F,  0.5F, 1.0F, // see-through mode activation button
+		-0.475F,   0.45F, 0.5F,  0.5F,  0.5F, 1.0F, 
+		-0.775F,   0.55F, 0.5F,  0.5F,  0.5F, 1.0F, 
+		-0.475F,   0.55F, 0.5F,  0.5F,  0.5F, 1.0F, 
+		-0.725F,   0.47F, 1.0F,  1.0F,  1.0F, 1.0F, // rectangle simbol on the see-through mode activation button
+		-0.525F,   0.47F, 1.0F,  1.0F,  1.0F, 1.0F, 
+		-0.725F,   0.53F, 1.0F,  1.0F,  1.0F, 1.0F, 
+		-0.525F,   0.53F, 1.0F,  1.0F,  1.0F, 1.0F, 
 		   0.1F,   0.65F, 0.5F,  0.5F,  0.5F, 1.0F, // "-" button, left of freezing chamber temperature widget
 		   0.2F,   0.65F, 0.5F,  0.5F,  0.5F, 1.0F, 
 		   0.1F,   0.75F, 0.5F,  0.5F,  0.5F, 1.0F, 
@@ -504,16 +512,18 @@ int main()
 			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
 			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);  // outer borders of refrigerator
 			glDrawArrays(GL_TRIANGLE_STRIP, 4, 4);  // digital clock rectangle widget
-			glDrawArrays(GL_TRIANGLE_STRIP, 8, 4);  // "-" button, left of freezing chamber temperature widget
-			glDrawArrays(GL_LINES, 12, 2);          // line representing the "-" sign itself
-			glDrawArrays(GL_TRIANGLE_STRIP, 14, 4); // freezing chamber temperature widget
-			glDrawArrays(GL_TRIANGLE_STRIP, 18, 4); // "+" button, left of freezing chamber temperature widget
-			glDrawArrays(GL_LINES, 22, 4);          // line representing the "+" sign itself
-			glDrawArrays(GL_TRIANGLE_STRIP, 26, 4);  // "-" button, left of refrigerating chamber temperature widget
-			glDrawArrays(GL_LINES, 30, 2);          // line representing the "-" sign itself
-			glDrawArrays(GL_TRIANGLE_STRIP, 32, 4); // refrigerating chamber temperature widget
-			glDrawArrays(GL_TRIANGLE_STRIP, 36, 4); // "+" button, left of refrigerating chamber temperature widget
-			glDrawArrays(GL_LINES, 40, 4);          // line representing the "+" sign itself
+			glDrawArrays(GL_TRIANGLE_STRIP, 8, 4);  // see-through mode activation button
+			glDrawArrays(GL_TRIANGLE_STRIP, 12, 4); // rectangle simbol on the see-through mode activation button
+			glDrawArrays(GL_TRIANGLE_STRIP, 16, 4); // "-" button, left of freezing chamber temperature widget
+			glDrawArrays(GL_LINES, 20, 2);          // line representing the "-" sign itself
+			glDrawArrays(GL_TRIANGLE_STRIP, 22, 4); // freezing chamber temperature widget
+			glDrawArrays(GL_TRIANGLE_STRIP, 26, 4); // "+" button, left of freezing chamber temperature widget
+			glDrawArrays(GL_LINES, 30, 4);          // line representing the "+" sign itself
+			glDrawArrays(GL_TRIANGLE_STRIP, 34, 4);  // "-" button, left of refrigerating chamber temperature widget
+			glDrawArrays(GL_LINES, 38, 2);          // line representing the "-" sign itself
+			glDrawArrays(GL_TRIANGLE_STRIP, 40, 4); // refrigerating chamber temperature widget
+			glDrawArrays(GL_TRIANGLE_STRIP, 44, 4); // "+" button, left of refrigerating chamber temperature widget
+			glDrawArrays(GL_LINES, 48, 4);          // line representing the "+" sign itself
 
 			// Activate the desired shader program.
 			// Every shader and rendering call from now on will use this shader program object.
