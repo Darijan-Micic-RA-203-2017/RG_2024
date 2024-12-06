@@ -192,75 +192,71 @@ int main()
 	};
 	float verticesOfRefrigerator[] = {
 		// position       // color
-		  -0.8F,   -0.8F, 0.9F,  0.9F,  0.9F,  0.5F, // outer borders of refrigerator
+		  -0.8F,   -0.8F, 0.9F,  0.9F,  0.9F,  0.5F, // refrigerator doors
 		   0.8F,   -0.8F, 0.9F,  0.9F,  0.9F,  0.5F, 
 		  -0.8F,    0.8F, 0.9F,  0.9F,  0.9F,  0.5F, 
 		   0.8F,    0.8F, 0.9F,  0.9F,  0.9F,  0.5F, 
 		// (0.1125F + 0.0050F = 0.1175F) * windowWidth, 0.8325F * windowHeight
-		-0.775F,  0.625F, 0.0F, 0.75F, 0.75F,  1.0F, // digital clock rectangle widget
-		-0.475F,  0.625F, 0.0F, 0.75F, 0.75F,  1.0F, 
-		-0.775F,  0.775F, 0.0F, 0.75F, 0.75F,  1.0F, 
-		-0.475F,  0.775F, 0.0F, 0.75F, 0.75F,  1.0F, 
-		-0.775F,   0.45F, 0.5F,  0.5F,  0.5F,  1.0F, // see-through mode activation button
-		-0.475F,   0.45F, 0.5F,  0.5F,  0.5F,  1.0F, 
-		-0.775F,   0.55F, 0.5F,  0.5F,  0.5F,  1.0F, 
-		-0.475F,   0.55F, 0.5F,  0.5F,  0.5F,  1.0F, 
-		-0.725F,   0.47F, 1.0F,  1.0F,  1.0F,  1.0F, // rectangle simbol on the see-through mode activation button
-		-0.525F,   0.47F, 1.0F,  1.0F,  1.0F,  1.0F, 
-		-0.725F,   0.53F, 1.0F,  1.0F,  1.0F,  1.0F, 
-		-0.525F,   0.53F, 1.0F,  1.0F,  1.0F,  1.0F, 
-		   0.1F,   0.65F, 0.5F,  0.5F,  0.5F,  1.0F, // "-" button, left of freezing chamber temperature widget
-		   0.2F,   0.65F, 0.5F,  0.5F,  0.5F,  1.0F, 
-		   0.1F,   0.75F, 0.5F,  0.5F,  0.5F,  1.0F, 
-		   0.2F,   0.75F, 0.5F,  0.5F,  0.5F,  1.0F, 
-		  0.12F,    0.7F, 1.0F,  1.0F,  1.0F,  1.0F, // line representing the "-" sign itself
-		  0.18F,    0.7F, 1.0F,  1.0F,  1.0F,  1.0F, 
+		-0.775F,  0.625F,  0.0F, 0.75F, 0.75F, 1.0F, // digital clock rectangle widget
+		-0.475F,  0.625F,  0.0F, 0.75F, 0.75F, 1.0F, 
+		-0.775F,  0.775F,  0.0F, 0.75F, 0.75F, 1.0F, 
+		-0.475F,  0.775F,  0.0F, 0.75F, 0.75F, 1.0F, 
+		-0.775F,   0.45F, 0.75F, 0.75F, 0.75F, 1.0F, // see-through mode activation button
+		-0.475F,   0.45F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		-0.775F,   0.55F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		-0.475F,   0.55F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		-0.725F,   0.47F,  1.0F,  1.0F,  1.0F, 1.0F, // rectangle simbol on the see-through mode activation button
+		-0.525F,   0.47F,  1.0F,  1.0F,  1.0F, 1.0F, 
+		-0.725F,   0.53F,  1.0F,  1.0F,  1.0F, 1.0F, 
+		-0.525F,   0.53F,  1.0F,  1.0F,  1.0F, 1.0F, 
+		   0.1F,   0.65F, 0.75F, 0.75F, 0.75F, 1.0F, // "-" button, left of freezing chamber temperature widget
+		   0.2F,   0.65F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.1F,   0.75F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.2F,   0.75F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		  0.12F,    0.7F,  1.0F,  1.0F,  1.0F, 1.0F, // line representing the "-" sign itself
+		  0.18F,    0.7F,  1.0F,  1.0F,  1.0F, 1.0F, 
 		// (0.2250F + 0.4425F = 0.6675F) * windowWidth, 0.8325F * windowHeight
-		 0.225F,  0.625F, 0.0F, 0.75F, 0.75F,  1.0F, // freezing chamber temperature widget
-		 0.625F,  0.625F, 0.0F, 0.75F, 0.75F,  1.0F, 
-		 0.225F,  0.775F, 0.0F, 0.75F, 0.75F,  1.0F, 
-		 0.625F,  0.775F, 0.0F, 0.75F, 0.75F,  1.0F, 
-		  0.65F,   0.65F, 0.5F,  0.5F,  0.5F,  1.0F, // "+" button, right of freezing chamber temperature widget
-		  0.75F,   0.65F, 0.5F,  0.5F,  0.5F,  1.0F, 
-		  0.65F,   0.75F, 0.5F,  0.5F,  0.5F,  1.0F, 
-		  0.75F,   0.75F, 0.5F,  0.5F,  0.5F,  1.0F, 
-		  0.67F,    0.7F, 1.0F,  1.0F,  1.0F,  1.0F, // lines representing the "+" sign itself
-		  0.73F,    0.7F, 1.0F,  1.0F,  1.0F,  1.0F, 
-		   0.7F,   0.67F, 1.0F,  1.0F,  1.0F,  1.0F, 
-		   0.7F,   0.73F, 1.0F,  1.0F,  1.0F,  1.0F, 
-		   0.1F,   0.45F, 0.5F,  0.5F,  0.5F,  1.0F, // "-" button, left of refrigerating chamber temperature widget
-		   0.2F,   0.45F, 0.5F,  0.5F,  0.5F,  1.0F, 
-		   0.1F,   0.55F, 0.5F,  0.5F,  0.5F,  1.0F, 
-		   0.2F,   0.55F, 0.5F,  0.5F,  0.5F,  1.0F, 
-		  0.12F,    0.5F, 1.0F,  1.0F,  1.0F,  1.0F, // line representing the "-" sign itself
-		  0.18F,    0.5F, 1.0F,  1.0F,  1.0F,  1.0F, 
+		 0.225F,  0.625F,  0.0F, 0.75F, 0.75F, 1.0F, // freezing chamber temperature widget
+		 0.625F,  0.625F,  0.0F, 0.75F, 0.75F, 1.0F, 
+		 0.225F,  0.775F,  0.0F, 0.75F, 0.75F, 1.0F, 
+		 0.625F,  0.775F,  0.0F, 0.75F, 0.75F, 1.0F, 
+		  0.65F,   0.65F, 0.75F, 0.75F, 0.75F, 1.0F, // "+" button, right of freezing chamber temperature widget
+		  0.75F,   0.65F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		  0.65F,   0.75F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		  0.75F,   0.75F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		  0.67F,    0.7F,  1.0F,  1.0F,  1.0F, 1.0F, // lines representing the "+" sign itself
+		  0.73F,    0.7F,  1.0F,  1.0F,  1.0F, 1.0F, 
+		   0.7F,   0.67F,  1.0F,  1.0F,  1.0F, 1.0F, 
+		   0.7F,   0.73F,  1.0F,  1.0F,  1.0F, 1.0F, 
+		   0.1F,   0.45F, 0.75F, 0.75F, 0.75F, 1.0F, // "-" button, left of refrigerating chamber temperature widget
+		   0.2F,   0.45F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.1F,   0.55F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.2F,   0.55F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		  0.12F,    0.5F,  1.0F,  1.0F,  1.0F, 1.0F, // line representing the "-" sign itself
+		  0.18F,    0.5F,  1.0F,  1.0F,  1.0F, 1.0F, 
 		// (0.2250F + 0.4625F = 0.6875F) * windowWidth, 0.7325F * windowHeight
-		 0.225F,  0.425F, 0.0F, 0.75F, 0.75F,  1.0F, // refrigerating chamber temperature widget
-		 0.625F,  0.425F, 0.0F, 0.75F, 0.75F,  1.0F, 
-		 0.225F,  0.575F, 0.0F, 0.75F, 0.75F,  1.0F, 
-		 0.625F,  0.575F, 0.0F, 0.75F, 0.75F,  1.0F, 
-		  0.65F,   0.45F, 0.5F,  0.5F,  0.5F,  1.0F, // "+" button, right of refrigerating chamber temperature widget
-		  0.75F,   0.45F, 0.5F,  0.5F,  0.5F,  1.0F, 
-		  0.65F,   0.55F, 0.5F,  0.5F,  0.5F,  1.0F, 
-		  0.75F,   0.55F, 0.5F,  0.5F,  0.5F,  1.0F, 
-		  0.67F,    0.5F, 1.0F,  1.0F,  1.0F,  1.0F, // lines representing the "+" sign itself
-		  0.73F,    0.5F, 1.0F,  1.0F,  1.0F,  1.0F, 
-		   0.7F,   0.47F, 1.0F,  1.0F,  1.0F,  1.0F, 
-		   0.7F,   0.53F, 1.0F,  1.0F,  1.0F,  1.0F
+		 0.225F,  0.425F,  0.0F, 0.75F, 0.75F, 1.0F, // refrigerating chamber temperature widget
+		 0.625F,  0.425F,  0.0F, 0.75F, 0.75F, 1.0F, 
+		 0.225F,  0.575F,  0.0F, 0.75F, 0.75F, 1.0F, 
+		 0.625F,  0.575F,  0.0F, 0.75F, 0.75F, 1.0F, 
+		  0.65F,   0.45F, 0.75F, 0.75F, 0.75F, 1.0F, // "+" button, right of refrigerating chamber temperature widget
+		  0.75F,   0.45F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		  0.65F,   0.55F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		  0.75F,   0.55F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		  0.67F,    0.5F,  1.0F,  1.0F,  1.0F, 1.0F, // lines representing the "+" sign itself
+		  0.73F,    0.5F,  1.0F,  1.0F,  1.0F, 1.0F, 
+		   0.7F,   0.47F,  1.0F,  1.0F,  1.0F, 1.0F, 
+		   0.7F,   0.53F,  1.0F,  1.0F,  1.0F, 1.0F
 	};
 
 	// Create memory on the GPU where vertex data and index data will be stored.
 	// Said data will be handled by VAO and vertex/element buffer objects inside that VAO.
 	// Core OpenGL REQUIRES the use of VAOs!
 	unsigned int groceriesVAO, chambersVAO, refrigeratorVAO, textVAO;
-	glGenVertexArrays(1, &groceriesVAO);
-	glGenVertexArrays(1, &chambersVAO);
-	glGenVertexArrays(1, &refrigeratorVAO);
+	glGenVertexArrays(1, &groceriesVAO); glGenVertexArrays(1, &chambersVAO); glGenVertexArrays(1, &refrigeratorVAO);
 	glGenVertexArrays(1, &textVAO);
 	unsigned int groceriesVBO, chambersVBO, refrigeratorVBO, textVBO;
-	glGenBuffers(1, &groceriesVBO);
-	glGenBuffers(1, &chambersVBO);
-	glGenBuffers(1, &refrigeratorVBO);
+	glGenBuffers(1, &groceriesVBO); glGenBuffers(1, &chambersVBO); glGenBuffers(1, &refrigeratorVBO);
 	glGenBuffers(1, &textVBO);
 
 	// Bind (assign) the newly created VAO to OpenGL's context.
@@ -553,9 +549,26 @@ int main()
 			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
 			glDrawArrays(GL_TRIANGLE_STRIP, 0, 8);
 
+			// Activate the desired shader program.
+			// Every shader and rendering call from now on will use this shader program object.
+			shaderProgramForRefrigerator->useProgram();
+
 			// Bind (assign) the desired VAO to OpenGL's context.
 			glBindVertexArray(refrigeratorVAO);
+			// Depending on whether the see-through mode is turned on or off, render the refrigerator doors differently.
+			if (seeThroughModeTurnedOn)
+			{
+				glEnable(GL_BLEND);
+			}
+			else
+			{
+				glDisable(GL_BLEND);
+			}
 			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
+			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);  // refrigerator doors
+
+			// Always turn on the blending when rendering the graphical elements.
+			glEnable(GL_BLEND);
 			glDrawArrays(GL_TRIANGLE_STRIP, 4, 4);  // digital clock rectangle widget
 			glDrawArrays(GL_TRIANGLE_STRIP, 8, 4);  // see-through mode activation button
 			glDrawArrays(GL_TRIANGLE_STRIP, 12, 4); // rectangle simbol on the see-through mode activation button
@@ -569,11 +582,13 @@ int main()
 			glDrawArrays(GL_TRIANGLE_STRIP, 40, 4); // refrigerating chamber temperature widget
 			glDrawArrays(GL_TRIANGLE_STRIP, 44, 4); // "+" button, left of refrigerating chamber temperature widget
 			glDrawArrays(GL_LINES, 48, 4);          // line representing the "+" sign itself
-			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);  // outer borders of refrigerator
 
 			// Activate the desired shader program.
 			// Every shader and rendering call from now on will use this shader program object.
 			shaderProgramForNonlogoText->useProgram();
+
+			// Always turn on the blending when rendering text, due to the way the "FreeType" library is implemented.
+			glEnable(GL_BLEND);
 
 			// Text rendering usually does not require the use of the perspective projection. Therefore, an ortographic
 			// projection matrix will suffice. Using an orthographic projection matrix also allows all vertex coordinates to
@@ -646,12 +661,16 @@ int main()
 				// Every shader and rendering call from now on will use this shader program object.
 				shaderProgramForChambers->useProgram();
 
-				// Update see-through mode global varible and uniform.
+				// Update see-through mode global varible and uniform and its associates.
 				seeThroughModeTurnedOn = false;
 				shaderProgramForChambers->setBoolUniform("seeThroughModeTurnedOn", seeThroughModeTurnedOn);
+				// Enable blending.
+				glEnable(GL_BLEND);
 			}
 		}
 
+		// Enable blending.
+		glEnable(GL_BLEND);
 		// Render the author's signature in the bottom left corner of the screen space, scale it 2/3 times and paint it
 		// yellow.
 		timesNewRomanFont.renderText(*shaderProgramForNonlogoText, "Darijan Micic, RA 203/2017", 
@@ -697,6 +716,7 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 		{
 			logoModeTurnedOn = false;
 			graphicalModeTurnedOn = true;
+			seeThroughModeTurnedOn = false;
 			// Initialize the graphical mode activation timestamp with the current time.
 			timeWhenGraphicalModeWasActivated = static_cast<float>(glfwGetTime());
 
