@@ -150,8 +150,8 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shaders\Groceries\vertex_shader_of_groceries.glsl" />
-    <None Include="Shaders\Groceries\fragment_shader_of_groceries.glsl" />
+    <None Include="Shaders\Grocery\vertex_shader_of_grocery.glsl" />
+    <None Include="Shaders\Grocery\fragment_shader_of_grocery.glsl" />
     <None Include="Shaders\Chamber\vertex_shader_of_chamber.glsl" />
     <None Include="Shaders\Chamber\fragment_shader_of_chamber.glsl" />
     <None Include="Shaders\Refrigerator\vertex_shader_of_refrigerator.glsl" />

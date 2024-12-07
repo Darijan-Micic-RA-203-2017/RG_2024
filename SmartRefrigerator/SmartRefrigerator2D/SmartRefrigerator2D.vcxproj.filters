@@ -44,10 +44,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shaders\Groceries\vertex_shader_of_groceries.glsl">
+    <None Include="Shaders\Grocery\vertex_shader_of_grocery.glsl">
       <Filter>Shader Files</Filter>
     </None>
-    <None Include="Shaders\Groceries\fragment_shader_of_groceries.glsl">
+    <None Include="Shaders\Grocery\fragment_shader_of_grocery.glsl">
       <Filter>Shader Files</Filter>
     </None>
     <None Include="Shaders\Chamber\vertex_shader_of_chamber.glsl">

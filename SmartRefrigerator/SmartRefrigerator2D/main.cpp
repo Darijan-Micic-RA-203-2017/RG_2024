@@ -24,8 +24,8 @@ const float desiredMaxDeltaTime = 0.016667F; // 1 / 60
 float previousFrameTime = 0.0F;
 
 // Shader programs.
-ShaderProgram *shaderProgramForGroceries = NULL;
-ShaderProgram *shaderProgramForChambers = NULL;
+ShaderProgram *shaderProgramForGrocery = NULL;
+ShaderProgram *shaderProgramForChamber = NULL;
 ShaderProgram *shaderProgramForRefrigerator = NULL;
 ShaderProgram *shaderProgramForNonlogoText = NULL;
 ShaderProgram *shaderProgramForLogoText = NULL;
@@ -108,29 +108,27 @@ int main()
 	}
 
 	// Configure the global OpenGL state.
-	// Enable blending.
-	glEnable(GL_BLEND);
 	// Set the blending function. Its parameters:
 	// 1) the source color factor - the factor of the output variable of the fragment shader;
 	// 2) the destination color factor - the factor of the color of the fragment we are drawing over.
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	// Compile the shaders and link the shader programs using the helper "ShaderProgram" class.
-	shaderProgramForGroceries = new ShaderProgram("Shaders/Groceries/vertex_shader_of_groceries.glsl", 
-		"Shaders/Groceries/fragment_shader_of_groceries.glsl");
-	if (shaderProgramForGroceries->errorCode != 0)
+	shaderProgramForGrocery = new ShaderProgram("Shaders/Grocery/vertex_shader_of_grocery.glsl", 
+		"Shaders/Grocery/fragment_shader_of_grocery.glsl");
+	if (shaderProgramForGrocery->errorCode != 0)
 	{
 		glfwTerminate();
 
-		return shaderProgramForGroceries->errorCode;
+		return shaderProgramForGrocery->errorCode;
 	}
-	shaderProgramForChambers = new ShaderProgram("Shaders/Chamber/vertex_shader_of_chamber.glsl", 
+	shaderProgramForChamber = new ShaderProgram("Shaders/Chamber/vertex_shader_of_chamber.glsl", 
 		"Shaders/Chamber/fragment_shader_of_chamber.glsl");
-	if (shaderProgramForChambers->errorCode != 0)
+	if (shaderProgramForChamber->errorCode != 0)
 	{
 		glfwTerminate();
 
-		return shaderProgramForChambers->errorCode;
+		return shaderProgramForChamber->errorCode;
 	}
 	shaderProgramForRefrigerator = new ShaderProgram("Shaders/Refrigerator/vertex_shader_of_refrigerator.glsl", 
 		"Shaders/Refrigerator/fragment_shader_of_refrigerator.glsl");
@@ -357,10 +355,10 @@ int main()
 
 	// Activate the desired shader program.
 	// Every shader and rendering call from now on will use this shader program object.
-	shaderProgramForGroceries->useProgram();
+	shaderProgramForGrocery->useProgram();
 	// Tell OpenGL to which texture unit each shader sampler belongs to, by setting each sampler.
-	shaderProgramForGroceries->setIntegerUniform("fishSticksPackage", 0);
-	shaderProgramForGroceries->setIntegerUniform("milkCartonBox", 1);
+	shaderProgramForGrocery->setIntegerUniform("fishSticksPackage", 0);
+	shaderProgramForGrocery->setIntegerUniform("milkCartonBox", 1);
 
 	// Activate the desired shader program.
 	// Every shader and rendering call from now on will use this shader program object.
@@ -504,7 +502,7 @@ int main()
 		{
 			// Activate the desired shader program.
 			// Every shader and rendering call from now on will use this shader program object.
-			shaderProgramForGroceries->useProgram();
+			shaderProgramForGrocery->useProgram();
 
 			// Activate the texture unit (one of 16). After activating a texture unit, a subsequent "glBindTexture"
 			// call will bind that texture to the currently active texture unit. The texture unit "GL_TEXTURE0" is
@@ -520,7 +518,7 @@ int main()
 
 			// Set the grocery inside freezer uniform.
 			groceryInsideFreezer = !groceryInsideFreezer;
-			shaderProgramForGroceries->setBoolUniform("groceryInsideFreezer", groceryInsideFreezer);
+			shaderProgramForGrocery->setBoolUniform("groceryInsideFreezer", groceryInsideFreezer);
 
 			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
 			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4); // left fish sticks package
@@ -528,7 +526,7 @@ int main()
 
 			// Set the grocery inside freezer uniform.
 			groceryInsideFreezer = !groceryInsideFreezer;
-			shaderProgramForGroceries->setBoolUniform("groceryInsideFreezer", groceryInsideFreezer);
+			shaderProgramForGrocery->setBoolUniform("groceryInsideFreezer", groceryInsideFreezer);
 
 			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
 			glDrawArrays(GL_TRIANGLE_STRIP, 8, 4);  // left milk carton box
@@ -536,12 +534,12 @@ int main()
 
 			// Activate the desired shader program.
 			// Every shader and rendering call from now on will use this shader program object.
-			shaderProgramForChambers->useProgram();
+			shaderProgramForChamber->useProgram();
 
 			// Set the current temperatures of each chamber uniforms.
-			shaderProgramForChambers->setBoolUniform(
+			shaderProgramForChamber->setBoolUniform(
 				"currentTemperatureOfFreezingChamber", currentTemperatureOfFreezingChamber);
-			shaderProgramForChambers->setBoolUniform(
+			shaderProgramForChamber->setBoolUniform(
 				"currentTemperatureOfRefrigeratingChamber", currentTemperatureOfRefrigeratingChamber);
 
 			// Bind (assign) the desired VAO to OpenGL's context.
@@ -567,7 +565,8 @@ int main()
 			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
 			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);  // refrigerator doors
 
-			// Always turn on the blending when rendering the graphical elements.
+			// Always turn on the blending when rendering the graphical elements and text, due to the way the "FreeType"
+			// library is implemented.
 			glEnable(GL_BLEND);
 			glDrawArrays(GL_TRIANGLE_STRIP, 4, 4);  // digital clock rectangle widget
 			glDrawArrays(GL_TRIANGLE_STRIP, 8, 4);  // see-through mode activation button
@@ -586,9 +585,6 @@ int main()
 			// Activate the desired shader program.
 			// Every shader and rendering call from now on will use this shader program object.
 			shaderProgramForNonlogoText->useProgram();
-
-			// Always turn on the blending when rendering text, due to the way the "FreeType" library is implemented.
-			glEnable(GL_BLEND);
 
 			// Text rendering usually does not require the use of the perspective projection. Therefore, an ortographic
 			// projection matrix will suffice. Using an orthographic projection matrix also allows all vertex coordinates to
@@ -659,11 +655,11 @@ int main()
 
 				// Activate the desired shader program.
 				// Every shader and rendering call from now on will use this shader program object.
-				shaderProgramForChambers->useProgram();
+				shaderProgramForChamber->useProgram();
 
 				// Update see-through mode global varible and uniform and its associates.
 				seeThroughModeTurnedOn = false;
-				shaderProgramForChambers->setBoolUniform("seeThroughModeTurnedOn", seeThroughModeTurnedOn);
+				shaderProgramForChamber->setBoolUniform("seeThroughModeTurnedOn", seeThroughModeTurnedOn);
 				// Enable blending.
 				glEnable(GL_BLEND);
 			}
@@ -687,8 +683,8 @@ int main()
 	delete shaderProgramForLogoText;
 	delete shaderProgramForNonlogoText;
 	delete shaderProgramForRefrigerator;
-	delete shaderProgramForChambers;
-	delete shaderProgramForGroceries;
+	delete shaderProgramForChamber;
+	delete shaderProgramForGrocery;
 
 	// Terminate the GLFW library, which frees up all allocated resources.
 	glfwTerminate();
@@ -708,7 +704,7 @@ void framebuffer_size_callback(GLFWwindow *window, int width, int height)
 }
 
 // Funtion that processes clicking on mouse buttons.
-void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 {
 	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
 	{
@@ -738,11 +734,11 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 			{
 				// Activate the desired shader program.
 				// Every shader and rendering call from now on will use this shader program object.
-				shaderProgramForChambers->useProgram();
+				shaderProgramForChamber->useProgram();
 
 				// Update see-through mode global varible and uniform.
 				seeThroughModeTurnedOn = !seeThroughModeTurnedOn;
-				shaderProgramForChambers->setBoolUniform("seeThroughModeTurnedOn", seeThroughModeTurnedOn);
+				shaderProgramForChamber->setBoolUniform("seeThroughModeTurnedOn", seeThroughModeTurnedOn);
 
 				return;
 			}
