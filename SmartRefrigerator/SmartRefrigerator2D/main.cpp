@@ -532,28 +532,8 @@ int main()
 			glDrawArrays(GL_TRIANGLE_STRIP, 8, 4);  // left milk carton box
 			glDrawArrays(GL_TRIANGLE_STRIP, 12, 4); // right milk carton box
 
-			// Activate the desired shader program.
-			// Every shader and rendering call from now on will use this shader program object.
-			shaderProgramForChamber->useProgram();
-
-			// Set the current temperatures of each chamber uniforms.
-			shaderProgramForChamber->setBoolUniform(
-				"currentTemperatureOfFreezingChamber", currentTemperatureOfFreezingChamber);
-			shaderProgramForChamber->setBoolUniform(
-				"currentTemperatureOfRefrigeratingChamber", currentTemperatureOfRefrigeratingChamber);
-
-			// Bind (assign) the desired VAO to OpenGL's context.
-			glBindVertexArray(chambersVAO);
-			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
-			glDrawArrays(GL_TRIANGLE_STRIP, 0, 8);
-
-			// Activate the desired shader program.
-			// Every shader and rendering call from now on will use this shader program object.
-			shaderProgramForRefrigerator->useProgram();
-
-			// Bind (assign) the desired VAO to OpenGL's context.
-			glBindVertexArray(refrigeratorVAO);
-			// Depending on whether the see-through mode is turned on or off, render the refrigerator doors differently.
+			// Depending on whether the see-through mode is turned on or off, render the chambers and the refrigerator
+			// doors differently.
 			if (seeThroughModeTurnedOn)
 			{
 				glEnable(GL_BLEND);
@@ -562,6 +542,32 @@ int main()
 			{
 				glDisable(GL_BLEND);
 			}
+
+			// Activate the desired shader program.
+			// Every shader and rendering call from now on will use this shader program object.
+			shaderProgramForChamber->useProgram();
+
+			// Set the current window width and height uniforms.
+			shaderProgramForChamber->setFloatUniform("windowWidth", static_cast<float>(windowWidth));
+			shaderProgramForChamber->setFloatUniform("windowHeight", static_cast<float>(windowHeight));
+			// Set the current temperatures of each chamber uniforms.
+			shaderProgramForChamber->setFloatUniform(
+				"currentTemperatureOfFreezingChamber", currentTemperatureOfFreezingChamber);
+			shaderProgramForChamber->setFloatUniform(
+				"currentTemperatureOfRefrigeratingChamber", currentTemperatureOfRefrigeratingChamber);
+
+			// Bind (assign) the desired VAO to OpenGL's context.
+			glBindVertexArray(chambersVAO);
+			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
+			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4); // see-through, blue-tinted freezing chamber plastic
+			glDrawArrays(GL_TRIANGLE_STRIP, 4, 4); // see-through, blue-tinted refrigerating chamber plastic
+
+			// Activate the desired shader program.
+			// Every shader and rendering call from now on will use this shader program object.
+			shaderProgramForRefrigerator->useProgram();
+
+			// Bind (assign) the desired VAO to OpenGL's context.
+			glBindVertexArray(refrigeratorVAO);
 			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
 			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);  // refrigerator doors
 
@@ -657,15 +663,13 @@ int main()
 				// Every shader and rendering call from now on will use this shader program object.
 				shaderProgramForChamber->useProgram();
 
-				// Update see-through mode global varible and uniform and its associates.
+				// Update see-through mode global varible and uniform.
 				seeThroughModeTurnedOn = false;
 				shaderProgramForChamber->setBoolUniform("seeThroughModeTurnedOn", seeThroughModeTurnedOn);
-				// Enable blending.
-				glEnable(GL_BLEND);
 			}
 		}
 
-		// Enable blending.
+		// Enable blending. FreeType library requires blending to be enabled in order to properly show glyphs.
 		glEnable(GL_BLEND);
 		// Render the author's signature in the bottom left corner of the screen space, scale it 2/3 times and paint it
 		// yellow.
@@ -736,7 +740,7 @@ void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 				// Every shader and rendering call from now on will use this shader program object.
 				shaderProgramForChamber->useProgram();
 
-				// Update see-through mode global varible and uniform.
+				// Update see-through mode global variable and uniform.
 				seeThroughModeTurnedOn = !seeThroughModeTurnedOn;
 				shaderProgramForChamber->setBoolUniform("seeThroughModeTurnedOn", seeThroughModeTurnedOn);
 
