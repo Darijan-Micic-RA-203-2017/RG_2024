@@ -29,28 +29,25 @@ void main()
 	// Because of that, the normalized device coordinates (NDCs) used to describe the vertex's position in the main
 	// program have to be converted to the [0.0F, 1.0F] range and multiplied with window's width/height. Only then can
 	// the single values of the "gl_FragCoord" vector be compared with the borders of the chambers.
-	if (gl_FragCoord.x >= 0.25F * windowWidth && gl_FragCoord.x <= 0.75F * windowWidth)
+	if (gl_FragCoord.y >= 0.38F * windowHeight && gl_FragCoord.y <= 0.62F * windowHeight)
 	{
-		if (gl_FragCoord.y >= 0.38F * windowHeight && gl_FragCoord.y <= 0.62F * windowHeight)
-		{
-			// minFreezChmbT <= currFreezChmbT <= maxFreezChmbT / + (-left_side)
-			// 0.0F <= currFreezChmbT - minFreezChmbT <= maxFreezChmbT - minFreezChmbT / : right_side
-			// 0.0F <= (currFreezChmbT - minFreezChmbT) / (maxFreezChmbT - minFreezChmbT) <= 1.0F
-			// resultingColorOfFragment.a = (1.0F - the_expression_in_the_middle) / 2.0F.
-			resultingColorOfFragment.a = (1.0F - 
-				(currentTemperatureOfFreezingChamber - minTemperatureOfFreezingChamber) / 
-					(maxTemperatureOfFreezingChamber - minTemperatureOfFreezingChamber)) / 2.0F;
-		}
-		else if (gl_FragCoord.y >= 0.13F * windowHeight && gl_FragCoord.y <= 0.37F * windowHeight)
-		{
-			// minRefrigChmbT <= currRefrigChmbT <= maxRefrigChmbT / + (-left_side)
-			// 0.0F <= currRefrigChmbT - minRefrigChmbT <= maxRefrigChmbT - minRefrigChmbT / : right_side
-			// 0.0F <= (currRefrigChmbT - minRefrigChmbT) / (maxRefrigChmbT - minRefrigChmbT) <= 1.0F
-			// resultingColorOfFragment.a = (1.0F - the_expression_in_the_middle) / 2.0F.
-			resultingColorOfFragment.a = (1.0F - 
-				(currentTemperatureOfRefrigeratingChamber - minTemperatureOfRefrigeratingChamber) / 
-					(maxTemperatureOfRefrigeratingChamber - minTemperatureOfRefrigeratingChamber)) / 2.0F;
-		}
+		// minFreezChmbT <= currFreezChmbT <= maxFreezChmbT / + (-left_side)
+		// 0.0F <= currFreezChmbT - minFreezChmbT <= maxFreezChmbT - minFreezChmbT / : right_side
+		// 0.0F <= (currFreezChmbT - minFreezChmbT) / (maxFreezChmbT - minFreezChmbT) <= 1.0F
+		// resultingColorOfFragment.a = (1.0F - the_expression_in_the_middle) / 2.0F.
+		resultingColorOfFragment.a = (1.0F - 
+			(currentTemperatureOfFreezingChamber - minTemperatureOfFreezingChamber) / 
+				(maxTemperatureOfFreezingChamber - minTemperatureOfFreezingChamber)) / 2.0F;
+	}
+	else
+	{
+		// minRefrigChmbT <= currRefrigChmbT <= maxRefrigChmbT / + (-left_side)
+		// 0.0F <= currRefrigChmbT - minRefrigChmbT <= maxRefrigChmbT - minRefrigChmbT / : right_side
+		// 0.0F <= (currRefrigChmbT - minRefrigChmbT) / (maxRefrigChmbT - minRefrigChmbT) <= 1.0F
+		// resultingColorOfFragment.a = (1.0F - the_expression_in_the_middle) / 2.0F.
+		resultingColorOfFragment.a = (1.0F - 
+			(currentTemperatureOfRefrigeratingChamber - minTemperatureOfRefrigeratingChamber) / 
+				(maxTemperatureOfRefrigeratingChamber - minTemperatureOfRefrigeratingChamber)) / 2.0F;
 	}
 	FragColor = resultingColorOfFragment;
 }

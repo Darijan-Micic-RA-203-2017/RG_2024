@@ -928,7 +928,7 @@ void processInput(GLFWwindow *window)
 		logoNeedsToMoveInCircle = false;
 		bottomLeftXOfLogoText = 0.275F * windowWidth;
 		bottomLeftYOfLogoText = 0.4F * windowHeight;
-		
+
 		// Update the logo needs to move left-right between edges global variable and uniform and its associate.
 		logoNeedsToMoveLeftRightBetweenEdges = true;
 		shaderProgramForLogoText->setBoolUniform("logoNeedsToMoveLeftRightBetweenEdges", logoNeedsToMoveLeftRightBetweenEdges);
