@@ -457,7 +457,7 @@ int main()
 				// crossed.
 				if (bottomLeftXOfLogoText > windowWidth)
 				{
-					bottomLeftXOfLogoText = 0.0F;
+					bottomLeftXOfLogoText = -0.45F * windowWidth;
 				}
 			}
 			if (logoNeedsToMoveInCircle)
