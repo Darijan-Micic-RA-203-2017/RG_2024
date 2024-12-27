@@ -1,7 +1,6 @@
 #version 330 core
 
 in vec2 TexCoords;
-in float OpacityFactorOfDistanceFromVerticalEdges;
 
 out vec4 FragColor;
 
@@ -17,6 +16,8 @@ uniform float redColorComponentForPulsing;
 // Pressing the "5" key should start the movement of the "LOK" company's logo from left to right and vice-versa between
 // the window's edges. The closer the logo is to one of the edges, the more transparent it should be.
 uniform bool logoNeedsToMoveLeftRightBetweenEdges;
+// Send the window width. Half of it is the screen space center's x-coodinate.
+uniform float windowWidth;
 
 void main()
 {
@@ -27,25 +28,26 @@ void main()
 	// to enable multiplication with the color of text the user chooses.
 	vec4 sampledColor = vec4(1.0F, 1.0F, 1.0F, texture(text, TexCoords).r);
 	// Finally, the samled RGB color is multiplied by the "colorOfText" uniform to get the resulting text color.
-	FragColor = vec4(colorOfText, 1.0F) * sampledColor;
+	vec4 resultingColorOfFragment = vec4(colorOfText, 1.0F) * sampledColor;
 
 	if (logoNeedsToPulse)
 	{
-		FragColor.r = redColorComponentForPulsing;
+		resultingColorOfFragment.r = redColorComponentForPulsing;
 	}
 	if (logoNeedsToMoveLeftRightBetweenEdges)
 	{
-		if (FragColor.a > 0.0F)
+		float centerXOfScreenSpace = windowWidth / 2.0F;
+		float difference = centerXOfScreenSpace - gl_FragCoord.x;
+		float alphaFactor = abs(difference) / centerXOfScreenSpace;
+		if (difference == centerXOfScreenSpace || difference == 0.0F)
 		{
-			FragColor.a -= OpacityFactorOfDistanceFromVerticalEdges;
-			if (FragColor.a <= 0.0F)
-			{
-				FragColor.a = 0.1F;
-			}
-			if (FragColor.a > 1.0F)
-			{
-				FragColor.a = 1.0F;
-			}
+			alphaFactor = 0.0F;
 		}
+		else if (difference >= 0.0F)
+		{
+			alphaFactor -= 0.5F;
+		}
+		resultingColorOfFragment.a *= alphaFactor;
 	}
+	FragColor = resultingColorOfFragment;
 }

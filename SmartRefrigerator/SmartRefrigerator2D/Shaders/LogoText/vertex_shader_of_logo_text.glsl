@@ -4,9 +4,6 @@
 layout (location = 0U) in vec4 vertex;
 
 out vec2 TexCoords;
-// Pressing the "5" key should start the movement of the "LOK" company's logo from left to right and vice-versa between
-// the window's edges. The closer the logo is to one of the edges, the more transparent it should be.
-out float OpacityFactorOfDistanceFromVerticalEdges;
 
 // Text rendering usually does not require the use of the perspective projection. Therefore, an ortographic projection
 // matrix will suffice. Using an orthographic projection matrix also allows all vertex coordinates to be specified in
@@ -20,7 +17,6 @@ uniform mat4 projectionMatrix;
 void main()
 {
 	TexCoords = vertex.zw;
-	OpacityFactorOfDistanceFromVerticalEdges = abs(vertex.x);
 
 	gl_Position = projectionMatrix * vec4(vertex.xy, 0.0F, 1.0F);
 }

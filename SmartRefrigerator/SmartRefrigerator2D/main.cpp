@@ -442,6 +442,9 @@ int main()
 			glUniformMatrix4fv(glGetUniformLocation(shaderProgramForLogoText->id, "projectionMatrix"), 
 				1, GL_FALSE, &projectionMatrix[0U][0U]);
 
+			// Set the current window width uniform.
+			shaderProgramForLogoText->setFloatUniform("windowWidth", static_cast<float>(windowWidth));
+
 			if (logoNeedsToPulse)
 			{
 				// Change the color of the "LOK" company's logo from blue to purple.

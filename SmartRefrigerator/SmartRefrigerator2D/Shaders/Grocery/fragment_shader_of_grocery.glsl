@@ -10,12 +10,19 @@ uniform bool groceryInsideFreezer;
 
 void main()
 {
+	vec4 resultingColorOfFragment = vec4(0.0F);
 	if (groceryInsideFreezer)
 	{
-		FragColor = texture(fishSticksPackage, TexCoords);
+		resultingColorOfFragment = texture(fishSticksPackage, TexCoords);
 	}
 	else
 	{
-		FragColor = texture(milkCartonBox, TexCoords);
+		resultingColorOfFragment = texture(milkCartonBox, TexCoords);
 	}
+
+	if (resultingColorOfFragment.a < 0.1F)
+	{
+		discard;
+	}
+	FragColor = resultingColorOfFragment;
 }
