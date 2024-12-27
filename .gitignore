@@ -29,8 +29,9 @@
 *.la
 *.a
 *.lib
-# Except the ".lib" files in the "libs" directory.
+# Except the ".lib" files in the "libs" directories of the 2D and the 3D project.
 !SmartRefrigerator/SmartRefrigerator2D/libs/*.lib
+!SmartRefrigerator/SmartRefrigerator3D/libs/*.lib
 
 # Executables
 *.exe
@@ -142,7 +143,7 @@ StyleCopReport.xml
 *.meta
 *.iobj
 *.pdb
-# Except the "SmartRefrigerator/SmartRefrigerator2D/x64/Debug/freetyped.pdb" file.
+# Except the "SmartRefrigerator/x64/Debug/freetyped.pdb" file.
 !freetyped.pdb
 # I added the ".idb" extension myself.
 *.idb

@@ -72,12 +72,10 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>C:\Fakultet\RG\RG_2024\SmartRefrigerator\SmartRefrigerator2D\include;$(IncludePath)</IncludePath>
-    <SourcePath>$(SourcePath)</SourcePath>
     <LibraryPath>C:\Fakultet\RG\RG_2024\SmartRefrigerator\SmartRefrigerator2D\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>C:\Fakultet\RG\RG_2024\SmartRefrigerator\SmartRefrigerator2D\include;$(IncludePath)</IncludePath>
-    <SourcePath>$(SourcePath)</SourcePath>
     <LibraryPath>C:\Fakultet\RG\RG_2024\SmartRefrigerator\SmartRefrigerator2D\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
