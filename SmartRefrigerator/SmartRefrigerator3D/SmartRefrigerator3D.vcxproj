@@ -142,6 +142,7 @@
     <ClInclude Include="texture.hpp" />
     <ClInclude Include="include\ft2build.h" />
     <ClInclude Include="text.hpp" />
+    <ClInclude Include="camera.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stb_image.cpp" />
