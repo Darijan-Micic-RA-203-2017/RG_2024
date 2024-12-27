@@ -70,6 +70,14 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>C:\Fakultet\RG\RG_2024\SmartRefrigerator\SmartRefrigerator3D\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Fakultet\RG\RG_2024\SmartRefrigerator\SmartRefrigerator3D\libs;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>C:\Fakultet\RG\RG_2024\SmartRefrigerator\SmartRefrigerator3D\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Fakultet\RG\RG_2024\SmartRefrigerator\SmartRefrigerator3D\libs;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -108,6 +116,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>opengl32.lib;freetyped.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -124,8 +133,39 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>opengl32.lib;freetype.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="shader_program.hpp" />
+    <ClInclude Include="stb_image.h" />
+    <ClInclude Include="texture.hpp" />
+    <ClInclude Include="include\ft2build.h" />
+    <ClInclude Include="text.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stb_image.cpp" />
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\Grocery\vertex_shader_of_grocery.glsl" />
+    <None Include="Shaders\Grocery\fragment_shader_of_grocery.glsl" />
+    <None Include="Shaders\Chamber\vertex_shader_of_chamber.glsl" />
+    <None Include="Shaders\Chamber\fragment_shader_of_chamber.glsl" />
+    <None Include="Shaders\Refrigerator\vertex_shader_of_refrigerator.glsl" />
+    <None Include="Shaders\Refrigerator\fragment_shader_of_refrigerator.glsl" />
+    <None Include="Shaders\NonlogoText\vertex_shader_of_nonlogo_text.glsl" />
+    <None Include="Shaders\NonlogoText\fragment_shader_of_nonlogo_text.glsl" />
+    <None Include="Shaders\LogoText\vertex_shader_of_logo_text.glsl" />
+    <None Include="Shaders\LogoText\fragment_shader_of_logo_text.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\Images\Fish_sticks_package.png" />
+    <Image Include="Resources\Images\Milk_carton_box.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Resources\Fonts\times.ttf" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

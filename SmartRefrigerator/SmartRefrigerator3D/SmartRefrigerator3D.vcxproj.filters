@@ -9,10 +9,84 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="Shader Files">
+      <UniqueIdentifier>{F09E2DF8-E7B7-4e8a-EC47-C163ECBFAA4B}</UniqueIdentifier>
+      <Extensions>glsl</Extensions>
+    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms;ttf</Extensions>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="shader_program.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="texture.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ft2build.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="text.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stb_image.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\Grocery\vertex_shader_of_grocery.glsl">
+      <Filter>Shader Files</Filter>
+    </None>
+    <None Include="Shaders\Grocery\fragment_shader_of_grocery.glsl">
+      <Filter>Shader Files</Filter>
+    </None>
+    <None Include="Shaders\Chamber\vertex_shader_of_chamber.glsl">
+      <Filter>Shader Files</Filter>
+    </None>
+    <None Include="Shaders\Chamber\fragment_shader_of_chamber.glsl">
+      <Filter>Shader Files</Filter>
+    </None>
+    <None Include="Shaders\Refrigerator\vertex_shader_of_refrigerator.glsl">
+      <Filter>Shader Files</Filter>
+    </None>
+    <None Include="Shaders\Refrigerator\fragment_shader_of_refrigerator.glsl">
+      <Filter>Shader Files</Filter>
+    </None>
+    <None Include="Shaders\NonlogoText\vertex_shader_of_nonlogo_text.glsl">
+      <Filter>Shader Files</Filter>
+    </None>
+    <None Include="Shaders\NonlogoText\fragment_shader_of_nonlogo_text.glsl">
+      <Filter>Shader Files</Filter>
+    </None>
+    <None Include="Shaders\LogoText\vertex_shader_of_logo_text.glsl">
+      <Filter>Shader Files</Filter>
+    </None>
+    <None Include="Shaders\LogoText\fragment_shader_of_logo_text.glsl">
+      <Filter>Shader Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\Images\Fish_sticks_package.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\Images\Milk_carton_box.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Resources\Fonts\times.ttf">
+      <Filter>Resource Files</Filter>
+    </Font>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
