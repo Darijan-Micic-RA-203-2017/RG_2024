@@ -45,11 +45,14 @@ public:
 		this->front = front;
 		this->upVector = upVector;
 
-		updateCameraCoordinateSystem();
+		updateCoordinateSystemOfCamera();
 	}
 
+	// REFERENCE: https://www.geeksforgeeks.org/destructors-c/
+	virtual ~Camera() {}
+
 	// Utility function for calculating all the vectors required to create the camera's coordinate system.
-	void updateCameraCoordinateSystem()
+	void updateCoordinateSystemOfCamera()
 	{
 		// Calculate the ACTUAL camera's direction vector, the result of subtracting the camera's position from the
 		// camera's target (thus visually ending at the camera's target, the minuend of subtraction).
@@ -84,7 +87,7 @@ public:
 	// Utility function for calculating the view matrix.
 	glm::mat4 getCalculatedViewMatrix()
 	{
-		updateCameraCoordinateSystem();
+		updateCoordinateSystemOfCamera();
 
 		// GLM's "lookAt" function requires the camera's position, the camera's target and the "up" vector.
 		return glm::lookAt(position, target, upVector);
@@ -155,7 +158,7 @@ public:
 
 		// 4. and final step: calculate the ACTUAL camera's direction vector, the result of subtracting the camera's
 		// position from the camera's target (thus visually ending at the camera's target, the minuend of subtraction).
-		updateCameraCoordinateSystem();
+		updateCoordinateSystemOfCamera();
 	}
 
 	// Utility function for processing the mouse scrolling.
