@@ -188,12 +188,50 @@ int main()
 		-0.5F,  -0.26F, 0.0F,  0.0F,  1.0F, 0.25F, 
 		 0.5F,  -0.26F, 0.0F,  0.0F,  1.0F, 0.25F
 	};
+	// 36 vertices are needed to render the cube (6 sides * 2 triangles per side * 3 vertices for each triangle).
 	float verticesOfRefrigerator[] = {
-		// position       // color
-		  -0.8F,   -0.8F, 0.9F,  0.9F,  0.9F,  0.5F, // refrigerator doors
-		   0.8F,   -0.8F, 0.9F,  0.9F,  0.9F,  0.5F, 
-		  -0.8F,    0.8F, 0.9F,  0.9F,  0.9F,  0.5F, 
-		   0.8F,    0.8F, 0.9F,  0.9F,  0.9F,  0.5F, 
+		// Since the vertex by itself doesn't have a surface (the vertex is simply a single point in space), its
+		// surrounding vertices need to be used to figure out the surface of the vertex in question.
+		// A neat trick can be used to calculate the normal vectors for all the cube's vertices by using the cross
+		// product. However, the cube is a simple shape, so the normal vectors can simply be manually added to the
+		// vertex data.
+		// position              // normal vector     // color
+		  -0.8F,   -0.8F, -1.0F,  0.0F,  0.0F, -1.0F, 0.9F,  0.9F,  0.9F,  0.5F, // refrigerator doors, back side
+		   0.8F,   -0.8F, -1.0F,  0.0F,  0.0F, -1.0F, 0.9F,  0.9F,  0.9F,  0.5F, 
+		  -0.8F,    0.8F, -1.0F,  0.0F,  0.0F, -1.0F, 0.9F,  0.9F,  0.9F,  0.5F, 
+		  -0.8F,    0.8F, -1.0F,  0.0F,  0.0F, -1.0F, 0.9F,  0.9F,  0.9F,  0.5F, 
+		   0.8F,   -0.8F, -1.0F,  0.0F,  0.0F, -1.0F, 0.9F,  0.9F,  0.9F,  0.5F, 
+		   0.8F,    0.8F, -1.0F,  0.0F,  0.0F, -1.0F, 0.9F,  0.9F,  0.9F,  0.5F, 
+		  -0.8F,   -0.8F,  1.0F,  0.0F,  0.0F,  1.0F, 0.9F,  0.9F,  0.9F,  0.5F, // refrigerator doors, front side
+		   0.8F,   -0.8F,  1.0F,  0.0F,  0.0F,  1.0F, 0.9F,  0.9F,  0.9F,  0.5F, 
+		  -0.8F,    0.8F,  1.0F,  0.0F,  0.0F,  1.0F, 0.9F,  0.9F,  0.9F,  0.5F, 
+		  -0.8F,    0.8F,  1.0F,  0.0F,  0.0F,  1.0F, 0.9F,  0.9F,  0.9F,  0.5F, 
+		   0.8F,   -0.8F,  1.0F,  0.0F,  0.0F,  1.0F, 0.9F,  0.9F,  0.9F,  0.5F, 
+		   0.8F,    0.8F,  1.0F,  0.0F,  0.0F,  1.0F, 0.9F,  0.9F,  0.9F,  0.5F, 
+		  -0.8F,   -0.8F, -1.0F, -1.0F,  0.0F,  0.0F, 0.9F,  0.9F,  0.9F,  0.5F, // refrigerator doors, left side
+		  -0.8F,   -0.8F,  1.0F, -1.0F,  0.0F,  0.0F, 0.9F,  0.9F,  0.9F,  0.5F, 
+		  -0.8F,    0.8F, -1.0F, -1.0F,  0.0F,  0.0F, 0.9F,  0.9F,  0.9F,  0.5F, 
+		  -0.8F,    0.8F, -1.0F, -1.0F,  0.0F,  0.0F, 0.9F,  0.9F,  0.9F,  0.5F, 
+		  -0.8F,   -0.8F,  1.0F, -1.0F,  0.0F,  0.0F, 0.9F,  0.9F,  0.9F,  0.5F, 
+		  -0.8F,    0.8F,  1.0F, -1.0F,  0.0F,  0.0F, 0.9F,  0.9F,  0.9F,  0.5F, 
+		   0.8F,   -0.8F,  1.0F,  1.0F,  0.0F,  0.0F, 0.9F,  0.9F,  0.9F,  0.5F, // refrigerator doors, right side
+		   0.8F,   -0.8F, -1.0F,  1.0F,  0.0F,  0.0F, 0.9F,  0.9F,  0.9F,  0.5F, 
+		   0.8F,    0.8F,  1.0F,  1.0F,  0.0F,  0.0F, 0.9F,  0.9F,  0.9F,  0.5F, 
+		   0.8F,    0.8F,  1.0F,  1.0F,  0.0F,  0.0F, 0.9F,  0.9F,  0.9F,  0.5F, 
+		   0.8F,   -0.8F, -1.0F,  1.0F,  0.0F,  0.0F, 0.9F,  0.9F,  0.9F,  0.5F, 
+		   0.8F,    0.8F, -1.0F,  1.0F,  0.0F,  0.0F, 0.9F,  0.9F,  0.9F,  0.5F, 
+		  -0.8F,   -0.8F, -1.0F,  0.0F, -1.0F,  0.0F, 0.9F,  0.9F,  0.9F,  0.5F, // refrigerator doors, bottom side
+		   0.8F,   -0.8F, -1.0F,  0.0F, -1.0F,  0.0F, 0.9F,  0.9F,  0.9F,  0.5F, 
+		  -0.8F,   -0.8F,  1.0F,  0.0F, -1.0F,  0.0F, 0.9F,  0.9F,  0.9F,  0.5F, 
+		  -0.8F,   -0.8F,  1.0F,  0.0F, -1.0F,  0.0F, 0.9F,  0.9F,  0.9F,  0.5F, 
+		   0.8F,   -0.8F, -1.0F,  0.0F, -1.0F,  0.0F, 0.9F,  0.9F,  0.9F,  0.5F, 
+		   0.8F,   -0.8F,  1.0F,  0.0F, -1.0F,  0.0F, 0.9F,  0.9F,  0.9F,  0.5F, 
+		  -0.8F,    0.8F,  1.0F,  0.0F,  1.0F,  0.0F, 0.9F,  0.9F,  0.9F,  0.5F, // refrigerator doors, top side
+		   0.8F,    0.8F,  1.0F,  0.0F,  1.0F,  0.0F, 0.9F,  0.9F,  0.9F,  0.5F, 
+		  -0.8F,    0.8F, -1.0F,  0.0F,  1.0F,  0.0F, 0.9F,  0.9F,  0.9F,  0.5F, 
+		  -0.8F,    0.8F, -1.0F,  0.0F,  1.0F,  0.0F, 0.9F,  0.9F,  0.9F,  0.5F, 
+		   0.8F,    0.8F,  1.0F,  0.0F,  1.0F,  0.0F, 0.9F,  0.9F,  0.9F,  0.5F, 
+		   0.8F,    0.8F, -1.0F,  0.0F,  1.0F,  0.0F, 0.9F,  0.9F,  0.9F,  0.5F, 
 		// (0.1125F + 0.0050F = 0.1175F) * windowWidth, 0.8325F * windowHeight
 		-0.775F,  0.625F,  0.0F, 0.75F, 0.75F, 1.0F, // digital clock rectangle widget
 		-0.475F,  0.625F,  0.0F, 0.75F, 0.75F, 1.0F, 
