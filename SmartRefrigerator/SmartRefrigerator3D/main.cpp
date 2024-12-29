@@ -305,10 +305,10 @@ int main()
 		-0.775F,   0.55F,  1.005F,  0.0F,  1.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
 		-0.475F,   0.55F,  1.025F,  0.0F,  1.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
 		-0.475F,   0.55F,  1.005F,  0.0F,  1.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
-		-0.725F,   0.47F,  1.0F,  1.0F,  1.0F, 1.0F, // rectangle simbol on the see-through mode activation button
-		-0.525F,   0.47F,  1.0F,  1.0F,  1.0F, 1.0F, 
-		-0.725F,   0.53F,  1.0F,  1.0F,  1.0F, 1.0F, 
-		-0.525F,   0.53F,  1.0F,  1.0F,  1.0F, 1.0F, 
+		-0.725F,   0.47F,  1.025F,  0.0F,  0.0F,  1.0F,  1.0F,  1.0F,  1.0F, 1.0F, // rectangle symbol on the see-through mode activation button
+		-0.525F,   0.47F,  1.025F,  0.0F,  0.0F,  1.0F,  1.0F,  1.0F,  1.0F, 1.0F, 
+		-0.725F,   0.53F,  1.025F,  0.0F,  0.0F,  1.0F,  1.0F,  1.0F,  1.0F, 1.0F, 
+		-0.525F,   0.53F,  1.025F,  0.0F,  0.0F,  1.0F,  1.0F,  1.0F,  1.0F, 1.0F, 
 		   0.1F,   0.65F, 0.75F, 0.75F, 0.75F, 1.0F, // "-" button, left of freezing chamber temperature widget
 		   0.2F,   0.65F, 0.75F, 0.75F, 0.75F, 1.0F, 
 		   0.1F,   0.75F, 0.75F, 0.75F, 0.75F, 1.0F, 
@@ -681,7 +681,7 @@ int main()
 			glEnable(GL_BLEND);
 			glDrawArrays(GL_TRIANGLE_STRIP, 4, 4);  // digital clock rectangle widget
 			glDrawArrays(GL_TRIANGLE_STRIP, 8, 4);  // see-through mode activation button
-			glDrawArrays(GL_TRIANGLE_STRIP, 12, 4); // rectangle simbol on the see-through mode activation button
+			glDrawArrays(GL_TRIANGLE_STRIP, 12, 4); // rectangle symbol on the see-through mode activation button
 			glDrawArrays(GL_TRIANGLE_STRIP, 16, 4); // "-" button, left of freezing chamber temperature widget
 			glDrawArrays(GL_LINES, 20, 2);          // line representing the "-" sign itself
 			glDrawArrays(GL_TRIANGLE_STRIP, 22, 4); // freezing chamber temperature widget
