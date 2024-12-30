@@ -751,13 +751,17 @@ int main()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(verticesOfGroceries), verticesOfGroceries, GL_STATIC_DRAW);
 	// Tell OpenGL how it should interpret vertex data, per vertex attribute.
 	// Position attribute.
-	glVertexAttribPointer(0U, 2, GL_FLOAT, GL_FALSE, 4U * sizeof(float), (void*) 0U);
+	glVertexAttribPointer(0U, 3, GL_FLOAT, GL_FALSE, 8U * sizeof(float), (void*) 0U);
 	// Enable vertex's position attribute.
 	glEnableVertexAttribArray(0U);
-	// Texture coordinates attribute.
-	glVertexAttribPointer(1U, 2, GL_FLOAT, GL_FALSE, 4U * sizeof(float), (void*) (2U * sizeof(float)));
-	// Enable vertex's texture coodinates attribute.
+	// Normal vector attribute.
+	glVertexAttribPointer(1U, 3, GL_FLOAT, GL_FALSE, 8U * sizeof(float), (void*) (3U * sizeof(float)));
+	// Enable vertex's normal vector attribute.
 	glEnableVertexAttribArray(1U);
+	// Texture coordinates attribute.
+	glVertexAttribPointer(2U, 2, GL_FLOAT, GL_FALSE, 8U * sizeof(float), (void*) (6U * sizeof(float)));
+	// Enable vertex's texture coodinates attribute.
+	glEnableVertexAttribArray(2U);
 
 	// Bind (assign) the newly created VAO to OpenGL's context.
 	glBindVertexArray(chambersVAO);
@@ -768,13 +772,17 @@ int main()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(verticesOfChambers), verticesOfChambers, GL_STATIC_DRAW);
 	// Tell OpenGL how it should interpret vertex data, per vertex attribute.
 	// Position attribute.
-	glVertexAttribPointer(0U, 2, GL_FLOAT, GL_FALSE, 6U * sizeof(float), (void*) 0U);
+	glVertexAttribPointer(0U, 3, GL_FLOAT, GL_FALSE, 10U * sizeof(float), (void*) 0U);
 	// Enable vertex's position attribute.
 	glEnableVertexAttribArray(0U);
-	// Color attribute.
-	glVertexAttribPointer(1U, 4, GL_FLOAT, GL_FALSE, 6U * sizeof(float), (void*) (2U * sizeof(float)));
-	// Enable vertex's color attribute.
+	// Normal vector attribute.
+	glVertexAttribPointer(1U, 3, GL_FLOAT, GL_FALSE, 10U * sizeof(float), (void*) (3U * sizeof(float)));
+	// Enable vertex's normal vector attribute.
 	glEnableVertexAttribArray(1U);
+	// Color attribute.
+	glVertexAttribPointer(2U, 4, GL_FLOAT, GL_FALSE, 10U * sizeof(float), (void*) (6U * sizeof(float)));
+	// Enable vertex's color attribute.
+	glEnableVertexAttribArray(2U);
 
 	// Bind (assign) the newly created VAO to OpenGL's context.
 	glBindVertexArray(refrigeratorVAO);
@@ -785,13 +793,17 @@ int main()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(verticesOfRefrigerator), verticesOfRefrigerator, GL_STATIC_DRAW);
 	// Tell OpenGL how it should interpret vertex data, per vertex attribute.
 	// Position attribute.
-	glVertexAttribPointer(0U, 2, GL_FLOAT, GL_FALSE, 6U * sizeof(float), (void*) 0U);
+	glVertexAttribPointer(0U, 3, GL_FLOAT, GL_FALSE, 10U * sizeof(float), (void*) 0U);
 	// Enable vertex's position attribute.
 	glEnableVertexAttribArray(0U);
-	// Color attribute.
-	glVertexAttribPointer(1U, 4, GL_FLOAT, GL_FALSE, 6U * sizeof(float), (void*) (2U * sizeof(float)));
-	// Enable vertex's color attribute.
+	// Normal vector attribute.
+	glVertexAttribPointer(1U, 3, GL_FLOAT, GL_FALSE, 10U * sizeof(float), (void*) (3U * sizeof(float)));
+	// Enable vertex's normal vector attribute.
 	glEnableVertexAttribArray(1U);
+	// Color attribute.
+	glVertexAttribPointer(2U, 4, GL_FLOAT, GL_FALSE, 10U * sizeof(float), (void*) (6U * sizeof(float)));
+	// Enable vertex's color attribute.
+	glEnableVertexAttribArray(2U);
 
 	// Bind (assign) the newly created VAO to OpenGL's context.
 	glBindVertexArray(textVAO);
