@@ -6,9 +6,19 @@
 #include "shader_program.hpp"
 #include "texture.hpp"
 #include "text.hpp"
+#include "camera.hpp"
 
 int windowWidth = 800;
 int windowHeight = 600;
+
+// All settings are kept in an instance of the camera class.
+Camera *camera = NULL;
+
+// Is this the first time the mouse entry is captured?
+bool firstMouseEntry = true;
+// Previous cursor position is initialized to the half of the window's size.
+float previousCursorPosX = static_cast<float>(windowWidth) / 2.0F;
+float previousCursorPosY = static_cast<float>(windowHeight) / 2.0F;
 
 // The current time (in seconds) after the initialization of the GLFW library.
 float currentFrameTime = 0.0F;
@@ -67,6 +77,7 @@ float seeThroughModeTurnedOn = false;
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void mouse_button_callback(GLFWwindow *window, int button, int action, int mods);
+void cursor_pos_callback(GLFWwindow *window, double xpos, double ypos);
 void processInput(GLFWwindow *window);
 
 int main()
@@ -97,6 +108,7 @@ int main()
 	// Register the callback functions.
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 	glfwSetMouseButtonCallback(window, mouse_button_callback);
+	glfwSetCursorPosCallback(window, cursor_pos_callback);
 
 	// Initialize the GLEW library.
 	if (glewInit() != GLEW_OK)
@@ -890,6 +902,9 @@ int main()
 		return 11;
 	}
 
+	// Create the camera with the specified position, front vector and up vector using the helper "Camera" class.
+	camera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+
 	glClearColor(0.1F, 0.1F, 0.1F, 1.0F);
 
 	glfwSetTime(0.0);
@@ -1182,6 +1197,9 @@ int main()
 		glfwPollEvents();
 	}
 
+	// On next drawing, reset first mouse entry indicator.
+	firstMouseEntry = true;
+
 	// REFERENCE: https://www.geeksforgeeks.org/destructors-c/
 	// De-allocate shader programs using their destructors.
 	delete shaderProgramForLogoText;
@@ -1306,6 +1324,39 @@ void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 			}
 		}
 	}
+}
+
+// Function that will be called every time the user moves the mouse while the application has focus.
+void cursor_pos_callback(GLFWwindow *window, double xpos, double ypos)
+{
+	// Calculate "camera's front" vector that acts as insurance that however the user moves the camera, it will always
+	// keep looking straight ahead.
+	// Math is explained below. In 2. thing needed to manually create the LookAt matrix - "camera's direction":
+	// glm::vec3 cameraTarget = cameraPosition + cameraFront;
+	// glm::vec3 cameraDirection = glm::normalize(cameraPosition - cameraTarget) = glm::normalize(-cameraFront);
+
+	// 0. step: if the mouse input is received for the first time, the previous cursor position should be set to the
+	// position in which the user entered the application's window. Offsets should be calculated based on that position
+	// of mentry. Wihout this added step, the camera would suddenly jump to the position of the entry with mouse, which
+	// is usually far away from the window's center.
+	float xPos = static_cast<float>(xpos);
+	float yPos = static_cast<float>(ypos);
+	if (firstMouseEntry)
+	{
+		previousCursorPosX = xPos;
+		previousCursorPosY = yPos;
+		firstMouseEntry = false;
+	}
+
+	// 1. step: calculate the mouse cursor's offset since the last frame.
+	float xOffset = xPos - previousCursorPosX;
+	// The order of subtraction is reversed, because the y-coordinates range from the bottom to the top.
+	float yOffset = previousCursorPosY - yPos;
+	previousCursorPosX = xPos;
+	previousCursorPosY = yPos;
+
+	// 2. step onward: done in the "Camera" class.
+	camera->processMovementOfMouse(xOffset, yOffset);
 }
 
 // Input processing function.
