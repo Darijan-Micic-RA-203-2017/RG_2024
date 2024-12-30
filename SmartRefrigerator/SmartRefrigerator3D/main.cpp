@@ -219,10 +219,42 @@ int main()
 		-0.5F,  0.24F, -0.8F,  0.0F,  1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
 		 0.5F,  0.24F,  0.8F,  0.0F,  1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
 		 0.5F,  0.24F, -0.8F,  0.0F,  1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
-		-0.5F,  -0.74F, 0.0F,  0.0F,  1.0F, 0.25F, // see-through, blue-tinted refrigerating chamber plastic
-		 0.5F,  -0.74F, 0.0F,  0.0F,  1.0F, 0.25F, 
-		-0.5F,  -0.26F, 0.0F,  0.0F,  1.0F, 0.25F, 
-		 0.5F,  -0.26F, 0.0F,  0.0F,  1.0F, 0.25F
+		-0.5F, -0.74F, -0.8F,  0.0F,  0.0F, -1.0F, 0.0F, 0.0F, 1.0F, 0.25F, // see-through, blue-tinted refrigerating chamber plastic
+		 0.5F, -0.74F, -0.8F,  0.0F,  0.0F, -1.0F, 0.0F, 0.0F, 1.0F, 0.25F, // - back side
+		-0.5F, -0.26F, -0.8F,  0.0F,  0.0F, -1.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+		-0.5F, -0.26F, -0.8F,  0.0F,  0.0F, -1.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+		 0.5F, -0.74F, -0.8F,  0.0F,  0.0F, -1.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+		 0.5F, -0.26F, -0.8F,  0.0F,  0.0F, -1.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+		-0.5F, -0.74F,  0.8F,  0.0F,  0.0F,  1.0F, 0.0F, 0.0F, 1.0F, 0.25F, // see-through, blue-tinted refrigerating chamber plastic
+		 0.5F, -0.74F,  0.8F,  0.0F,  0.0F,  1.0F, 0.0F, 0.0F, 1.0F, 0.25F, // - front side
+		-0.5F, -0.26F,  0.8F,  0.0F,  0.0F,  1.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+		-0.5F, -0.26F,  0.8F,  0.0F,  0.0F,  1.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+		 0.5F, -0.74F,  0.8F,  0.0F,  0.0F,  1.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+		 0.5F, -0.26F,  0.8F,  0.0F,  0.0F,  1.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+		-0.5F, -0.74F, -0.8F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // see-through, blue-tinted refrigerating chamber plastic
+		-0.5F, -0.74F,  0.8F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // - left side
+		-0.5F, -0.26F, -0.8F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+		-0.5F, -0.26F, -0.8F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+		-0.5F, -0.74F,  0.8F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+		-0.5F, -0.26F,  0.8F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+		 0.5F, -0.74F,  0.8F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // see-through, blue-tinted refrigerating chamber plastic
+		 0.5F, -0.74F, -0.8F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // - right side
+		 0.5F, -0.26F,  0.8F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+		 0.5F, -0.26F,  0.8F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+		 0.5F, -0.74F, -0.8F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+		 0.5F, -0.26F, -0.8F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+		-0.5F, -0.74F, -0.8F,  0.0F, -1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // see-through, blue-tinted refrigerating chamber plastic
+		 0.5F, -0.74F, -0.8F,  0.0F, -1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // - bottom side
+		-0.5F, -0.74F,  0.8F,  0.0F, -1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+		-0.5F, -0.74F,  0.8F,  0.0F, -1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+		 0.5F, -0.74F, -0.8F,  0.0F, -1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+		 0.5F, -0.74F,  0.8F,  0.0F, -1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+		-0.5F, -0.26F,  0.8F,  0.0F,  1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // see-through, blue-tinted refrigerating chamber plastic
+		 0.5F, -0.26F,  0.8F,  0.0F,  1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // - top side
+		-0.5F, -0.26F, -0.8F,  0.0F,  1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+		-0.5F, -0.26F, -0.8F,  0.0F,  1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+		 0.5F, -0.26F,  0.8F,  0.0F,  1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+		 0.5F, -0.26F, -0.8F,  0.0F,  1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F
 	};
 	// 36 vertices are needed to render the cube (6 sides * 2 triangles per side * 3 vertices for each triangle).
 	float verticesOfRefrigerator[] = {
