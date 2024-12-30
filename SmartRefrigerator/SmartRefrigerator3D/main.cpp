@@ -424,12 +424,44 @@ int main()
 		  0.73F,    0.7F,  1.025F,  0.0F,  0.0F,  1.0F,  1.0F,  1.0F,  1.0F, 1.0F, 
 		   0.7F,   0.67F,  1.025F,  0.0F,  0.0F,  1.0F,  1.0F,  1.0F,  1.0F, 1.0F, 
 		   0.7F,   0.73F,  1.025F,  0.0F,  0.0F,  1.0F,  1.0F,  1.0F,  1.0F, 1.0F, 
-		   0.1F,   0.45F, 0.75F, 0.75F, 0.75F, 1.0F, // "-" button, left of refrigerating chamber temperature widget
-		   0.2F,   0.45F, 0.75F, 0.75F, 0.75F, 1.0F, 
-		   0.1F,   0.55F, 0.75F, 0.75F, 0.75F, 1.0F, 
-		   0.2F,   0.55F, 0.75F, 0.75F, 0.75F, 1.0F, 
-		  0.12F,    0.5F,  1.0F,  1.0F,  1.0F, 1.0F, // line representing the "-" sign itself
-		  0.18F,    0.5F,  1.0F,  1.0F,  1.0F, 1.0F, 
+		   0.1F,   0.45F,  1.005F,  0.0F,  0.0F, -1.0F, 0.75F, 0.75F, 0.75F, 1.0F, // "-" button, left of refrigerating chamber temperature widget
+		   0.2F,   0.45F,  1.005F,  0.0F,  0.0F, -1.0F, 0.75F, 0.75F, 0.75F, 1.0F, // - back side
+		   0.1F,   0.55F,  1.005F,  0.0F,  0.0F, -1.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.1F,   0.55F,  1.005F,  0.0F,  0.0F, -1.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.2F,   0.45F,  1.005F,  0.0F,  0.0F, -1.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.2F,   0.55F,  1.005F,  0.0F,  0.0F, -1.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.1F,   0.45F,  1.025F,  0.0F,  0.0F,  1.0F, 0.75F, 0.75F, 0.75F, 1.0F, // "-" button, left of refrigerating chamber temperature widget
+		   0.2F,   0.45F,  1.025F,  0.0F,  0.0F,  1.0F, 0.75F, 0.75F, 0.75F, 1.0F, // - front side
+		   0.1F,   0.55F,  1.025F,  0.0F,  0.0F,  1.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.1F,   0.55F,  1.025F,  0.0F,  0.0F,  1.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.2F,   0.45F,  1.025F,  0.0F,  0.0F,  1.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.2F,   0.55F,  1.025F,  0.0F,  0.0F,  1.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.1F,   0.45F,  1.005F, -1.0F,  0.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, // "-" button, left of refrigerating chamber temperature widget
+		   0.1F,   0.45F,  1.025F, -1.0F,  0.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, // - left side
+		   0.1F,   0.55F,  1.005F, -1.0F,  0.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.1F,   0.55F,  1.005F, -1.0F,  0.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.1F,   0.45F,  1.025F, -1.0F,  0.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.1F,   0.55F,  1.025F, -1.0F,  0.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.2F,   0.45F,  1.025F,  1.0F,  0.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, // "-" button, left of refrigerating chamber temperature widget
+		   0.2F,   0.45F,  1.005F,  1.0F,  0.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, // - right side
+		   0.2F,   0.55F,  1.025F,  1.0F,  0.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.2F,   0.55F,  1.025F,  1.0F,  0.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.2F,   0.45F,  1.005F,  1.0F,  0.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.2F,   0.55F,  1.005F,  1.0F,  0.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.1F,   0.45F,  1.005F,  0.0F, -1.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, // "-" button, left of refrigerating chamber temperature widget
+		   0.2F,   0.45F,  1.005F,  0.0F, -1.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, // - bottom side
+		   0.1F,   0.45F,  1.025F,  0.0F, -1.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.1F,   0.45F,  1.025F,  0.0F, -1.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.2F,   0.45F,  1.005F,  0.0F, -1.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.2F,   0.45F,  1.025F,  0.0F, -1.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.1F,   0.55F,  1.025F,  0.0F,  1.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, // "-" button, left of refrigerating chamber temperature widget
+		   0.2F,   0.55F,  1.025F,  0.0F,  1.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, // - top side
+		   0.1F,   0.55F,  1.005F,  0.0F,  1.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.1F,   0.55F,  1.005F,  0.0F,  1.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.2F,   0.55F,  1.025F,  0.0F,  1.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.2F,   0.55F,  1.005F,  0.0F,  1.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		  0.12F,    0.5F,  1.025F,  0.0F,  0.0F,  1.0F,  1.0F,  1.0F,  1.0F, 1.0F, // line representing the "-" sign itself
+		  0.18F,    0.5F,  1.025F,  0.0F,  0.0F,  1.0F,  1.0F,  1.0F,  1.0F, 1.0F, 
 		// (0.2250F + 0.4625F = 0.6875F) * windowWidth, 0.7325F * windowHeight
 		 0.225F,  0.425F,  0.0F, 0.75F, 0.75F, 1.0F, // refrigerating chamber temperature widget
 		 0.625F,  0.425F,  0.0F, 0.75F, 0.75F, 1.0F, 
