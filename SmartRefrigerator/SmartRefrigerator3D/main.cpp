@@ -120,6 +120,9 @@ int main()
 	}
 
 	// Configure the global OpenGL state.
+
+	// Enable the depth testing.
+	glEnable(GL_DEPTH_TEST);
 	// Set the blending function. Its parameters:
 	// 1) the source color factor - the factor of the output variable of the fragment shader;
 	// 2) the destination color factor - the factor of the color of the fragment we are drawing over.
@@ -932,7 +935,7 @@ int main()
 		processInput(window);
 
 		// Third part: rendering commands.
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		if (logoModeTurnedOn)
 		{
