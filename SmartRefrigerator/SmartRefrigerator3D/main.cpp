@@ -161,12 +161,44 @@ int main()
 	// A neat trick can be used to calculate the normal vectors for all the cube's vertices by using the cross product.
 	// However, the cube is a simple shape, so the normal vectors can simply be manually added to the vertex data.
 	float verticesOfGroceries[] = {
-		// position  // texture coordinates
+		// position           // normal vector     // texture coordinates
 		// in the freezing chamber
-		-0.45F, -0.2F, 0.0F, 0.0F, // left fish sticks package
-		-0.05F, -0.2F, 1.0F, 0.0F, 
-		-0.45F,  0.2F, 0.0F, 1.0F, 
-		-0.05F,  0.2F, 1.0F, 1.0F, 
+		-0.45F, -0.2F,  0.3F,  0.0F,  0.0F, -1.0F, 0.0F, 0.0F, // left fish sticks package
+		-0.05F, -0.2F,  0.3F,  0.0F,  0.0F, -1.0F, 1.0F, 0.0F, // - back side
+		-0.45F,  0.2F,  0.3F,  0.0F,  0.0F, -1.0F, 0.0F, 1.0F, 
+		-0.45F,  0.2F,  0.3F,  0.0F,  0.0F, -1.0F, 1.0F, 1.0F, 
+		-0.05F, -0.2F,  0.3F,  0.0F,  0.0F, -1.0F, 0.0F, 1.0F, 
+		-0.05F,  0.2F,  0.3F,  0.0F,  0.0F, -1.0F, 1.0F, 1.0F, 
+		-0.45F, -0.2F,  0.6F,  0.0F,  0.0F,  1.0F, 0.0F, 0.0F, // left fish sticks package
+		-0.05F, -0.2F,  0.6F,  0.0F,  0.0F,  1.0F, 1.0F, 0.0F, // - front side
+		-0.45F,  0.2F,  0.6F,  0.0F,  0.0F,  1.0F, 0.0F, 1.0F, 
+		-0.45F,  0.2F,  0.6F,  0.0F,  0.0F,  1.0F, 1.0F, 1.0F, 
+		-0.05F, -0.2F,  0.6F,  0.0F,  0.0F,  1.0F, 0.0F, 1.0F, 
+		-0.05F,  0.2F,  0.6F,  0.0F,  0.0F,  1.0F, 1.0F, 1.0F, 
+		-0.45F, -0.2F,  0.3F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, // left fish sticks package
+		-0.45F, -0.2F,  0.6F, -1.0F,  0.0F,  0.0F, 1.0F, 0.0F, // - left side
+		-0.45F,  0.2F,  0.3F, -1.0F,  0.0F,  0.0F, 0.0F, 1.0F, 
+		-0.45F,  0.2F,  0.3F, -1.0F,  0.0F,  0.0F, 1.0F, 1.0F, 
+		-0.45F, -0.2F,  0.6F, -1.0F,  0.0F,  0.0F, 0.0F, 1.0F, 
+		-0.45F,  0.2F,  0.6F, -1.0F,  0.0F,  0.0F, 1.0F, 1.0F, 
+		-0.05F, -0.2F,  0.6F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, // left fish sticks package
+		-0.05F, -0.2F,  0.3F,  1.0F,  0.0F,  0.0F, 1.0F, 0.0F, // - right side
+		-0.05F,  0.2F,  0.6F,  1.0F,  0.0F,  0.0F, 0.0F, 1.0F, 
+		-0.05F,  0.2F,  0.6F,  1.0F,  0.0F,  0.0F, 1.0F, 1.0F, 
+		-0.05F, -0.2F,  0.3F,  1.0F,  0.0F,  0.0F, 0.0F, 1.0F, 
+		-0.05F,  0.2F,  0.3F,  1.0F,  0.0F,  0.0F, 1.0F, 1.0F, 
+		-0.45F, -0.2F,  0.3F,  0.0F, -1.0F,  0.0F, 0.0F, 0.0F, // left fish sticks package
+		-0.05F, -0.2F,  0.3F,  0.0F, -1.0F,  0.0F, 1.0F, 0.0F, // - bottom side
+		-0.45F, -0.2F,  0.6F,  0.0F, -1.0F,  0.0F, 0.0F, 1.0F, 
+		-0.45F, -0.2F,  0.6F,  0.0F, -1.0F,  0.0F, 1.0F, 1.0F, 
+		-0.05F, -0.2F,  0.3F,  0.0F, -1.0F,  0.0F, 0.0F, 1.0F, 
+		-0.05F, -0.2F,  0.6F,  0.0F, -1.0F,  0.0F, 1.0F, 1.0F, 
+		-0.45F,  0.2F,  0.6F,  0.0F,  1.0F,  0.0F, 0.0F, 0.0F, // left fish sticks package
+		-0.05F,  0.2F,  0.6F,  0.0F,  1.0F,  0.0F, 1.0F, 0.0F, // - top side
+		-0.45F,  0.2F,  0.3F,  0.0F,  1.0F,  0.0F, 0.0F, 1.0F, 
+		-0.45F,  0.2F,  0.3F,  0.0F,  1.0F,  0.0F, 1.0F, 1.0F, 
+		-0.05F,  0.2F,  0.6F,  0.0F,  1.0F,  0.0F, 0.0F, 1.0F, 
+		-0.05F,  0.2F,  0.3F,  0.0F,  1.0F,  0.0F, 1.0F, 1.0F, 
 		 0.05F, -0.2F, 0.0F, 0.0F, // right fish sticks package
 		 0.45F, -0.2F, 1.0F, 0.0F, 
 		 0.05F,  0.2F, 0.0F, 1.0F, 
