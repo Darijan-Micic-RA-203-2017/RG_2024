@@ -94,7 +94,7 @@ public:
 	}
 
 	// Utility function for processing the keyboard input.
-	void processKeyboardInput(std::string key, float deltaTime)
+	void processInputFromKeyboard(std::string key, float deltaTime)
 	{
 		// The camera will move at a constant speed of 2.5 units per second.
 		float speedOfCamera = 2.5F * deltaTime;
