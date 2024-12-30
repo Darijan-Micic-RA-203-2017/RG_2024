@@ -131,12 +131,12 @@ public:
 	}
 
 	// Utility function for processing the mouse movement, starting from the 2. step of calculating the "camera's front"
-	// vector. The "Camera's front" vector acts as insurance that however the user moves the camera, it will always keep
-	// lookin straight ahead.
+	// vector. The "camera's front" vector acts as insurance that however the user moves the camera, it will always keep
+	// looking straight ahead.
 	// Math is explained below. In 2. thing needed to manually create the LookAt matrix - the "camera's direction":
 	// glm::vec3 cameraTarget = cameraPosition + cameraFront;
 	// glm::vec3 cameraDirection = glm::normalize(cameraPosition - cameraTarget) = glm::normalize(-cameraFront);.
-	void processMouseMovement(float xoffset, float yoffset)
+	void processMovementOfMouse(float xoffset, float yoffset)
 	{
 		// 2. step: add the offset values to the camera's pitch and yaw angles.
 		// The mouse movement would be too erratic if it had not been scaled by a sensitivity variable.
