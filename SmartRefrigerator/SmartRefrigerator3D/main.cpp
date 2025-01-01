@@ -877,36 +877,14 @@ int main()
 	shaderProgramForNonlogoText->useProgram();
 	// Tell OpenGL to which texture unit each shader sampler belongs to, by setting each sampler.
 	shaderProgramForNonlogoText->setIntegerUniform("text", 0);
-	// Retrieve the location of the uniform variable "projectionMatrix" in the shader program for nonlogo text.
-	// This doesn't require the activation of the shader program.
-	int locationOfProjectionMatrix = glGetUniformLocation(shaderProgramForNonlogoText->id, "projectionMatrix");
-	// If the uniform variable's location wasn't found, the "glGetUniformLocation" function returns -1.
-	if (locationOfProjectionMatrix == -1)
-	{
-		std::cout << "Location of uniform variable \"projectionMatrix\" wasn't found!" << std::endl;
-		glfwTerminate();
-
-		return 11;
-	}
 	// Activate the desired shader program.
 	// Every shader and rendering call from now on will use this shader program object.
 	shaderProgramForLogoText->useProgram();
 	// Tell OpenGL to which texture unit each shader sampler belongs to, by setting each sampler.
 	shaderProgramForLogoText->setIntegerUniform("text", 0);
-	// Retrieve the location of the uniform variable "projectionMatrix" in the shader program for logo text.
-	// This doesn't require the activation of the shader program.
-	locationOfProjectionMatrix = glGetUniformLocation(shaderProgramForLogoText->id, "projectionMatrix");
-	// If the uniform variable's location wasn't found, the "glGetUniformLocation" function returns -1.
-	if (locationOfProjectionMatrix == -1)
-	{
-		std::cout << "Location of uniform variable \"projectionMatrix\" wasn't found!" << std::endl;
-		glfwTerminate();
-
-		return 11;
-	}
 
 	// Create the camera with the specified position, front vector and up vector using the helper "Camera" class.
-	camera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	camera = new Camera(glm::vec3(0.0F, 0.0F, 3.0F), glm::vec3(0.0F, 0.0F, -1.0F), glm::vec3(0.0F, 1.0F, 0.0F));
 
 	glClearColor(0.1F, 0.1F, 0.1F, 1.0F);
 
@@ -954,8 +932,7 @@ int main()
 			glm::mat4 projectionMatrix = 
 				glm::ortho(0.0F, static_cast<float>(windowWidth), 0.0F, static_cast<float>(windowHeight));
 			// Set the projection matrix. This matrix changes each frame.
-			glUniformMatrix4fv(glGetUniformLocation(shaderProgramForLogoText->id, "projectionMatrix"), 
-				1, GL_FALSE, &projectionMatrix[0U][0U]);
+			shaderProgramForLogoText->setFloatMat4Uniform("projectionMatrix", projectionMatrix);
 
 			// Set the current window width uniform.
 			shaderProgramForLogoText->setFloatUniform("windowWidth", static_cast<float>(windowWidth));
@@ -1092,6 +1069,7 @@ int main()
 			// Always turn on the blending when rendering the graphical elements and text, due to the way the "FreeType"
 			// library is implemented.
 			glEnable(GL_BLEND);
+
 			glDrawArrays(GL_TRIANGLE_STRIP, 4, 4);  // digital clock rectangle widget
 			glDrawArrays(GL_TRIANGLE_STRIP, 8, 4);  // see-through mode activation button
 			glDrawArrays(GL_TRIANGLE_STRIP, 12, 4); // rectangle symbol on the see-through mode activation button
@@ -1120,8 +1098,7 @@ int main()
 			glm::mat4 projectionMatrix = 
 				glm::ortho(0.0F, static_cast<float>(windowWidth), 0.0F, static_cast<float>(windowHeight));
 			// Set the projection matrix. This matrix changes each frame.
-			glUniformMatrix4fv(glGetUniformLocation(shaderProgramForNonlogoText->id, "projectionMatrix"), 
-				1, GL_FALSE, &projectionMatrix[0U][0U]);
+			shaderProgramForNonlogoText->setFloatMat4Uniform("projectionMatrix", projectionMatrix);
 
 			// REFERENCE: https://labex.io/tutorials/c-creating-a-simple-clock-animation-using-opengl-298829
 			time_t rawTime;
@@ -1189,6 +1166,27 @@ int main()
 
 		// Enable blending. FreeType library requires blending to be enabled in order to properly show glyphs.
 		glEnable(GL_BLEND);
+
+		// Activate the desired shader program.
+			// Every shader and rendering call from now on will use this shader program object.
+		shaderProgramForNonlogoText->useProgram();
+
+		// Text rendering usually does not require the use of the perspective projection. Therefore, an ortographic
+		// projection matrix will suffice. Using an orthographic projection matrix also allows all vertex
+		// coordinates to be specified in screen-space coordinates. In order to take advantage of this, the
+		// projection matrix needs to be set up this way:
+		// glm::mat4 projectionMatrix = glm::ortho(0.0F, windowWidth, 0.0F, windowHeight).
+		// The result is that coordinates can be specified with y-values ranging from the bottom part of the screen
+		// (0.0F) to the top part of the screen (window's height). The point (0.0F, 0.0F) now corresponds to the
+		// bottom-left corner.
+		glm::mat4 projectionMatrix = 
+			glm::ortho(0.0F, static_cast<float>(windowWidth), 0.0F, static_cast<float>(windowHeight));
+		// Set the projection matrix. This matrix changes each frame.
+		shaderProgramForNonlogoText->setFloatMat4Uniform("projectionMatrix", projectionMatrix);
+
+		// Set the current window width uniform.
+		shaderProgramForNonlogoText->setFloatUniform("windowWidth", static_cast<float>(windowWidth));
+
 		// Render the author's signature in the bottom left corner of the screen space, scale it 2/3 times and paint it
 		// yellow.
 		timesNewRomanFont.renderText(*shaderProgramForNonlogoText, "Darijan Micic, RA 203/2017", 
