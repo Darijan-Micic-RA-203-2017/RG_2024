@@ -18,7 +18,7 @@ class Font
 {
 private:
 	// Generate the texture for the loaded character glyph.
-	unsigned int generateTextureForLoadedGlyph(FT_Face& face)
+	unsigned int generateTextureForLoadedGlyph(FT_Face &face)
 	{
 		unsigned int textureID;
 		// Create memory on the GPU where the texture will be stored.
@@ -168,7 +168,7 @@ public:
 	}
 
 	// Renders text, with position (x, y) being the encompassing text quad's bottom left corner.
-	void renderText(ShaderProgram& shaderProgram, std::string text, float x, float y, float scale, glm::vec3 color)
+	void renderText(ShaderProgram &shaderProgram, std::string text, float x, float y, float scale, glm::vec3 color)
 	{
 		// Activate the corresponding render state.
 		shaderProgram.useProgram();
