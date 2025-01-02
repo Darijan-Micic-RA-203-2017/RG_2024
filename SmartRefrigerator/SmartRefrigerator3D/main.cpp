@@ -110,6 +110,10 @@ int main()
 	glfwSetMouseButtonCallback(window, mouse_button_callback);
 	glfwSetCursorPosCallback(window, cursor_pos_callback);
 
+	// Tell the GLFW library to capture and hide the mouse cursor. Capturing the mouse cursor means fixating it to the
+	// center of the application's window and only letting it move if the application loses focus or quits.
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
 	// Initialize the GLEW library.
 	if (glewInit() != GLEW_OK)
 	{
@@ -1188,11 +1192,17 @@ int main()
 				logoModeTurnedOn = true;
 				graphicalModeTurnedOn = false;
 
+				// Tell the GLFW library to release and show the mouse cursor, which is its normal mode.
+				glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+				// Reset the first mouse entry indicator to prevent the possible disappearance of the refrigerator from
+				// the camera's view frustum.
+				firstMouseEntry = true;
+
 				// Activate the desired shader program.
 				// Every shader and rendering call from now on will use this shader program object.
 				shaderProgramForChamber->useProgram();
 
-				// Update see-through mode global varible and uniform.
+				// Update see-through mode global variable and uniform.
 				seeThroughModeTurnedOn = false;
 				shaderProgramForChamber->setBoolUniform("seeThroughModeTurnedOn", seeThroughModeTurnedOn);
 			}
@@ -1232,7 +1242,7 @@ int main()
 		glfwPollEvents();
 	}
 
-	// On next drawing, reset first mouse entry indicator.
+	// In case the application's window gets launched again, reset the first mouse entry indicator.
 	firstMouseEntry = true;
 
 	// REFERENCE: https://www.geeksforgeeks.org/destructors-c/
@@ -1272,6 +1282,9 @@ void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 			seeThroughModeTurnedOn = false;
 			// Initialize the graphical mode activation timestamp with the current time.
 			timeWhenGraphicalModeWasActivated = static_cast<float>(glfwGetTime());
+			// Tell the GLFW library to capture and hide the mouse cursor. Capturing the mouse cursor means fixating it
+			// to the center of the application's window and only letting it move if the application loses focus or quits.
+			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 			return;
 		}
