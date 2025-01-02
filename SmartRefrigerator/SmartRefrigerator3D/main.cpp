@@ -174,11 +174,15 @@ int main()
 		return shaderProgramForLogoText->errorCode;
 	}
 
+	// Draw only the lines connecting the vertices. In other words, activate "the wireframe" mode.
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
 	// Vertices in the normalized device coordinates system (from -1.0F to 1.0F).
 	// Since the vertex by itself doesn't have a surface (the vertex is simply a single point in space), its surrounding
 	// vertices need to be used to figure out the surface of the vertex in question.
 	// A neat trick can be used to calculate the normal vectors for all the cube's vertices by using the cross product.
 	// However, the cube is a simple shape, so the normal vectors can simply be manually added to the vertex data.
+	// 36 vertices are needed to render the cube (6 sides * 2 triangles per side * 3 vertices for each triangle).
 	float verticesOfGroceries[] = {
 		// position           // normal vector     // texture coordinates
 		// in the freezing chamber
@@ -403,7 +407,6 @@ int main()
 		 0.5F, -0.26F,  0.8F,  0.0F,  1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
 		 0.5F, -0.26F, -0.8F,  0.0F,  1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F
 	};
-	// 36 vertices are needed to render the cube (6 sides * 2 triangles per side * 3 vertices for each triangle).
 	float verticesOfRefrigerator[] = {
 		// position              // normal vector     // color
 		  -0.8F,   -0.8F, -1.0F,  0.0F,  0.0F, -1.0F, 0.9F,  0.9F,  0.9F,  0.5F, // refrigerator doors
@@ -1041,16 +1044,16 @@ int main()
 			shaderProgramForGrocery->setBoolUniform("groceryInsideFreezer", groceryInsideFreezer);
 
 			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
-			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4); // left fish sticks package
-			glDrawArrays(GL_TRIANGLE_STRIP, 4, 4); // right fish sticks package
+			glDrawArrays(GL_TRIANGLES, 0, 36);  // left fish sticks package
+			glDrawArrays(GL_TRIANGLES, 36, 36); // right fish sticks package
 
 			// Set the grocery inside freezer uniform.
 			groceryInsideFreezer = !groceryInsideFreezer;
 			shaderProgramForGrocery->setBoolUniform("groceryInsideFreezer", groceryInsideFreezer);
 
 			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
-			glDrawArrays(GL_TRIANGLE_STRIP, 8, 4);  // left milk carton box
-			glDrawArrays(GL_TRIANGLE_STRIP, 12, 4); // right milk carton box
+			glDrawArrays(GL_TRIANGLES, 72, 36);  // left milk carton box
+			glDrawArrays(GL_TRIANGLES, 108, 36); // right milk carton box
 
 			// Depending on whether the see-through mode is turned on or off, render the chambers and the refrigerator
 			// doors differently.
@@ -1086,8 +1089,8 @@ int main()
 			// Bind (assign) the desired VAO to OpenGL's context.
 			glBindVertexArray(chambersVAO);
 			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
-			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4); // see-through, blue-tinted freezing chamber plastic
-			glDrawArrays(GL_TRIANGLE_STRIP, 4, 4); // see-through, blue-tinted refrigerating chamber plastic
+			glDrawArrays(GL_TRIANGLES, 0, 36);  // see-through, blue-tinted freezing chamber plastic
+			glDrawArrays(GL_TRIANGLES, 36, 36); // see-through, blue-tinted refrigerating chamber plastic
 
 			// Activate the desired shader program.
 			// Every shader and rendering call from now on will use this shader program object.
@@ -1103,25 +1106,25 @@ int main()
 			// Bind (assign) the desired VAO to OpenGL's context.
 			glBindVertexArray(refrigeratorVAO);
 			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
-			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);  // refrigerator doors
+			glDrawArrays(GL_TRIANGLES, 0, 36);   // refrigerator doors
 
 			// Always turn on the blending when rendering the graphical elements and text, due to the way the "FreeType"
 			// library is implemented.
 			glEnable(GL_BLEND);
 
-			glDrawArrays(GL_TRIANGLE_STRIP, 4, 4);  // digital clock rectangle widget
-			glDrawArrays(GL_TRIANGLE_STRIP, 8, 4);  // see-through mode activation button
-			glDrawArrays(GL_TRIANGLE_STRIP, 12, 4); // rectangle symbol on the see-through mode activation button
-			glDrawArrays(GL_TRIANGLE_STRIP, 16, 4); // "-" button, left of freezing chamber temperature widget
-			glDrawArrays(GL_LINES, 20, 2);          // line representing the "-" sign itself
-			glDrawArrays(GL_TRIANGLE_STRIP, 22, 4); // freezing chamber temperature widget
-			glDrawArrays(GL_TRIANGLE_STRIP, 26, 4); // "+" button, left of freezing chamber temperature widget
-			glDrawArrays(GL_LINES, 30, 4);          // line representing the "+" sign itself
-			glDrawArrays(GL_TRIANGLE_STRIP, 34, 4);  // "-" button, left of refrigerating chamber temperature widget
-			glDrawArrays(GL_LINES, 38, 2);          // line representing the "-" sign itself
-			glDrawArrays(GL_TRIANGLE_STRIP, 40, 4); // refrigerating chamber temperature widget
-			glDrawArrays(GL_TRIANGLE_STRIP, 44, 4); // "+" button, left of refrigerating chamber temperature widget
-			glDrawArrays(GL_LINES, 48, 4);          // line representing the "+" sign itself
+			glDrawArrays(GL_TRIANGLES, 36, 36);  // digital clock rectangle widget
+			glDrawArrays(GL_TRIANGLES, 72, 36);  // see-through mode activation button
+			glDrawArrays(GL_TRIANGLES, 108, 36); // rectangle symbol on the see-through mode activation button
+			glDrawArrays(GL_TRIANGLES, 144, 36); // "-" button, left of freezing chamber temperature widget
+			glDrawArrays(GL_LINES, 170, 2);      // line representing the "-" sign itself
+			glDrawArrays(GL_TRIANGLES, 172, 36); // freezing chamber temperature widget
+			glDrawArrays(GL_TRIANGLES, 208, 36); // "+" button, left of freezing chamber temperature widget
+			glDrawArrays(GL_LINES, 244, 4);      // line representing the "+" sign itself
+			glDrawArrays(GL_TRIANGLES, 248, 36); // "-" button, left of refrigerating chamber temperature widget
+			glDrawArrays(GL_LINES, 284, 2);      // line representing the "-" sign itself
+			glDrawArrays(GL_TRIANGLES, 286, 36); // refrigerating chamber temperature widget
+			glDrawArrays(GL_TRIANGLES, 322, 36); // "+" button, left of refrigerating chamber temperature widget
+			glDrawArrays(GL_LINES, 358, 4);      // line representing the "+" sign itself
 
 			// Activate the desired shader program.
 			// Every shader and rendering call from now on will use this shader program object.
