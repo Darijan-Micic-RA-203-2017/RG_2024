@@ -1406,6 +1406,32 @@ void processInput(GLFWwindow *window)
 
 	if (!logoModeTurnedOn)
 	{
+		// Move the camera.
+		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+		{
+			camera->processInputFromKeyboard("W", deltaTime);
+
+			return;
+		}
+		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+		{
+			camera->processInputFromKeyboard("S", deltaTime);
+
+			return;
+		}
+		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+		{
+			camera->processInputFromKeyboard("A", deltaTime);
+
+			return;
+		}
+		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+		{
+			camera->processInputFromKeyboard("D", deltaTime);
+
+			return;
+		}
+
 		return;
 	}
 	
@@ -1519,32 +1545,6 @@ void processInput(GLFWwindow *window)
 		logoNeedsToMoveLeftRightBetweenEdges = true;
 		shaderProgramForLogoText->setBoolUniform("logoNeedsToMoveLeftRightBetweenEdges", logoNeedsToMoveLeftRightBetweenEdges);
 		logoNowNeedsToMoveTowardsLeftEdge = true;
-
-		return;
-	}
-
-	// Move the camera.
-	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-	{
-		camera->processInputFromKeyboard("W", deltaTime);
-
-		return;
-	}
-	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-	{
-		camera->processInputFromKeyboard("S", deltaTime);
-
-		return;
-	}
-	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-	{
-		camera->processInputFromKeyboard("A", deltaTime);
-
-		return;
-	}
-	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-	{
-		camera->processInputFromKeyboard("D", deltaTime);
 
 		return;
 	}
