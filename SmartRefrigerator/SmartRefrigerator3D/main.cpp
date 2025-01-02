@@ -1008,6 +1008,27 @@ int main()
 			glActiveTexture(GL_TEXTURE1);
 			glBindTexture(GL_TEXTURE_2D, milkCartonBox.id);
 
+			// The projection matrix transforms the view-space coordinates to the clip-space coordinates.
+			// The projection that will be used is the perspective projection with the varying field of view (FOV) that
+			// the user sets by scrolling, 0.1F near plane and 100.0F far plane. The ratio of the window's width and
+			// height is called the aspect ratio.
+			glm::mat4 projectionMatrix = glm::perspective(glm::radians(camera->fov), 
+				static_cast<float>(windowWidth) / static_cast<float>(windowHeight), 0.1F, 100.0F);
+			// Set the projection matrix. This matrix changes each frame.
+			shaderProgramForGrocery->setFloatMat4Uniform("projectionMatrix", projectionMatrix);
+
+			// The view matrix transforms the world-space coordinates to the view-space coordinates.
+			// The world (scene) will be transformed by moving the camera using the keyboard.
+			glm::mat4 viewMatrix = camera->getCalculatedViewMatrix();
+			// Set the view matrix. This matrix changes each frame.
+			shaderProgramForGrocery->setFloatMat4Uniform("viewMatrix", viewMatrix);
+
+			// The model matrix transforms the local-space coordinates to the world-space coordinates.
+			// The model matrix is simply an identity matrix, no transformation is applied.
+			glm::mat4 modelMatrix = glm::mat4(1.0F);
+			// Set the model matrix. This matrix changes each frame.
+			shaderProgramForGrocery->setFloatMat4Uniform("modelMatrix", modelMatrix);
+
 			// Bind (assign) the desired VAO to OpenGL's context.
 			glBindVertexArray(groceriesVAO);
 
@@ -1042,6 +1063,13 @@ int main()
 			// Every shader and rendering call from now on will use this shader program object.
 			shaderProgramForChamber->useProgram();
 
+			// Set the projection matrix. This matrix changes each frame.
+			shaderProgramForChamber->setFloatMat4Uniform("projectionMatrix", projectionMatrix);
+			// Set the view matrix. This matrix changes each frame.
+			shaderProgramForChamber->setFloatMat4Uniform("viewMatrix", viewMatrix);
+			// Set the model matrix. This matrix changes each frame.
+			shaderProgramForChamber->setFloatMat4Uniform("modelMatrix", modelMatrix);
+
 			// Set the current window width and height uniforms.
 			shaderProgramForChamber->setFloatUniform("windowWidth", static_cast<float>(windowWidth));
 			shaderProgramForChamber->setFloatUniform("windowHeight", static_cast<float>(windowHeight));
@@ -1060,6 +1088,13 @@ int main()
 			// Activate the desired shader program.
 			// Every shader and rendering call from now on will use this shader program object.
 			shaderProgramForRefrigerator->useProgram();
+
+			// Set the projection matrix. This matrix changes each frame.
+			shaderProgramForRefrigerator->setFloatMat4Uniform("projectionMatrix", projectionMatrix);
+			// Set the view matrix. This matrix changes each frame.
+			shaderProgramForRefrigerator->setFloatMat4Uniform("viewMatrix", viewMatrix);
+			// Set the model matrix. This matrix changes each frame.
+			shaderProgramForRefrigerator->setFloatMat4Uniform("modelMatrix", modelMatrix);
 
 			// Bind (assign) the desired VAO to OpenGL's context.
 			glBindVertexArray(refrigeratorVAO);
@@ -1095,8 +1130,7 @@ int main()
 			// The result is that coordinates can be specified with y-values ranging from the bottom part of the screen
 			// (0.0F) to the top part of the screen (window's height). The point (0.0F, 0.0F) now corresponds to the
 			// bottom-left corner.
-			glm::mat4 projectionMatrix = 
-				glm::ortho(0.0F, static_cast<float>(windowWidth), 0.0F, static_cast<float>(windowHeight));
+			projectionMatrix = glm::ortho(0.0F, static_cast<float>(windowWidth), 0.0F, static_cast<float>(windowHeight));
 			// Set the projection matrix. This matrix changes each frame.
 			shaderProgramForNonlogoText->setFloatMat4Uniform("projectionMatrix", projectionMatrix);
 
