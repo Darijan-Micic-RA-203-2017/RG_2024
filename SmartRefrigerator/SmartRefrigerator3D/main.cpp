@@ -530,6 +530,8 @@ int main()
 		-0.725F,   0.47F,  1.025F,  0.0F,  0.0F,  1.0F,  1.0F,  1.0F,  1.0F, 1.0F, // rectangle symbol on the see-through mode activation button
 		-0.525F,   0.47F,  1.025F,  0.0F,  0.0F,  1.0F,  1.0F,  1.0F,  1.0F, 1.0F, 
 		-0.725F,   0.53F,  1.025F,  0.0F,  0.0F,  1.0F,  1.0F,  1.0F,  1.0F, 1.0F, 
+		-0.725F,   0.53F,  1.025F,  0.0F,  0.0F,  1.0F,  1.0F,  1.0F,  1.0F, 1.0F, 
+		-0.525F,   0.47F,  1.025F,  0.0F,  0.0F,  1.0F,  1.0F,  1.0F,  1.0F, 1.0F, 
 		-0.525F,   0.53F,  1.025F,  0.0F,  0.0F,  1.0F,  1.0F,  1.0F,  1.0F, 1.0F, 
 		   0.1F,   0.65F,  1.005F,  0.0F,  0.0F, -1.0F, 0.75F, 0.75F, 0.75F, 1.0F, // "-" button, left of freezing chamber temperature widget
 		   0.2F,   0.65F,  1.005F,  0.0F,  0.0F, -1.0F, 0.75F, 0.75F, 0.75F, 1.0F, // - back side
@@ -1117,25 +1119,39 @@ int main()
 			// Bind (assign) the desired VAO to OpenGL's context.
 			glBindVertexArray(refrigeratorVAO);
 			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
-			glDrawArrays(GL_TRIANGLES, 0, 36);   // refrigerator doors
+			// glDrawArrays(GL_TRIANGLES, 0, 36);   // refrigerator
+			glDrawArrays(GL_TRIANGLES, 0, 30);   // refrigerator
 
 			// Always turn on the blending when rendering the graphical elements and text, due to the way the "FreeType"
 			// library is implemented.
 			glEnable(GL_BLEND);
 
-			glDrawArrays(GL_TRIANGLES, 36, 36);  // digital clock rectangle widget
-			glDrawArrays(GL_TRIANGLES, 72, 36);  // see-through mode activation button
-			glDrawArrays(GL_TRIANGLES, 108, 36); // rectangle symbol on the see-through mode activation button
-			glDrawArrays(GL_TRIANGLES, 144, 36); // "-" button, left of freezing chamber temperature widget
-			glDrawArrays(GL_LINES, 170, 2);      // line representing the "-" sign itself
-			glDrawArrays(GL_TRIANGLES, 172, 36); // freezing chamber temperature widget
-			glDrawArrays(GL_TRIANGLES, 208, 36); // "+" button, left of freezing chamber temperature widget
-			glDrawArrays(GL_LINES, 244, 4);      // line representing the "+" sign itself
-			glDrawArrays(GL_TRIANGLES, 248, 36); // "-" button, left of refrigerating chamber temperature widget
-			glDrawArrays(GL_LINES, 284, 2);      // line representing the "-" sign itself
-			glDrawArrays(GL_TRIANGLES, 286, 36); // refrigerating chamber temperature widget
-			glDrawArrays(GL_TRIANGLES, 322, 36); // "+" button, left of refrigerating chamber temperature widget
-			glDrawArrays(GL_LINES, 358, 4);      // line representing the "+" sign itself
+			// glDrawArrays(GL_TRIANGLES, 36, 36);  // digital clock rectangle widget
+			glDrawArrays(GL_TRIANGLES, 30, 36);  // digital clock rectangle widget
+			// glDrawArrays(GL_TRIANGLES, 72, 36);  // see-through mode activation button
+			glDrawArrays(GL_TRIANGLES, 66, 36);  // see-through mode activation button
+			// glDrawArrays(GL_TRIANGLES, 108, 6);  // rectangle symbol on the see-through mode activation button
+			glDrawArrays(GL_TRIANGLES, 102, 6);  // rectangle symbol on the see-through mode activation button
+			// glDrawArrays(GL_TRIANGLES, 114, 36); // "-" button, left of freezing chamber temperature widget
+			glDrawArrays(GL_TRIANGLES, 108, 36); // "-" button, left of freezing chamber temperature widget
+			// glDrawArrays(GL_LINES, 150, 2);      // line representing the "-" sign itself
+			glDrawArrays(GL_LINES, 144, 2);      // line representing the "-" sign itself
+			// glDrawArrays(GL_TRIANGLES, 152, 36); // freezing chamber temperature widget
+			glDrawArrays(GL_TRIANGLES, 146, 36); // freezing chamber temperature widget
+			// glDrawArrays(GL_TRIANGLES, 188, 36); // "+" button, left of freezing chamber temperature widget
+			glDrawArrays(GL_TRIANGLES, 182, 36); // "+" button, left of freezing chamber temperature widget
+			// glDrawArrays(GL_LINES, 224, 4);      // line representing the "+" sign itself
+			glDrawArrays(GL_LINES, 218, 4);      // line representing the "+" sign itself
+			// glDrawArrays(GL_TRIANGLES, 228, 36); // "-" button, left of refrigerating chamber temperature widget
+			glDrawArrays(GL_TRIANGLES, 222, 36); // "-" button, left of refrigerating chamber temperature widget
+			// glDrawArrays(GL_LINES, 264, 2);      // line representing the "-" sign itself
+			glDrawArrays(GL_LINES, 258, 2);      // line representing the "-" sign itself
+			// glDrawArrays(GL_TRIANGLES, 266, 36); // refrigerating chamber temperature widget
+			glDrawArrays(GL_TRIANGLES, 260, 36); // refrigerating chamber temperature widget
+			// glDrawArrays(GL_TRIANGLES, 302, 36); // "+" button, left of refrigerating chamber temperature widget
+			glDrawArrays(GL_TRIANGLES, 296, 36); // "+" button, left of refrigerating chamber temperature widget
+			// glDrawArrays(GL_LINES, 338, 4);      // line representing the "+" sign itself
+			glDrawArrays(GL_LINES, 332, 4);      // line representing the "+" sign itself
 
 			// Activate the desired shader program.
 			// Every shader and rendering call from now on will use this shader program object.
@@ -1154,7 +1170,7 @@ int main()
 
 			// REFERENCE: https://labex.io/tutorials/c-creating-a-simple-clock-animation-using-opengl-298829
 			time_t rawTime;
-			struct tm* timeInfo;
+			struct tm *timeInfo;
 			time(&rawTime);
 			timeInfo = localtime(&rawTime);
 			int hours = timeInfo->tm_hour;
