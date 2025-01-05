@@ -568,12 +568,42 @@ int main()
 		  -0.9F,   -0.8F,   -1.1F,  0.0F,  1.0F,  0.0F,  0.9F,  0.9F,  0.0F, 0.5F, 
 		   0.9F,   -0.8F,    0.9F,  0.0F,  1.0F,  0.0F,  0.9F,  0.9F,  0.0F, 0.5F, 
 		   0.9F,   -0.8F,   -1.1F,  0.0F,  1.0F,  0.0F,  0.9F,  0.9F,  0.0F, 0.5F, 
-		  -0.8F,    0.8F,    1.0F,  0.0F,  1.0F,  0.0F,  0.9F,  0.9F,  0.9F, 0.5F, // refrigerator
-		   0.8F,    0.8F,    1.0F,  0.0F,  1.0F,  0.0F,  0.9F,  0.9F,  0.9F, 0.5F, // - top side
-		  -0.8F,    0.8F,   -1.0F,  0.0F,  1.0F,  0.0F,  0.9F,  0.9F,  0.9F, 0.5F, 
-		  -0.8F,    0.8F,   -1.0F,  0.0F,  1.0F,  0.0F,  0.9F,  0.9F,  0.9F, 0.5F, 
-		   0.8F,    0.8F,    1.0F,  0.0F,  1.0F,  0.0F,  0.9F,  0.9F,  0.9F, 0.5F, 
-		   0.8F,    0.8F,   -1.0F,  0.0F,  1.0F,  0.0F,  0.9F,  0.9F,  0.9F, 0.5F, 
+		  -0.9F,    0.8F,   -1.1F,  0.0F,  0.0F, -1.0F,  0.9F,  0.9F,  0.0F, 0.5F, // refrigerator (top side)
+		   0.9F,    0.8F,   -1.1F,  0.0F,  0.0F, -1.0F,  0.9F,  0.9F,  0.0F, 0.5F, // - back side
+		  -0.9F,    0.9F,   -1.1F,  0.0F,  0.0F, -1.0F,  0.9F,  0.9F,  0.0F, 0.5F, 
+		  -0.9F,    0.9F,   -1.1F,  0.0F,  0.0F, -1.0F,  0.9F,  0.9F,  0.0F, 0.5F, 
+		   0.9F,    0.8F,   -1.1F,  0.0F,  0.0F, -1.0F,  0.9F,  0.9F,  0.0F, 0.5F, 
+		   0.9F,    0.9F,   -1.1F,  0.0F,  0.0F, -1.0F,  0.9F,  0.9F,  0.0F, 0.5F, 
+		  -0.9F,    0.8F,    0.9F,  0.0F,  0.0F,  1.0F,  0.9F,  0.9F,  0.0F, 0.5F, // refrigerator (top side)
+		   0.9F,    0.8F,    0.9F,  0.0F,  0.0F,  1.0F,  0.9F,  0.9F,  0.0F, 0.5F, // - front side
+		  -0.9F,    0.9F,    0.9F,  0.0F,  0.0F,  1.0F,  0.9F,  0.9F,  0.0F, 0.5F, 
+		  -0.9F,    0.9F,    0.9F,  0.0F,  0.0F,  1.0F,  0.9F,  0.9F,  0.0F, 0.5F, 
+		   0.9F,    0.8F,    0.9F,  0.0F,  0.0F,  1.0F,  0.9F,  0.9F,  0.0F, 0.5F, 
+		   0.9F,    0.9F,    0.9F,  0.0F,  0.0F,  1.0F,  0.9F,  0.9F,  0.0F, 0.5F, 
+		  -0.9F,    0.8F,   -1.1F, -1.0F,  0.0F,  0.0F,  0.9F,  0.9F,  0.0F, 0.5F, // refrigerator (top side)
+		  -0.9F,    0.8F,    0.9F, -1.0F,  0.0F,  0.0F,  0.9F,  0.9F,  0.0F, 0.5F, // - left side
+		  -0.9F,    0.9F,   -1.1F, -1.0F,  0.0F,  0.0F,  0.9F,  0.9F,  0.0F, 0.5F, 
+		  -0.9F,    0.9F,   -1.1F, -1.0F,  0.0F,  0.0F,  0.9F,  0.9F,  0.0F, 0.5F, 
+		  -0.9F,    0.8F,    0.9F, -1.0F,  0.0F,  0.0F,  0.9F,  0.9F,  0.0F, 0.5F, 
+		  -0.9F,    0.9F,    0.9F, -1.0F,  0.0F,  0.0F,  0.9F,  0.9F,  0.0F, 0.5F, 
+		   0.9F,    0.8F,    0.9F,  1.0F,  0.0F,  0.0F,  0.9F,  0.9F,  0.0F, 0.5F, // refrigerator (top side)
+		   0.9F,    0.8F,   -1.1F,  1.0F,  0.0F,  0.0F,  0.9F,  0.9F,  0.0F, 0.5F, // - right side
+		   0.9F,    0.9F,    0.9F,  1.0F,  0.0F,  0.0F,  0.9F,  0.9F,  0.0F, 0.5F, 
+		   0.9F,    0.9F,    0.9F,  1.0F,  0.0F,  0.0F,  0.9F,  0.9F,  0.0F, 0.5F, 
+		   0.9F,    0.8F,   -1.1F,  1.0F,  0.0F,  0.0F,  0.9F,  0.9F,  0.0F, 0.5F, 
+		   0.9F,    0.9F,   -1.1F,  1.0F,  0.0F,  0.0F,  0.9F,  0.9F,  0.0F, 0.5F, 
+		  -0.9F,   -0.9F,   -1.1F,  0.0F, -1.0F,  0.0F,  0.9F,  0.9F,  0.0F, 0.5F, // refrigerator (top side)
+		   0.9F,   -0.9F,   -1.1F,  0.0F, -1.0F,  0.0F,  0.9F,  0.9F,  0.0F, 0.5F, // - bottom side
+		  -0.9F,   -0.9F,    0.9F,  0.0F, -1.0F,  0.0F,  0.9F,  0.9F,  0.0F, 0.5F, 
+		  -0.9F,   -0.9F,    0.9F,  0.0F, -1.0F,  0.0F,  0.9F,  0.9F,  0.0F, 0.5F, 
+		   0.9F,   -0.9F,   -1.1F,  0.0F, -1.0F,  0.0F,  0.9F,  0.9F,  0.0F, 0.5F, 
+		   0.9F,   -0.9F,    0.9F,  0.0F, -1.0F,  0.0F,  0.9F,  0.9F,  0.0F, 0.5F, 
+		  -0.9F,    0.9F,    0.9F,  0.0F,  1.0F,  0.0F,  0.9F,  0.9F,  0.0F, 0.5F, // refrigerator (top side)
+		   0.9F,    0.9F,    0.9F,  0.0F,  1.0F,  0.0F,  0.9F,  0.9F,  0.0F, 0.5F, // - top side
+		  -0.9F,    0.9F,   -1.1F,  0.0F,  1.0F,  0.0F,  0.9F,  0.9F,  0.0F, 0.5F, 
+		  -0.9F,    0.9F,   -1.1F,  0.0F,  1.0F,  0.0F,  0.9F,  0.9F,  0.0F, 0.5F, 
+		   0.9F,    0.9F,    0.9F,  0.0F,  1.0F,  0.0F,  0.9F,  0.9F,  0.0F, 0.5F, 
+		   0.9F,    0.9F,   -1.1F,  0.0F,  1.0F,  0.0F,  0.9F,  0.9F,  0.0F, 0.5F, 
 		// (0.1125F + 0.0050F = 0.1175F) * windowWidth, 0.8325F * windowHeight
 		-0.775F,  0.625F,  1.005F,  0.0F,  0.0F, -1.0F,  0.0F, 0.75F, 0.75F, 1.0F, // digital clock widget
 		-0.475F,  0.625F,  1.005F,  0.0F,  0.0F, -1.0F,  0.0F, 0.75F, 0.75F, 1.0F, // - back side
@@ -1243,39 +1273,39 @@ int main()
 			glDrawArrays(GL_TRIANGLES, 36, 36);  // refrigerator (front side)
 			glDrawArrays(GL_TRIANGLES, 72, 36);  // refrigerator (left side)
 			glDrawArrays(GL_TRIANGLES, 108, 36); // refrigerator (bottom side)
-			// glDrawArrays(GL_TRIANGLES, 144, 12); // refrigerator (rest of it)
-			glDrawArrays(GL_TRIANGLES, 144, 6);  // refrigerator (rest of it)
+			glDrawArrays(GL_TRIANGLES, 144, 36); // refrigerator (top side)
+			// glDrawArrays(GL_TRIANGLES, 180, 6); // refrigerator (rest of it)
 
 			// Always turn on the blending when rendering the graphical elements and text, due to the way the "FreeType"
 			// library is implemented.
 			glEnable(GL_BLEND);
 
-			// glDrawArrays(GL_TRIANGLES, 156, 36);  // digital clock rectangle widget
-			glDrawArrays(GL_TRIANGLES, 150, 36);  // digital clock rectangle widget
-			// glDrawArrays(GL_TRIANGLES, 192, 36); // see-through mode activation button
-			glDrawArrays(GL_TRIANGLES, 186, 36);  // see-through mode activation button
-			// glDrawArrays(GL_TRIANGLES, 228, 6);  // rectangle symbol on the see-through mode activation button
-			glDrawArrays(GL_TRIANGLES, 222, 6);  // rectangle symbol on the see-through mode activation button
-			// glDrawArrays(GL_TRIANGLES, 234, 36); // "-" button, left of freezing chamber temperature widget
-			glDrawArrays(GL_TRIANGLES, 228, 36); // "-" button, left of freezing chamber temperature widget
-			// glDrawArrays(GL_LINES, 270, 2);      // line representing the "-" sign itself
-			glDrawArrays(GL_LINES, 264, 2);      // line representing the "-" sign itself
-			// glDrawArrays(GL_TRIANGLES, 272, 36); // freezing chamber temperature widget
-			glDrawArrays(GL_TRIANGLES, 266, 36); // freezing chamber temperature widget
-			// glDrawArrays(GL_TRIANGLES, 308, 36); // "+" button, left of freezing chamber temperature widget
-			glDrawArrays(GL_TRIANGLES, 302, 36); // "+" button, left of freezing chamber temperature widget
-			// glDrawArrays(GL_LINES, 344, 4);      // line representing the "+" sign itself
-			glDrawArrays(GL_LINES, 338, 4);      // line representing the "+" sign itself
-			// glDrawArrays(GL_TRIANGLES, 348, 36); // "-" button, left of refrigerating chamber temperature widget
-			glDrawArrays(GL_TRIANGLES, 342, 36); // "-" button, left of refrigerating chamber temperature widget
-			// glDrawArrays(GL_LINES, 384, 2);      // line representing the "-" sign itself
-			glDrawArrays(GL_LINES, 378, 2);      // line representing the "-" sign itself
-			// glDrawArrays(GL_TRIANGLES, 386, 36); // refrigerating chamber temperature widget
-			glDrawArrays(GL_TRIANGLES, 380, 36); // refrigerating chamber temperature widget
-			// glDrawArrays(GL_TRIANGLES, 422, 36); // "+" button, left of refrigerating chamber temperature widget
-			glDrawArrays(GL_TRIANGLES, 416, 36); // "+" button, left of refrigerating chamber temperature widget
-			// glDrawArrays(GL_LINES, 458, 4);      // line representing the "+" sign itself
-			glDrawArrays(GL_LINES, 452, 4);      // line representing the "+" sign itself
+			// glDrawArrays(GL_TRIANGLES, 186, 36);  // digital clock rectangle widget
+			glDrawArrays(GL_TRIANGLES, 180, 36);  // digital clock rectangle widget
+			// glDrawArrays(GL_TRIANGLES, 222, 36); // see-through mode activation button
+			glDrawArrays(GL_TRIANGLES, 216, 36);  // see-through mode activation button
+			// glDrawArrays(GL_TRIANGLES, 258, 6);  // rectangle symbol on the see-through mode activation button
+			glDrawArrays(GL_TRIANGLES, 252, 6);  // rectangle symbol on the see-through mode activation button
+			// glDrawArrays(GL_TRIANGLES, 264, 36); // "-" button, left of freezing chamber temperature widget
+			glDrawArrays(GL_TRIANGLES, 258, 36); // "-" button, left of freezing chamber temperature widget
+			// glDrawArrays(GL_LINES, 300, 2);      // line representing the "-" sign itself
+			glDrawArrays(GL_LINES, 294, 2);      // line representing the "-" sign itself
+			// glDrawArrays(GL_TRIANGLES, 302, 36); // freezing chamber temperature widget
+			glDrawArrays(GL_TRIANGLES, 296, 36); // freezing chamber temperature widget
+			// glDrawArrays(GL_TRIANGLES, 338, 36); // "+" button, left of freezing chamber temperature widget
+			glDrawArrays(GL_TRIANGLES, 332, 36); // "+" button, left of freezing chamber temperature widget
+			// glDrawArrays(GL_LINES, 374, 4);      // line representing the "+" sign itself
+			glDrawArrays(GL_LINES, 368, 4);      // line representing the "+" sign itself
+			// glDrawArrays(GL_TRIANGLES, 378, 36); // "-" button, left of refrigerating chamber temperature widget
+			glDrawArrays(GL_TRIANGLES, 372, 36); // "-" button, left of refrigerating chamber temperature widget
+			// glDrawArrays(GL_LINES, 414, 2);      // line representing the "-" sign itself
+			glDrawArrays(GL_LINES, 408, 2);      // line representing the "-" sign itself
+			// glDrawArrays(GL_TRIANGLES, 416, 36); // refrigerating chamber temperature widget
+			glDrawArrays(GL_TRIANGLES, 410, 36); // refrigerating chamber temperature widget
+			// glDrawArrays(GL_TRIANGLES, 452, 36); // "+" button, left of refrigerating chamber temperature widget
+			glDrawArrays(GL_TRIANGLES, 446, 36); // "+" button, left of refrigerating chamber temperature widget
+			// glDrawArrays(GL_LINES, 488, 4);      // line representing the "+" sign itself
+			glDrawArrays(GL_LINES, 482, 4);      // line representing the "+" sign itself
 
 			// Activate the desired shader program.
 			// Every shader and rendering call from now on will use this shader program object.
