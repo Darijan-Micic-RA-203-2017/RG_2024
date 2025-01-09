@@ -64,6 +64,9 @@ float bottomLeftYOfLogoText = 0.4F * windowHeight;
 bool graphicalModeTurnedOn = true;
 float timeWhenGraphicalModeWasActivated = 0.0F;
 GLenum polygonMode = GL_FILL;
+// When the orthogonal projection is turned on, this 3D project acts as the 2D project and the mouse cursor is visible.
+// Otherwise, the entire refrigerator can be seen and the mouse cursor is hidden.
+bool orthogonalProjectionTurnedOn = true;
 bool groceryInsideFreezer = false;
 const float minTemperatureOfFreezingChamber = -40.0F;
 float currentTemperatureOfFreezingChamber = -29.0F;
@@ -110,10 +113,6 @@ int main()
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 	glfwSetMouseButtonCallback(window, mouse_button_callback);
 	glfwSetCursorPosCallback(window, cursor_pos_callback);
-
-	// Tell the GLFW library to capture and hide the mouse cursor. Capturing the mouse cursor means fixating it to the
-	// center of the application's window and only letting it move if the application loses focus or quits.
-	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	// Initialize the GLEW library.
 	if (glewInit() != GLEW_OK)
@@ -1080,8 +1079,10 @@ int main()
 	// Tell OpenGL to which texture unit each shader sampler belongs to, by setting each sampler.
 	shaderProgramForLogoText->setIntegerUniform("text", 0);
 
-	// Create the camera with the specified position, front vector and up vector using the helper "Camera" class.
-	camera = new Camera(glm::vec3(0.0F, 0.0F, 2.0F), glm::vec3(0.0F, 0.0F, -1.0F), glm::vec3(0.0F, 1.0F, 0.0F));
+	// Create the camera with the default position, front vector and up vector using the helper "Camera" class.
+	// The default position is glm::vec3(0.0F, 0.0F, 3.55F), the default front vector is glm::vec3(0.0F, 0.0F, -1.0F)
+	// and the default up vector is glm::vec3(0.0F, 1.0F, 0.0F).
+	camera = new Camera();
 
 	glClearColor(0.1F, 0.1F, 0.1F, 1.0F);
 
@@ -1501,9 +1502,13 @@ void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 			seeThroughModeTurnedOn = false;
 			// Initialize the graphical mode activation timestamp with the current time.
 			timeWhenGraphicalModeWasActivated = static_cast<float>(glfwGetTime());
-			// Tell the GLFW library to capture and hide the mouse cursor. Capturing the mouse cursor means fixating it
-			// to the center of the application's window and only letting it move if the application loses focus or quits.
-			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+			if (!orthogonalProjectionTurnedOn)
+			{
+				// Tell the GLFW library to capture and hide the mouse cursor. Capturing the mouse cursor means fixating
+				// it to the center of the application's window and only letting it move if the application loses focus
+				// or quits.
+				glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+			}
 
 			return;
 		}
@@ -1596,6 +1601,12 @@ void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 // Function that will be called every time the user moves the mouse while the application has focus.
 void cursor_pos_callback(GLFWwindow *window, double xpos, double ypos)
 {
+	// Do not allow moving the camera when the orthogonal projection is turned on.
+	if (orthogonalProjectionTurnedOn)
+	{
+		return;
+	}
+
 	// Calculate "camera's front" vector that acts as insurance that however the user moves the camera, it will always
 	// keep looking straight ahead.
 	// Math is explained below. In 2. thing needed to manually create the LookAt matrix - "camera's direction":
@@ -1638,32 +1649,36 @@ void processInput(GLFWwindow *window)
 
 	if (!logoModeTurnedOn)
 	{
-		// Move the camera.
-		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+		// Move the camera (only when the perspective projection is turned on).
+		if (!orthogonalProjectionTurnedOn)
 		{
-			camera->processInputFromKeyboard("W", deltaTime);
+			if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+			{
+				camera->processInputFromKeyboard("W", deltaTime);
 
-			return;
+				return;
+			}
+			if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+			{
+				camera->processInputFromKeyboard("S", deltaTime);
+
+				return;
+			}
+			if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+			{
+				camera->processInputFromKeyboard("A", deltaTime);
+
+				return;
+			}
+			if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+			{
+				camera->processInputFromKeyboard("D", deltaTime);
+
+				return;
+			}
 		}
-		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		{
-			camera->processInputFromKeyboard("S", deltaTime);
 
-			return;
-		}
-		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		{
-			camera->processInputFromKeyboard("A", deltaTime);
-
-			return;
-		}
-		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		{
-			camera->processInputFromKeyboard("D", deltaTime);
-
-			return;
-		}
-
+		// Switch the polygon mode.
 		if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS)
 		{
 			polygonMode = GL_POINT;
@@ -1683,7 +1698,30 @@ void processInput(GLFWwindow *window)
 			return;
 		}
 
-		return;
+		// Switch between the orthogonal projection (imitating the 2D project) and the perspective projection (used for
+		// the 3D project).
+		if (glfwGetKey(window, GLFW_KEY_O) == GLFW_PRESS)
+		{
+			orthogonalProjectionTurnedOn = true;
+			// Tell the GLFW library to release and show the mouse cursor, which is its normal mode.
+			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+			// Reset the camera so that it looks at the refrigerator's door.
+			camera->resetToDefaultPositionMeantForOrthogonalProjection();
+
+			return;
+		}
+		if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
+		{
+			orthogonalProjectionTurnedOn = false;
+			// Tell the GLFW library to capture and hide the mouse cursor. Capturing the mouse cursor means fixating it
+			// to the center of the application's window and only letting it move if the application loses focus or quits.
+			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+			// Reset the first mouse entry indicator to prevent the possible disappearance of the refrigerator from
+			// the camera's view frustum.
+			firstMouseEntry = true;
+
+			return;
+		}
 	}
 	
 	// Activate the desired shader program.

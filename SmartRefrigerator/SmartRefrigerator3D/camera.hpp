@@ -12,7 +12,7 @@
 class Camera
 {
 private:
-	glm::vec3 target = glm::vec3(0.0F, 0.0F, 2.0F);
+	glm::vec3 target = glm::vec3(0.0F, 0.0F, 2.55F);
 	glm::vec3 direction = glm::vec3(0.0F, 0.0F, 1.0F);
 	glm::vec3 upVector = glm::vec3(0.0F, 1.0F, 0.0F);
 	glm::vec3 right = glm::vec3(0.0F);
@@ -31,13 +31,18 @@ private:
 	// be initialized with a negative value, which means clockwise rotation.
 	float yaw = -90.0F;
 public:
-	glm::vec3 position = glm::vec3(0.0F, 0.0F, 3.0F);
+	glm::vec3 position = glm::vec3(0.0F, 0.0F, 3.55F);
 	// This vector acts as insurance that however the user moves the camera, it will always keep looking straight ahead.
 	// Math is explained below. In 2. thing needed to manually create the LookAt matrix - the "camera's direction":
 	// glm::vec3 cameraTarget = cameraPosition + cameraFront;
 	// glm::vec3 cameraDirection = glm::normalize(cameraPosition - cameraTarget) = glm::normalize(-cameraFront);
 	glm::vec3 front = glm::vec3(0.0F, 0.0F, -1.0F);
 	float fov = 45.0F;
+
+	Camera()
+	{
+		updateCoordinateSystemOfCamera();
+	}
 
 	Camera(glm::vec3 position, glm::vec3 front, glm::vec3 upVector)
 	{
@@ -173,6 +178,18 @@ public:
 		{
 			fov = 45.0F;
 		}
+	}
+
+	// Utility function for resetting the camera to the default position, meant for the orthogonal projection.
+	void resetToDefaultPositionMeantForOrthogonalProjection()
+	{
+		position = glm::vec3(0.0F, 0.0F, 3.55F);
+		upVector = glm::vec3(0.0F, 1.0F, 0.0F);
+		pitch = 0.0F;
+		yaw = -90.0F;
+		fov = 45.0F;
+
+		updateCoordinateSystemOfCamera();
 	}
 };
 #endif
