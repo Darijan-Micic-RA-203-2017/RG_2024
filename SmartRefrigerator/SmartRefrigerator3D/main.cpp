@@ -63,6 +63,7 @@ float bottomLeftYOfLogoText = 0.4F * windowHeight;
 // refrigerating chamber and the digital clock.
 bool graphicalModeTurnedOn = true;
 float timeWhenGraphicalModeWasActivated = 0.0F;
+GLenum polygonMode = GL_FILL;
 bool groceryInsideFreezer = false;
 const float minTemperatureOfFreezingChamber = -40.0F;
 float currentTemperatureOfFreezingChamber = -29.0F;
@@ -1191,6 +1192,9 @@ int main()
 		}
 		else
 		{
+			// Set the active polygon mode (filled meshes mode, wireframe mode or point mode).
+			glPolygonMode(GL_FRONT_AND_BACK, polygonMode);
+
 			// Activate the desired shader program.
 			// Every shader and rendering call from now on will use this shader program object.
 			shaderProgramForGrocery->useProgram();
@@ -1656,6 +1660,25 @@ void processInput(GLFWwindow *window)
 		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		{
 			camera->processInputFromKeyboard("D", deltaTime);
+
+			return;
+		}
+
+		if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS)
+		{
+			polygonMode = GL_POINT;
+
+			return;
+		}
+		if (glfwGetKey(window, GLFW_KEY_Y) == GLFW_PRESS)
+		{
+			polygonMode = GL_LINE;
+
+			return;
+		}
+		if (glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS)
+		{
+			polygonMode = GL_FILL;
 
 			return;
 		}
