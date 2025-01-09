@@ -1022,12 +1022,16 @@ int main()
 	glBindBuffer(GL_ARRAY_BUFFER, textVBO);
 	// Copy user-defined data into the currently bound buffer.
 	// Vertex data is now stored on the graphics card's memory.
-	glBufferData(GL_ARRAY_BUFFER, 6U * 4U * sizeof(float), NULL, GL_DYNAMIC_DRAW); // For often updates of the content.
+	glBufferData(GL_ARRAY_BUFFER, 6U * 5U * sizeof(float), NULL, GL_DYNAMIC_DRAW); // For often updates of the content.
 	// Tell OpenGL how it should interpret vertex data, per vertex attribute.
-	// Position and texture coordinates (combined) attribute.
-	glVertexAttribPointer(0U, 4, GL_FLOAT, GL_FALSE, 4U * sizeof(float), (void*) 0U);
-	// Enable vertex's position and texture coordinates (combined) attribute.
+	// Position attribute.
+	glVertexAttribPointer(0U, 3, GL_FLOAT, GL_FALSE, 5U * sizeof(float), (void*) 0U);
+	// Enable vertex's position attribute.
 	glEnableVertexAttribArray(0U);
+	// Texture coordinates attribute.
+	glVertexAttribPointer(1U, 2, GL_FLOAT, GL_FALSE, 5U * sizeof(float), (void*) (3U * sizeof(float)));
+	// Enable vertex's texture coordinates attribute.
+	glEnableVertexAttribArray(1U);
 
 	// Unbind VBO and VAO for safety reasons. This is not neccessary.
 	// VAO stores the glBindBuffer calls when the target is GL_ELEMENT_ARRAY_BUFFER.
@@ -1080,7 +1084,7 @@ int main()
 	shaderProgramForLogoText->setIntegerUniform("text", 0);
 
 	// Create the camera with the specified position, front vector and up vector using the helper "Camera" class.
-	camera = new Camera(glm::vec3(0.0F, 0.0F, 2.0F), glm::vec3(0.0F, 0.0F, -1.0F), glm::vec3(0.0F, 1.0F, 0.0F));
+	camera = new Camera(glm::vec3(0.0F, 0.0F, 4.0F), glm::vec3(0.0F, 0.0F, -1.0F), glm::vec3(0.0F, 1.0F, 0.0F));
 
 	glClearColor(0.1F, 0.1F, 0.1F, 1.0F);
 
@@ -1117,6 +1121,7 @@ int main()
 			// Every shader and rendering call from now on will use this shader program object.
 			shaderProgramForLogoText->useProgram();
 
+			// The projection matrix transforms the view-space coordinates to the clip-space coordinates.
 			// Text rendering usually does not require the use of the perspective projection. Therefore, an ortographic
 			// projection matrix will suffice. Using an orthographic projection matrix also allows all vertex
 			// coordinates to be specified in screen-space coordinates. In order to take advantage of this, the
@@ -1129,6 +1134,18 @@ int main()
 				glm::ortho(0.0F, static_cast<float>(windowWidth), 0.0F, static_cast<float>(windowHeight));
 			// Set the projection matrix. This matrix changes each frame.
 			shaderProgramForLogoText->setFloatMat4Uniform("projectionMatrix", projectionMatrix);
+
+			// The view matrix transforms the world-space coordinates to the view-space coordinates.
+			// The world (scene) will be transformed by moving the camera using the keyboard.
+			glm::mat4 viewMatrix = camera->getCalculatedViewMatrix();
+			// Set the view matrix. This matrix changes each frame.
+			shaderProgramForLogoText->setFloatMat4Uniform("viewMatrix", viewMatrix);
+
+			// The model matrix transforms the local-space coordinates to the world-space coordinates.
+			// The model matrix is simply an identity matrix, no transformation is applied.
+			glm::mat4 modelMatrix = glm::mat4(1.0F);
+			// Set the model matrix. This matrix changes each frame.
+			shaderProgramForLogoText->setFloatMat4Uniform("modelMatrix", modelMatrix);
 
 			// Set the current window width uniform.
 			shaderProgramForLogoText->setFloatUniform("windowWidth", static_cast<float>(windowWidth));
@@ -1187,7 +1204,7 @@ int main()
 
 			// Render the "LOK" company's logo, scale it 4 times and paint it blue.
 			timesNewRomanFont.renderText(*shaderProgramForLogoText, "LOK", 
-				bottomLeftXOfLogoText, bottomLeftYOfLogoText, 4.0F, glm::vec3(0.0F, 0.0F, 1.0F));
+				bottomLeftXOfLogoText, bottomLeftYOfLogoText, camera->target.z, 4.0F, glm::vec3(0.0F, 0.0F, 1.0F));
 		}
 		else
 		{
@@ -1339,6 +1356,7 @@ int main()
 			// Every shader and rendering call from now on will use this shader program object.
 			shaderProgramForNonlogoText->useProgram();
 
+			// The projection matrix transforms the view-space coordinates to the clip-space coordinates.
 			// Text rendering usually does not require the use of the perspective projection. Therefore, an ortographic
 			// projection matrix will suffice. Using an orthographic projection matrix also allows all vertex coordinates to
 			// be specified in screen-space coordinates. In order to take advantage of this, the projection matrix needs to
@@ -1349,6 +1367,10 @@ int main()
 			projectionMatrix = glm::ortho(0.0F, static_cast<float>(windowWidth), 0.0F, static_cast<float>(windowHeight));
 			// Set the projection matrix. This matrix changes each frame.
 			shaderProgramForNonlogoText->setFloatMat4Uniform("projectionMatrix", projectionMatrix);
+			// Set the view matrix. This matrix changes each frame.
+			shaderProgramForNonlogoText->setFloatMat4Uniform("viewMatrix", viewMatrix);
+			// Set the model matrix. This matrix changes each frame.
+			shaderProgramForNonlogoText->setFloatMat4Uniform("modelMatrix", modelMatrix);
 
 			// REFERENCE: https://labex.io/tutorials/c-creating-a-simple-clock-animation-using-opengl-298829
 			time_t rawTime;
@@ -1377,7 +1399,7 @@ int main()
 				hoursAsString.append(":").append(minutesAsString).append(":").append(secondsAsString);
 			// Render the current time in the digital clock's space, scale it 2/3 times and paint it white.
 			timesNewRomanFont.renderText(*shaderProgramForNonlogoText, currentTimeAsString, 
-				0.1175F * windowWidth, 0.8325F * windowHeight, 0.666667F, glm::vec3(1.0F, 1.0F, 1.0F));
+				0.1175F * windowWidth, 0.8325F * windowHeight, 1.027F, 0.666667F, glm::vec3(1.0F, 1.0F, 1.0F));
 
 			std::string currentTemperatureOfFreezingChamberAsString = 
 				std::to_string(currentTemperatureOfFreezingChamber);
@@ -1386,7 +1408,7 @@ int main()
 			// Render the current temperature of the freezing chamber in its widget's space, scale it 2/3 times and
 			// paint it white.
 			timesNewRomanFont.renderText(*shaderProgramForNonlogoText, currentTemperatureOfFreezingChamberAsString, 
-				0.6675F * windowWidth, 0.8325F * windowHeight, 0.666667F, glm::vec3(1.0F, 1.0F, 1.0F));
+				0.6675F * windowWidth, 0.8325F * windowHeight, 1.027F, 0.666667F, glm::vec3(1.0F, 1.0F, 1.0F));
 
 			std::string currentTemperatureOfRefrigeratingChamberAsString = 
 				std::to_string(currentTemperatureOfRefrigeratingChamber);
@@ -1395,7 +1417,7 @@ int main()
 			// Render the current temperature of the refrigerating chamber in its widget's space, scale it 2/3 times and
 			// paint it white.
 			timesNewRomanFont.renderText(*shaderProgramForNonlogoText, currentTemperatureOfRefrigeratingChamberAsString, 
-				0.6875F * windowWidth, 0.7325F * windowHeight, 0.666667F, glm::vec3(1.0F, 1.0F, 1.0F));
+				0.6875F * windowWidth, 0.7325F * windowHeight, 1.027F, 0.666667F, glm::vec3(1.0F, 1.0F, 1.0F));
 
 			// If 5 seconds have passed since the graphical mode was activated and no left click was registered, the
 			// application should switch to the logo mode.
@@ -1427,9 +1449,10 @@ int main()
 		glEnable(GL_BLEND);
 
 		// Activate the desired shader program.
-			// Every shader and rendering call from now on will use this shader program object.
+		// Every shader and rendering call from now on will use this shader program object.
 		shaderProgramForNonlogoText->useProgram();
 
+		// The projection matrix transforms the view-space coordinates to the clip-space coordinates.
 		// Text rendering usually does not require the use of the perspective projection. Therefore, an ortographic
 		// projection matrix will suffice. Using an orthographic projection matrix also allows all vertex
 		// coordinates to be specified in screen-space coordinates. In order to take advantage of this, the
@@ -1443,14 +1466,28 @@ int main()
 		// Set the projection matrix. This matrix changes each frame.
 		shaderProgramForNonlogoText->setFloatMat4Uniform("projectionMatrix", projectionMatrix);
 
+		// The view matrix transforms the world-space coordinates to the view-space coordinates.
+		// The world (scene) will be transformed by moving the camera using the keyboard.
+		glm::mat4 viewMatrix = camera->getCalculatedViewMatrix();
+		// Set the view matrix. This matrix changes each frame.
+		shaderProgramForNonlogoText->setFloatMat4Uniform("viewMatrix", viewMatrix);
+
+		// The model matrix transforms the local-space coordinates to the world-space coordinates.
+		// The model matrix is simply an identity matrix, no transformation is applied.
+		glm::mat4 modelMatrix = glm::mat4(1.0F);
+		glm::vec3 neededTranslation = 
+			camera->position - glm::vec3(0.0125F * windowWidth, 0.016667F * windowHeight, 0.0F);
+		modelMatrix = glm::translate(modelMatrix, neededTranslation);
+		// Set the model matrix. This matrix changes each frame.
+		shaderProgramForNonlogoText->setFloatMat4Uniform("modelMatrix", modelMatrix);
+
 		// Set the current window width uniform.
 		shaderProgramForNonlogoText->setFloatUniform("windowWidth", static_cast<float>(windowWidth));
 
 		// Render the author's signature in the bottom left corner of the screen space, scale it 2/3 times and paint it
 		// yellow.
 		timesNewRomanFont.renderText(*shaderProgramForNonlogoText, "Darijan Micic, RA 203/2017", 
-			glm::max(0.0125F * windowWidth, 10.0F), glm::max(0.016667F * windowHeight, 10.0F), 
-			0.666667F, glm::vec3(1.0F, 1.0F, 0.0F));
+			0.0125F * windowWidth, 0.016667F * windowHeight, camera->target.z, 0.666667F, glm::vec3(1.0F, 1.0F, 0.0F));
 
 		// Fourth part: swap buffers, check for events and call the events if they occured.
 		glfwSwapBuffers(window);
@@ -1461,7 +1498,8 @@ int main()
 	firstMouseEntry = true;
 
 	// REFERENCE: https://www.geeksforgeeks.org/destructors-c/
-	// De-allocate shader programs using their destructors.
+	// De-allocate the camera and the shader programs using their destructors.
+	delete camera;
 	delete shaderProgramForLogoText;
 	delete shaderProgramForNonlogoText;
 	delete shaderProgramForRefrigerator;

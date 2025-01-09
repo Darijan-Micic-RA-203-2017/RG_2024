@@ -167,12 +167,13 @@ public:
 		extractNecessaryInfoAboutFontFrom(filePath);
 	}
 
-	// Renders text, with position (x, y) being the encompassing text quad's bottom left corner.
-	void renderText(ShaderProgram &shaderProgram, std::string text, float x, float y, float scale, glm::vec3 color)
+	// Renders text, with position (x, y, z) being the encompassing text quad's bottom left corner.
+	void renderText(ShaderProgram &shaderProgram, std::string text, float x, float y, float z, float scale, 
+		glm::vec3 color)
 	{
 		// Activate the corresponding render state.
 		shaderProgram.useProgram();
-		shaderProgram.setFloatVec3Uniform("colorOfText", color.x, color.y, color.z);
+		shaderProgram.setFloatVec3Uniform("colorOfText", color);
 		glActiveTexture(GL_TEXTURE0);
 		glBindVertexArray(VAO);
 
@@ -195,16 +196,16 @@ public:
 			float width = ch.size.x * scale;
 			float height = ch.size.y * scale;
 			// Update the VBO for each character. Multidimensional vertices array has 6 rows because it takes 6 vertices
-			// to draw a rectangle and 4 columns because each vertex contains position (2 coordinates - x and y) and
-			// texture coordiantes (2 coordiantes - s and t).
-			float vertices[6][4] = {
-				{ xPos,         yPos + height, 0.0F, 0.0F }, 
-				{ xPos,         yPos,          0.0F, 1.0F }, 
-				{ xPos + width, yPos,          1.0F, 1.0F }, 
+			// to draw a rectangle and 5 columns because each vertex contains position (3 coordinates - x, y and z) and
+			// texture coordiantes (2 coordinates - s and t).
+			float vertices[6][5] = {
+				{ xPos,         yPos + height, z, 0.0F, 0.0F }, 
+				{ xPos,         yPos,          z, 0.0F, 1.0F }, 
+				{ xPos + width, yPos,          z, 1.0F, 1.0F }, 
 
-				{ xPos,         yPos + height, 0.0F, 0.0F }, 
-				{ xPos + width, yPos,          1.0F, 1.0F }, 
-				{ xPos + width, yPos + height, 1.0F, 0.0F }
+				{ xPos,         yPos + height, z, 0.0F, 0.0F }, 
+				{ xPos + width, yPos,          z, 1.0F, 1.0F }, 
+				{ xPos + width, yPos + height, z, 1.0F, 0.0F }
 			};
 			// Render the glyph texture over the quad.
 			glBindTexture(GL_TEXTURE_2D, ch.textureID);

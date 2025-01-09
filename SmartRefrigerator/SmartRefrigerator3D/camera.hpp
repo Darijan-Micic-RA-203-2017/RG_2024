@@ -12,7 +12,6 @@
 class Camera
 {
 private:
-	glm::vec3 target = glm::vec3(0.0F, 0.0F, 2.0F);
 	glm::vec3 direction = glm::vec3(0.0F, 0.0F, 1.0F);
 	glm::vec3 upVector = glm::vec3(0.0F, 1.0F, 0.0F);
 	glm::vec3 right = glm::vec3(0.0F);
@@ -32,6 +31,7 @@ private:
 	float yaw = -90.0F;
 public:
 	glm::vec3 position = glm::vec3(0.0F, 0.0F, 3.0F);
+	glm::vec3 target = glm::vec3(0.0F, 0.0F, 2.0F);
 	// This vector acts as insurance that however the user moves the camera, it will always keep looking straight ahead.
 	// Math is explained below. In 2. thing needed to manually create the LookAt matrix - the "camera's direction":
 	// glm::vec3 cameraTarget = cameraPosition + cameraFront;
