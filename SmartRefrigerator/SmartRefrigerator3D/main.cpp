@@ -1102,10 +1102,12 @@ int main()
 			deltaTime = currentFrameTime - previousFrameTime;
 			previousFrameTime = currentFrameTime;
 		}
+		/*
 		std::cout << "-------------------------" << std::endl;
 		std::cout << "             Delta time: " << deltaTime << " s." << std::endl;
 		std::cout << " Frame rate (1 / delta): " << frameRate << " s^(-1)." << std::endl;
 		std::cout << "    Previous frame time: " << previousFrameTime << " s." << std::endl;
+		*/
 
 		// Second part: process the user's input.
 		processInput(window);
@@ -1382,7 +1384,7 @@ int main()
 				hoursAsString.append(":").append(minutesAsString).append(":").append(secondsAsString);
 			// Render the current time in the digital clock's space, scale it 2/3 times and paint it white.
 			timesNewRomanFont.renderText(*shaderProgramForNonlogoText, currentTimeAsString, 
-				0.1175F * windowWidth, 0.8325F * windowHeight, 0.666667F, glm::vec3(1.0F, 1.0F, 1.0F));
+				0.22625F * windowWidth, 0.81875F * windowHeight, 0.475F, glm::vec3(1.0F, 1.0F, 1.0F));
 
 			std::string currentTemperatureOfFreezingChamberAsString = 
 				std::to_string(currentTemperatureOfFreezingChamber);
@@ -1391,7 +1393,7 @@ int main()
 			// Render the current temperature of the freezing chamber in its widget's space, scale it 2/3 times and
 			// paint it white.
 			timesNewRomanFont.renderText(*shaderProgramForNonlogoText, currentTemperatureOfFreezingChamberAsString, 
-				0.6675F * windowWidth, 0.8325F * windowHeight, 0.666667F, glm::vec3(1.0F, 1.0F, 1.0F));
+				0.6125F * windowWidth, 0.816667F * windowHeight, 0.666667F, glm::vec3(1.0F, 1.0F, 1.0F));
 
 			std::string currentTemperatureOfRefrigeratingChamberAsString = 
 				std::to_string(currentTemperatureOfRefrigeratingChamber);
@@ -1400,7 +1402,7 @@ int main()
 			// Render the current temperature of the refrigerating chamber in its widget's space, scale it 2/3 times and
 			// paint it white.
 			timesNewRomanFont.renderText(*shaderProgramForNonlogoText, currentTemperatureOfRefrigeratingChamberAsString, 
-				0.6875F * windowWidth, 0.7325F * windowHeight, 0.666667F, glm::vec3(1.0F, 1.0F, 1.0F));
+				0.63F * windowWidth, 0.718333F * windowHeight, 0.666667F, glm::vec3(1.0F, 1.0F, 1.0F));
 
 			// If 5 seconds have passed since the graphical mode was activated and no left click was registered, the
 			// application should switch to the logo mode.
@@ -1520,7 +1522,7 @@ void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 
 			double xpos, ypos;
 			glfwGetCursorPos(window, &xpos, &ypos);
-			// std::cout << "Cursor pos (x, y): (" << xpos << ", " << ypos << ")." << std::endl;
+			std::cout << "Cursor pos (x, y): (" << xpos << ", " << ypos << ")." << std::endl;
 
 			// see-through mode activation button
 			if (xpos >= 0.1125 * windowWidth && xpos <= 0.2625 * windowWidth 
