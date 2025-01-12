@@ -1525,8 +1525,8 @@ void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 			std::cout << "Cursor pos (x, y): (" << xpos << ", " << ypos << ")." << std::endl;
 
 			// see-through mode activation button
-			if (xpos >= 0.1125 * windowWidth && xpos <= 0.2625 * windowWidth 
-				&& ypos >= 0.225 * windowHeight && ypos <= 0.275 * windowHeight)
+			if (xpos >= 0.2225 * windowWidth && xpos <= 0.33 * windowWidth 
+				&& ypos >= 0.236667 * windowHeight && ypos <= 0.286667 * windowHeight)
 			{
 				// Activate the desired shader program.
 				// Every shader and rendering call from now on will use this shader program object.
@@ -1549,8 +1549,8 @@ void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 				temperatureOffset = 5.0F;
 			}
 			// "-" button, left of freezing chamber temperature widget
-			if (xpos >= 0.55 * windowWidth && xpos <= 0.6 * windowWidth 
-				&& ypos >= 0.125 * windowHeight && ypos <= 0.175 * windowHeight)
+			if (xpos >= 0.535 * windowWidth && xpos <= 0.57 * windowWidth 
+				&& ypos >= 0.141667 * windowHeight && ypos <= 0.19 * windowHeight)
 			{
 				currentTemperatureOfFreezingChamber -= temperatureOffset;
 				if (currentTemperatureOfFreezingChamber < minTemperatureOfFreezingChamber)
@@ -1561,8 +1561,8 @@ void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 				return;
 			}
 			// "+" button, right of freezing chamber temperature widget
-			if (xpos >= 0.825 * windowWidth && xpos <= 0.875 * windowWidth 
-				&& ypos >= 0.125 * windowHeight && ypos <= 0.175 * windowHeight)
+			if (xpos >= 0.73125 * windowWidth && xpos <= 0.7675 * windowWidth 
+				&& ypos >= 0.141667 * windowHeight && ypos <= 0.19 * windowHeight)
 			{
 				currentTemperatureOfFreezingChamber += temperatureOffset;
 				if (currentTemperatureOfFreezingChamber > maxTemperatureOfFreezingChamber)
@@ -1573,8 +1573,8 @@ void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 				return;
 			}
 			// "-" button, left of refrigerating chamber temperature widget
-			if (xpos >= 0.55 * windowWidth && xpos <= 0.6 * windowWidth 
-				&& ypos >= 0.225 * windowHeight && ypos <= 0.275 * windowHeight)
+			if (xpos >= 0.535 * windowWidth && xpos <= 0.57 * windowWidth 
+				&& ypos >= 0.236667 * windowHeight && ypos <= 0.285 * windowHeight)
 			{
 				currentTemperatureOfRefrigeratingChamber -= temperatureOffset;
 				if (currentTemperatureOfRefrigeratingChamber < minTemperatureOfRefrigeratingChamber)
@@ -1585,8 +1585,8 @@ void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 				return;
 			}
 			// "+" button, right of refrigerating chamber temperature widget
-			if (xpos >= 0.825 * windowWidth && xpos <= 0.875 * windowWidth 
-				&& ypos >= 0.225 * windowHeight && ypos <= 0.275 * windowHeight)
+			if (xpos >= 0.73125 * windowWidth && xpos <= 0.7675 * windowWidth 
+				&& ypos >= 0.236667 * windowHeight && ypos <= 0.285 * windowHeight)
 			{
 				currentTemperatureOfRefrigeratingChamber += temperatureOffset;
 				if (currentTemperatureOfRefrigeratingChamber > maxTemperatureOfRefrigeratingChamber)
