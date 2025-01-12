@@ -352,28 +352,18 @@ int main()
 		-0.5F,  0.24F, -0.8F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
 		-0.5F, -0.24F,  0.8F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
 		-0.5F,  0.24F,  0.8F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
-		/*
 		 0.5F, -0.24F,  0.8F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // see-through, blue-tinted freezing chamber plastic
 		 0.5F, -0.24F, -0.8F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // - right side
 		 0.5F,  0.24F,  0.8F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
 		 0.5F,  0.24F,  0.8F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
 		 0.5F, -0.24F, -0.8F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
 		 0.5F,  0.24F, -0.8F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
-		 */
 		-0.5F, -0.24F, -0.8F,  0.0F, -1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // see-through, blue-tinted freezing chamber plastic
 		 0.5F, -0.24F, -0.8F,  0.0F, -1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // - bottom side
 		-0.5F, -0.24F,  0.8F,  0.0F, -1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
 		-0.5F, -0.24F,  0.8F,  0.0F, -1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
 		 0.5F, -0.24F, -0.8F,  0.0F, -1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
 		 0.5F, -0.24F,  0.8F,  0.0F, -1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
-		 /*
-		-0.5F,  0.24F,  0.8F,  0.0F,  1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // see-through, blue-tinted freezing chamber plastic
-		 0.5F,  0.24F,  0.8F,  0.0F,  1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // - top side
-		-0.5F,  0.24F, -0.8F,  0.0F,  1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
-		-0.5F,  0.24F, -0.8F,  0.0F,  1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
-		 0.5F,  0.24F,  0.8F,  0.0F,  1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
-		 0.5F,  0.24F, -0.8F,  0.0F,  1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
-		 */
 		-0.5F, -0.74F, -0.8F,  0.0F,  0.0F, -1.0F, 0.0F, 0.0F, 1.0F, 0.25F, // see-through, blue-tinted refrigerating chamber plastic
 		 0.5F, -0.74F, -0.8F,  0.0F,  0.0F, -1.0F, 0.0F, 0.0F, 1.0F, 0.25F, // - back side
 		-0.5F, -0.26F, -0.8F,  0.0F,  0.0F, -1.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
@@ -392,27 +382,18 @@ int main()
 		-0.5F, -0.26F, -0.8F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
 		-0.5F, -0.74F,  0.8F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
 		-0.5F, -0.26F,  0.8F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
-		/*
 		 0.5F, -0.74F,  0.8F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // see-through, blue-tinted refrigerating chamber plastic
 		 0.5F, -0.74F, -0.8F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // - right side
 		 0.5F, -0.26F,  0.8F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
 		 0.5F, -0.26F,  0.8F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
 		 0.5F, -0.74F, -0.8F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
 		 0.5F, -0.26F, -0.8F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
-		 */
 		-0.5F, -0.74F, -0.8F,  0.0F, -1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // see-through, blue-tinted refrigerating chamber plastic
 		 0.5F, -0.74F, -0.8F,  0.0F, -1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // - bottom side
 		-0.5F, -0.74F,  0.8F,  0.0F, -1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
 		-0.5F, -0.74F,  0.8F,  0.0F, -1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
 		 0.5F, -0.74F, -0.8F,  0.0F, -1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
-		 0.5F, -0.74F,  0.8F,  0.0F, -1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F/*, 
-		-0.5F, -0.26F,  0.8F,  0.0F,  1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // see-through, blue-tinted refrigerating chamber plastic
-		 0.5F, -0.26F,  0.8F,  0.0F,  1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // - top side
-		-0.5F, -0.26F, -0.8F,  0.0F,  1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
-		-0.5F, -0.26F, -0.8F,  0.0F,  1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
-		 0.5F, -0.26F,  0.8F,  0.0F,  1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
-		 0.5F, -0.26F, -0.8F,  0.0F,  1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F
-		 */
+		 0.5F, -0.74F,  0.8F,  0.0F, -1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F
 	};
 	float verticesOfRefrigerator[] = {
 		// position                // normal vector     // color
@@ -1285,9 +1266,7 @@ int main()
 			// Bind (assign) the desired VAO to OpenGL's context.
 			glBindVertexArray(chambersVAO);
 			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
-			// glDrawArrays(GL_TRIANGLES, 0, 36);  // see-through, blue-tinted freezing chamber plastic
 			glDrawArrays(GL_TRIANGLES, 0, 30);  // see-through, blue-tinted freezing chamber plastic
-			// glDrawArrays(GL_TRIANGLES, 36, 36); // see-through, blue-tinted refrigerating chamber plastic
 			glDrawArrays(GL_TRIANGLES, 30, 30); // see-through, blue-tinted refrigerating chamber plastic
 
 			// Activate the desired shader program.
