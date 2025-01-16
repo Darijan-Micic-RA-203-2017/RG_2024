@@ -692,6 +692,126 @@ int main()
 		-0.725F,   0.53F,  1.027F,  0.0F,  0.0F,  1.0F,  1.0F,  1.0F,  1.0F, 1.0F, 
 		-0.525F,   0.47F,  1.027F,  0.0F,  0.0F,  1.0F,  1.0F,  1.0F,  1.0F, 1.0F, 
 		-0.525F,   0.53F,  1.027F,  0.0F,  0.0F,  1.0F,  1.0F,  1.0F,  1.0F, 1.0F, 
+		   0.1F,  0.325F,  1.005F,  0.0F,  0.0F, -1.0F, 0.75F, 0.75F, 0.75F, 1.0F, // "-" button, left of point light intensity widget
+		   0.2F,  0.325F,  1.005F,  0.0F,  0.0F, -1.0F, 0.75F, 0.75F, 0.75F, 1.0F, // - back side
+		   0.1F,  0.375F,  1.005F,  0.0F,  0.0F, -1.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.1F,  0.375F,  1.005F,  0.0F,  0.0F, -1.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.2F,  0.325F,  1.005F,  0.0F,  0.0F, -1.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.2F,  0.375F,  1.005F,  0.0F,  0.0F, -1.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.1F,  0.325F,  1.025F,  0.0F,  0.0F,  1.0F, 0.75F, 0.75F, 0.75F, 1.0F, // "-" button, left of point light intensity widget
+		   0.2F,  0.325F,  1.025F,  0.0F,  0.0F,  1.0F, 0.75F, 0.75F, 0.75F, 1.0F, // - front side
+		   0.1F,  0.375F,  1.025F,  0.0F,  0.0F,  1.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.1F,  0.375F,  1.025F,  0.0F,  0.0F,  1.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.2F,  0.325F,  1.025F,  0.0F,  0.0F,  1.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.2F,  0.375F,  1.025F,  0.0F,  0.0F,  1.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.1F,  0.325F,  1.005F, -1.0F,  0.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, // "-" button, left of point light intensity widget
+		   0.1F,  0.325F,  1.025F, -1.0F,  0.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, // - left side
+		   0.1F,  0.375F,  1.005F, -1.0F,  0.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.1F,  0.375F,  1.005F, -1.0F,  0.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.1F,  0.325F,  1.025F, -1.0F,  0.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.1F,  0.375F,  1.025F, -1.0F,  0.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.2F,  0.325F,  1.025F,  1.0F,  0.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, // "-" button, left of point light intensity widget
+		   0.2F,  0.325F,  1.005F,  1.0F,  0.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, // - right side
+		   0.2F,  0.375F,  1.025F,  1.0F,  0.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.2F,  0.375F,  1.025F,  1.0F,  0.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.2F,  0.325F,  1.005F,  1.0F,  0.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.2F,  0.375F,  1.005F,  1.0F,  0.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.1F,  0.325F,  1.005F,  0.0F, -1.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, // "-" button, left of point light intensity widget
+		   0.2F,  0.325F,  1.005F,  0.0F, -1.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, // - bottom side
+		   0.1F,  0.325F,  1.025F,  0.0F, -1.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.1F,  0.325F,  1.025F,  0.0F, -1.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.2F,  0.325F,  1.005F,  0.0F, -1.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.2F,  0.325F,  1.025F,  0.0F, -1.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.1F,  0.375F,  1.025F,  0.0F,  1.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, // "-" button, left of point light intensity widget
+		   0.2F,  0.375F,  1.025F,  0.0F,  1.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, // - top side
+		   0.1F,  0.375F,  1.005F,  0.0F,  1.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.1F,  0.375F,  1.005F,  0.0F,  1.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.2F,  0.375F,  1.025F,  0.0F,  1.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		   0.2F,  0.375F,  1.005F,  0.0F,  1.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		  0.12F,   0.35F,  1.027F,  0.0F,  0.0F,  1.0F,  1.0F,  1.0F,  1.0F, 1.0F, // line representing the "-" sign itself
+		  0.18F,   0.35F,  1.027F,  0.0F,  0.0F,  1.0F,  1.0F,  1.0F,  1.0F, 1.0F, 
+		 0.325F,    0.3F,  1.005F,  0.0F,  0.0F, -1.0F,  0.0F,  0.0F,  1.0F, 1.0F, // point light intensity widget
+		 0.525F,    0.3F,  1.005F,  0.0F,  0.0F, -1.0F,  0.0F,  0.0F,  1.0F, 1.0F, // back side
+		 0.325F,    0.4F,  1.005F,  0.0F,  0.0F, -1.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
+		 0.325F,    0.4F,  1.005F,  0.0F,  0.0F, -1.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
+		 0.525F,    0.3F,  1.005F,  0.0F,  0.0F, -1.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
+		 0.525F,    0.4F,  1.005F,  0.0F,  0.0F, -1.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
+		 0.325F,    0.3F,  1.025F,  0.0F,  0.0F,  1.0F,  0.0F,  0.0F,  1.0F, 1.0F, // point light intensity widget
+		 0.525F,    0.3F,  1.025F,  0.0F,  0.0F,  1.0F,  0.0F,  0.0F,  1.0F, 1.0F, // - front side
+		 0.325F,    0.4F,  1.025F,  0.0F,  0.0F,  1.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
+		 0.325F,    0.4F,  1.025F,  0.0F,  0.0F,  1.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
+		 0.525F,    0.3F,  1.025F,  0.0F,  0.0F,  1.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
+		 0.525F,    0.4F,  1.025F,  0.0F,  0.0F,  1.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
+		 0.325F,    0.3F,  1.005F, -1.0F,  0.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, // point light intensity widget
+		 0.325F,    0.3F,  1.025F, -1.0F,  0.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, // - left side
+		 0.325F,    0.4F,  1.005F, -1.0F,  0.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
+		 0.325F,    0.4F,  1.005F, -1.0F,  0.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
+		 0.325F,    0.3F,  1.025F, -1.0F,  0.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
+		 0.325F,    0.4F,  1.025F, -1.0F,  0.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
+		 0.525F,    0.3F,  1.025F,  1.0F,  0.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, // point light intensity widget
+		 0.525F,    0.3F,  1.005F,  1.0F,  0.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, // - right side
+		 0.525F,    0.4F,  1.025F,  1.0F,  0.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
+		 0.525F,    0.4F,  1.025F,  1.0F,  0.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
+		 0.525F,    0.3F,  1.005F,  1.0F,  0.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
+		 0.525F,    0.4F,  1.005F,  1.0F,  0.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
+		 0.525F,    0.3F,  1.005F,  0.0F, -1.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, // point light intensity widget
+		 0.325F,    0.3F,  1.005F,  0.0F, -1.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, // - bottom side
+		 0.525F,    0.3F,  1.025F,  0.0F, -1.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
+		 0.525F,    0.3F,  1.025F,  0.0F, -1.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
+		 0.325F,    0.3F,  1.005F,  0.0F, -1.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
+		 0.325F,    0.3F,  1.025F,  0.0F, -1.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
+		 0.325F,    0.4F,  1.025F,  0.0F,  1.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, // point light intensity widget
+		 0.525F,    0.4F,  1.025F,  0.0F,  1.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, // - top side
+		 0.325F,    0.4F,  1.005F,  0.0F,  1.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
+		 0.325F,    0.4F,  1.005F,  0.0F,  1.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
+		 0.525F,    0.4F,  1.025F,  0.0F,  1.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
+		 0.525F,    0.4F,  1.005F,  0.0F,  1.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
+		 0.375F,   0.32F,  1.027F,  0.0F,  0.0F,  1.0F,  1.0F,  1.0F,  0.0F, 1.0F, // rectangle symbol on the point light intensity widget
+		 0.475F,   0.32F,  1.027F,  0.0F,  0.0F,  1.0F,  1.0F,  1.0F,  0.0F, 1.0F, 
+		 0.375F,   0.38F,  1.027F,  0.0F,  0.0F,  1.0F,  1.0F,  1.0F,  0.0F, 1.0F, 
+		 0.375F,   0.38F,  1.027F,  0.0F,  0.0F,  1.0F,  1.0F,  1.0F,  0.0F, 1.0F, 
+		 0.475F,   0.32F,  1.027F,  0.0F,  0.0F,  1.0F,  1.0F,  1.0F,  0.0F, 1.0F, 
+		 0.475F,   0.38F,  1.027F,  0.0F,  0.0F,  1.0F,  1.0F,  1.0F,  0.0F, 1.0F, 
+		  0.65F,  0.325F,  1.005F,  0.0F,  0.0F, -1.0F, 0.75F, 0.75F, 0.75F, 1.0F, // "+" button, right of point light intensity widget
+		  0.75F,  0.325F,  1.005F,  0.0F,  0.0F, -1.0F, 0.75F, 0.75F, 0.75F, 1.0F, // - back side
+		  0.65F,  0.375F,  1.005F,  0.0F,  0.0F, -1.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		  0.65F,  0.375F,  1.005F,  0.0F,  0.0F, -1.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		  0.75F,  0.325F,  1.005F,  0.0F,  0.0F, -1.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		  0.75F,  0.375F,  1.005F,  0.0F,  0.0F, -1.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		  0.65F,  0.325F,  1.025F,  0.0F,  0.0F,  1.0F, 0.75F, 0.75F, 0.75F, 1.0F, // "+" button, right of point light intensity widget
+		  0.75F,  0.325F,  1.025F,  0.0F,  0.0F,  1.0F, 0.75F, 0.75F, 0.75F, 1.0F, // - front side
+		  0.65F,  0.375F,  1.025F,  0.0F,  0.0F,  1.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		  0.65F,  0.375F,  1.025F,  0.0F,  0.0F,  1.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		  0.75F,  0.325F,  1.025F,  0.0F,  0.0F,  1.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		  0.75F,  0.375F,  1.025F,  0.0F,  0.0F,  1.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		  0.65F,  0.325F,  1.005F, -1.0F,  0.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, // "+" button, right of point light intensity widget
+		  0.65F,  0.325F,  1.025F, -1.0F,  0.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, // - left side
+		  0.65F,  0.375F,  1.005F, -1.0F,  0.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		  0.65F,  0.375F,  1.005F, -1.0F,  0.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		  0.65F,  0.325F,  1.025F, -1.0F,  0.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		  0.65F,  0.375F,  1.025F, -1.0F,  0.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		  0.75F,  0.325F,  1.025F,  1.0F,  0.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, // "+" button, right of point light intensity widget
+		  0.75F,  0.325F,  1.005F,  1.0F,  0.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, // - right side
+		  0.75F,  0.375F,  1.025F,  1.0F,  0.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		  0.75F,  0.375F,  1.025F,  1.0F,  0.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		  0.75F,  0.325F,  1.005F,  1.0F,  0.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		  0.75F,  0.375F,  1.005F,  1.0F,  0.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		  0.65F,  0.325F,  1.005F,  0.0F, -1.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, // "+" button, right of point light intensity widget
+		  0.75F,  0.325F,  1.005F,  0.0F, -1.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, // - bottom side
+		  0.65F,  0.325F,  1.025F,  0.0F, -1.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		  0.65F,  0.325F,  1.025F,  0.0F, -1.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		  0.75F,  0.325F,  1.005F,  0.0F, -1.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		  0.75F,  0.325F,  1.025F,  0.0F, -1.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		  0.65F,  0.375F,  1.025F,  0.0F,  1.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, // "+" button, right of point light intensity widget
+		  0.75F,  0.375F,  1.025F,  0.0F,  1.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, // - top side
+		  0.65F,  0.375F,  1.005F,  0.0F,  1.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		  0.65F,  0.375F,  1.005F,  0.0F,  1.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		  0.75F,  0.375F,  1.025F,  0.0F,  1.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		  0.75F,  0.375F,  1.005F,  0.0F,  1.0F,  0.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
+		  0.67F,   0.35F,  1.027F,  0.0F,  0.0F,  1.0F,  1.0F,  1.0F,  1.0F, 1.0F, // lines representing the "+" sign itself
+		  0.73F,   0.35F,  1.027F,  0.0F,  0.0F,  1.0F,  1.0F,  1.0F,  1.0F, 1.0F, 
+		   0.7F,  0.335F,  1.027F,  0.0F,  0.0F,  1.0F,  1.0F,  1.0F,  1.0F, 1.0F, 
+		   0.7F,  0.365F,  1.027F,  0.0F,  0.0F,  1.0F,  1.0F,  1.0F,  1.0F, 1.0F, 
 		   0.1F,   0.65F,  1.005F,  0.0F,  0.0F, -1.0F, 0.75F, 0.75F, 0.75F, 1.0F, // "-" button, left of freezing chamber temperature widget
 		   0.2F,   0.65F,  1.005F,  0.0F,  0.0F, -1.0F, 0.75F, 0.75F, 0.75F, 1.0F, // - back side
 		   0.1F,   0.75F,  1.005F,  0.0F,  0.0F, -1.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
@@ -1300,26 +1420,38 @@ int main()
 			glDrawArrays(GL_TRIANGLES, 252, 36); // see-through mode activation button
 			// glDrawArrays(GL_TRIANGLES, 252, 6);  // rectangle symbol on the see-through mode activation button
 			glDrawArrays(GL_TRIANGLES, 288, 6);  // rectangle symbol on the see-through mode activation button
-			// glDrawArrays(GL_TRIANGLES, 258, 36); // "-" button, left of freezing chamber temperature widget
-			glDrawArrays(GL_TRIANGLES, 294, 36); // "-" button, left of freezing chamber temperature widget
+			// glDrawArrays(GL_TRIANGLES, 258, 36); // "-" button, left of point light intensity widget
+			glDrawArrays(GL_TRIANGLES, 294, 36); // "-" button, left of point light intensity widget
 			// glDrawArrays(GL_LINES, 294, 2);      // line representing the "-" sign itself
 			glDrawArrays(GL_LINES, 330, 2);      // line representing the "-" sign itself
-			// glDrawArrays(GL_TRIANGLES, 296, 36); // freezing chamber temperature widget
-			glDrawArrays(GL_TRIANGLES, 332, 36); // freezing chamber temperature widget
-			// glDrawArrays(GL_TRIANGLES, 332, 36); // "+" button, left of freezing chamber temperature widget
-			glDrawArrays(GL_TRIANGLES, 368, 36); // "+" button, left of freezing chamber temperature widget
-			// glDrawArrays(GL_LINES, 368, 4);      // line representing the "+" sign itself
-			glDrawArrays(GL_LINES, 404, 4);      // line representing the "+" sign itself
-			// glDrawArrays(GL_TRIANGLES, 372, 36); // "-" button, left of refrigerating chamber temperature widget
-			glDrawArrays(GL_TRIANGLES, 408, 36); // "-" button, left of refrigerating chamber temperature widget
-			// glDrawArrays(GL_LINES, 408, 2);      // line representing the "-" sign itself
-			glDrawArrays(GL_LINES, 444, 2);      // line representing the "-" sign itself
-			// glDrawArrays(GL_TRIANGLES, 410, 36); // refrigerating chamber temperature widget
-			glDrawArrays(GL_TRIANGLES, 446, 36); // refrigerating chamber temperature widget
-			// glDrawArrays(GL_TRIANGLES, 446, 36); // "+" button, left of refrigerating chamber temperature widget
-			glDrawArrays(GL_TRIANGLES, 482, 36); // "+" button, left of refrigerating chamber temperature widget
-			// glDrawArrays(GL_LINES, 482, 4);      // line representing the "+" sign itself
-			glDrawArrays(GL_LINES, 518, 4);      // line representing the "+" sign itself
+			// glDrawArrays(GL_TRIANGLES, 296, 36); // point light intensity widget
+			glDrawArrays(GL_TRIANGLES, 332, 36); // point light intensity widget
+			// glDrawArrays(GL_TRIANGLES, 332, 6);  // rectangle symbol on the point light intensity widget
+			glDrawArrays(GL_TRIANGLES, 368, 6);  // rectangle symbol on the point light intensity widget
+			// glDrawArrays(GL_TRIANGLES, 338, 36); // "+" button, right of point light intensity widget
+			glDrawArrays(GL_TRIANGLES, 374, 36); // "+" button, right of point light intensity widget
+			// glDrawArrays(GL_LINES, 374, 4);      // lines representing the "+" sign itself
+			glDrawArrays(GL_LINES, 410, 4);      // lines representing the "+" sign itself
+			// glDrawArrays(GL_TRIANGLES, 378, 36); // "-" button, left of freezing chamber temperature widget
+			glDrawArrays(GL_TRIANGLES, 414, 36); // "-" button, left of freezing chamber temperature widget
+			// glDrawArrays(GL_LINES, 414, 2);      // line representing the "-" sign itself
+			glDrawArrays(GL_LINES, 450, 2);      // line representing the "-" sign itself
+			// glDrawArrays(GL_TRIANGLES, 416, 36); // freezing chamber temperature widget
+			glDrawArrays(GL_TRIANGLES, 452, 36); // freezing chamber temperature widget
+			// glDrawArrays(GL_TRIANGLES, 452, 36); // "+" button, right of freezing chamber temperature widget
+			glDrawArrays(GL_TRIANGLES, 488, 36); // "+" button, right of freezing chamber temperature widget
+			// glDrawArrays(GL_LINES, 488, 4);      // lines representing the "+" sign itself
+			glDrawArrays(GL_LINES, 524, 4);      // lines representing the "+" sign itself
+			// glDrawArrays(GL_TRIANGLES, 492, 36); // "-" button, left of refrigerating chamber temperature widget
+			glDrawArrays(GL_TRIANGLES, 528, 36); // "-" button, left of refrigerating chamber temperature widget
+			// glDrawArrays(GL_LINES, 528, 2);      // line representing the "-" sign itself
+			glDrawArrays(GL_LINES, 564, 2);      // line representing the "-" sign itself
+			// glDrawArrays(GL_TRIANGLES, 530, 36); // refrigerating chamber temperature widget
+			glDrawArrays(GL_TRIANGLES, 566, 36); // refrigerating chamber temperature widget
+			// glDrawArrays(GL_TRIANGLES, 566, 36); // "+" button, right of refrigerating chamber temperature widget
+			glDrawArrays(GL_TRIANGLES, 602, 36); // "+" button, right of refrigerating chamber temperature widget
+			// glDrawArrays(GL_LINES, 602, 4);      // lines representing the "+" sign itself
+			glDrawArrays(GL_LINES, 638, 4);      // lines representing the "+" sign itself
 
 			// Activate the desired shader program.
 			// Every shader and rendering call from now on will use this shader program object.
