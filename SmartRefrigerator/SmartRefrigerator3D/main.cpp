@@ -74,6 +74,8 @@ const float maxTemperatureOfFreezingChamber = -18.0F;
 const float minTemperatureOfRefrigeratingChamber = 0.0F;
 float currentTemperatureOfRefrigeratingChamber = 3.5F;
 const float maxTemperatureOfRefrigeratingChamber = 7.0F;
+// This factor affects not only the intensity of background, but all elements of graphic display.
+float intensityOfBackgroundLight = 1.0F;
 
 // The see-through mode starts after the user clicks on that mode activation button during the graphical mode.
 // See-through mode consists of showing the groceries inside the smart refrigerator.
@@ -1646,6 +1648,33 @@ void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 				// Update see-through mode global variable and uniform.
 				seeThroughModeTurnedOn = !seeThroughModeTurnedOn;
 				shaderProgramForChamber->setBoolUniform("seeThroughModeTurnedOn", seeThroughModeTurnedOn);
+
+				return;
+			}
+
+			// button for decreasing the intensity of the point light
+			if (xpos >= 0.535 * windowWidth && xpos <= 0.57 * windowWidth 
+				&& ypos >= 0.32 * windowHeight && ypos <= 0.346667 * windowHeight)
+			{
+				intensityOfBackgroundLight -= 0.02F;
+				if (intensityOfBackgroundLight < 0.0F)
+				{
+					intensityOfBackgroundLight = 0.0F;
+				}
+				std::cout << "Intensity of background light : " << intensityOfBackgroundLight << std::endl;
+
+				return;
+			}
+			// button for increasing the intensity of the point light
+			if (xpos >= 0.73125 * windowWidth && xpos <= 0.7675 * windowWidth 
+				&& ypos >= 0.32 * windowHeight && ypos <= 0.346667 * windowHeight)
+			{
+				intensityOfBackgroundLight += 0.02F;
+				if (intensityOfBackgroundLight > 1.0F)
+				{
+					intensityOfBackgroundLight = 1.0F;
+				}
+				std::cout << "Intensity of background light : " << intensityOfBackgroundLight << std::endl;
 
 				return;
 			}
