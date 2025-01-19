@@ -1396,6 +1396,9 @@ int main()
 			// Set the model matrix. This matrix changes each frame.
 			shaderProgramForRefrigerator->setFloatMat4Uniform("modelMatrix", modelMatrix);
 
+			// Set the current intensity of background light uniform.
+			shaderProgramForRefrigerator->setFloatUniform("intensityOfBackgroundLight", intensityOfBackgroundLight);
+
 			// Bind (assign) the desired VAO to OpenGL's context.
 			glBindVertexArray(refrigeratorVAO);
 			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
