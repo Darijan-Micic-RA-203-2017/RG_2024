@@ -768,12 +768,6 @@ int main()
 		 0.325F,    0.4F,  1.005F,  0.0F,  1.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
 		 0.525F,    0.4F,  1.025F,  0.0F,  1.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
 		 0.525F,    0.4F,  1.005F,  0.0F,  1.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
-		 0.375F,   0.32F,  1.027F,  0.0F,  0.0F,  1.0F,  1.0F,  1.0F,  0.0F, 1.0F, // rectangle symbol on the point light intensity widget
-		 0.475F,   0.32F,  1.027F,  0.0F,  0.0F,  1.0F,  1.0F,  1.0F,  0.0F, 1.0F, 
-		 0.375F,   0.38F,  1.027F,  0.0F,  0.0F,  1.0F,  1.0F,  1.0F,  0.0F, 1.0F, 
-		 0.375F,   0.38F,  1.027F,  0.0F,  0.0F,  1.0F,  1.0F,  1.0F,  0.0F, 1.0F, 
-		 0.475F,   0.32F,  1.027F,  0.0F,  0.0F,  1.0F,  1.0F,  1.0F,  0.0F, 1.0F, 
-		 0.475F,   0.38F,  1.027F,  0.0F,  0.0F,  1.0F,  1.0F,  1.0F,  0.0F, 1.0F, 
 		  0.65F,  0.325F,  1.005F,  0.0F,  0.0F, -1.0F, 0.75F, 0.75F, 0.75F, 1.0F, // "+" button, right of point light intensity widget
 		  0.75F,  0.325F,  1.005F,  0.0F,  0.0F, -1.0F, 0.75F, 0.75F, 0.75F, 1.0F, // - back side
 		  0.65F,  0.375F,  1.005F,  0.0F,  0.0F, -1.0F, 0.75F, 0.75F, 0.75F, 1.0F, 
@@ -1428,32 +1422,30 @@ int main()
 			glDrawArrays(GL_LINES, 330, 2);      // line representing the "-" sign itself
 			// glDrawArrays(GL_TRIANGLES, 296, 36); // point light intensity widget
 			glDrawArrays(GL_TRIANGLES, 332, 36); // point light intensity widget
-			// glDrawArrays(GL_TRIANGLES, 332, 6);  // rectangle symbol on the point light intensity widget
-			glDrawArrays(GL_TRIANGLES, 368, 6);  // rectangle symbol on the point light intensity widget
-			// glDrawArrays(GL_TRIANGLES, 338, 36); // "+" button, right of point light intensity widget
-			glDrawArrays(GL_TRIANGLES, 374, 36); // "+" button, right of point light intensity widget
-			// glDrawArrays(GL_LINES, 374, 4);      // lines representing the "+" sign itself
-			glDrawArrays(GL_LINES, 410, 4);      // lines representing the "+" sign itself
-			// glDrawArrays(GL_TRIANGLES, 378, 36); // "-" button, left of freezing chamber temperature widget
-			glDrawArrays(GL_TRIANGLES, 414, 36); // "-" button, left of freezing chamber temperature widget
-			// glDrawArrays(GL_LINES, 414, 2);      // line representing the "-" sign itself
-			glDrawArrays(GL_LINES, 450, 2);      // line representing the "-" sign itself
-			// glDrawArrays(GL_TRIANGLES, 416, 36); // freezing chamber temperature widget
-			glDrawArrays(GL_TRIANGLES, 452, 36); // freezing chamber temperature widget
-			// glDrawArrays(GL_TRIANGLES, 452, 36); // "+" button, right of freezing chamber temperature widget
-			glDrawArrays(GL_TRIANGLES, 488, 36); // "+" button, right of freezing chamber temperature widget
-			// glDrawArrays(GL_LINES, 488, 4);      // lines representing the "+" sign itself
-			glDrawArrays(GL_LINES, 524, 4);      // lines representing the "+" sign itself
-			// glDrawArrays(GL_TRIANGLES, 492, 36); // "-" button, left of refrigerating chamber temperature widget
-			glDrawArrays(GL_TRIANGLES, 528, 36); // "-" button, left of refrigerating chamber temperature widget
-			// glDrawArrays(GL_LINES, 528, 2);      // line representing the "-" sign itself
-			glDrawArrays(GL_LINES, 564, 2);      // line representing the "-" sign itself
-			// glDrawArrays(GL_TRIANGLES, 530, 36); // refrigerating chamber temperature widget
-			glDrawArrays(GL_TRIANGLES, 566, 36); // refrigerating chamber temperature widget
-			// glDrawArrays(GL_TRIANGLES, 566, 36); // "+" button, right of refrigerating chamber temperature widget
-			glDrawArrays(GL_TRIANGLES, 602, 36); // "+" button, right of refrigerating chamber temperature widget
-			// glDrawArrays(GL_LINES, 602, 4);      // lines representing the "+" sign itself
-			glDrawArrays(GL_LINES, 638, 4);      // lines representing the "+" sign itself
+			// glDrawArrays(GL_TRIANGLES, 332, 36); // "+" button, right of point light intensity widget
+			glDrawArrays(GL_TRIANGLES, 368, 36); // "+" button, right of point light intensity widget
+			// glDrawArrays(GL_LINES, 368, 4);      // lines representing the "+" sign itself
+			glDrawArrays(GL_LINES, 404, 4);      // lines representing the "+" sign itself
+			// glDrawArrays(GL_TRIANGLES, 372, 36); // "-" button, left of freezing chamber temperature widget
+			glDrawArrays(GL_TRIANGLES, 408, 36); // "-" button, left of freezing chamber temperature widget
+			// glDrawArrays(GL_LINES, 408, 2);      // line representing the "-" sign itself
+			glDrawArrays(GL_LINES, 444, 2);      // line representing the "-" sign itself
+			// glDrawArrays(GL_TRIANGLES, 410, 36); // freezing chamber temperature widget
+			glDrawArrays(GL_TRIANGLES, 446, 36); // freezing chamber temperature widget
+			// glDrawArrays(GL_TRIANGLES, 446, 36); // "+" button, right of freezing chamber temperature widget
+			glDrawArrays(GL_TRIANGLES, 482, 36); // "+" button, right of freezing chamber temperature widget
+			// glDrawArrays(GL_LINES, 482, 4);      // lines representing the "+" sign itself
+			glDrawArrays(GL_LINES, 518, 4);      // lines representing the "+" sign itself
+			// glDrawArrays(GL_TRIANGLES, 486, 36); // "-" button, left of refrigerating chamber temperature widget
+			glDrawArrays(GL_TRIANGLES, 522, 36); // "-" button, left of refrigerating chamber temperature widget
+			// glDrawArrays(GL_LINES, 522, 2);      // line representing the "-" sign itself
+			glDrawArrays(GL_LINES, 558, 2);      // line representing the "-" sign itself
+			// glDrawArrays(GL_TRIANGLES, 524, 36); // refrigerating chamber temperature widget
+			glDrawArrays(GL_TRIANGLES, 560, 36); // refrigerating chamber temperature widget
+			// glDrawArrays(GL_TRIANGLES, 560, 36); // "+" button, right of refrigerating chamber temperature widget
+			glDrawArrays(GL_TRIANGLES, 596, 36); // "+" button, right of refrigerating chamber temperature widget
+			// glDrawArrays(GL_LINES, 596, 4);      // lines representing the "+" sign itself
+			glDrawArrays(GL_LINES, 632, 4);      // lines representing the "+" sign itself
 
 			// Activate the desired shader program.
 			// Every shader and rendering call from now on will use this shader program object.
@@ -1499,10 +1491,18 @@ int main()
 			timesNewRomanFont.renderText(*shaderProgramForNonlogoText, currentTimeAsString, 
 				0.22625F * windowWidth, 0.81875F * windowHeight, 0.475F, glm::vec3(1.0F, 1.0F, 1.0F));
 
+			std::string intensityOfBackgroundLightAsString = std::to_string(intensityOfBackgroundLight);
+			intensityOfBackgroundLightAsString = intensityOfBackgroundLightAsString
+				.substr(0U, intensityOfBackgroundLightAsString.size() - 4U);
+			// Render the current intensity of the point light ("background light") in its widget's space, scale it
+			// 2/3 times and paint it white.
+			timesNewRomanFont.renderText(*shaderProgramForNonlogoText, intensityOfBackgroundLightAsString, 
+				0.6275F * windowWidth, 0.653333F * windowHeight, 0.475F, glm::vec3(1.0F, 1.0F, 1.0F));
+
 			std::string currentTemperatureOfFreezingChamberAsString = 
 				std::to_string(currentTemperatureOfFreezingChamber);
 			currentTemperatureOfFreezingChamberAsString = currentTemperatureOfFreezingChamberAsString
-				.substr(0, currentTemperatureOfFreezingChamberAsString.size() - 5U);
+				.substr(0U, currentTemperatureOfFreezingChamberAsString.size() - 5U);
 			// Render the current temperature of the freezing chamber in its widget's space, scale it 2/3 times and
 			// paint it white.
 			timesNewRomanFont.renderText(*shaderProgramForNonlogoText, currentTemperatureOfFreezingChamberAsString, 
@@ -1511,7 +1511,7 @@ int main()
 			std::string currentTemperatureOfRefrigeratingChamberAsString = 
 				std::to_string(currentTemperatureOfRefrigeratingChamber);
 			currentTemperatureOfRefrigeratingChamberAsString = currentTemperatureOfRefrigeratingChamberAsString
-				.substr(0, currentTemperatureOfRefrigeratingChamberAsString.size() - 5U);
+				.substr(0U, currentTemperatureOfRefrigeratingChamberAsString.size() - 5U);
 			// Render the current temperature of the refrigerating chamber in its widget's space, scale it 2/3 times and
 			// paint it white.
 			timesNewRomanFont.renderText(*shaderProgramForNonlogoText, currentTemperatureOfRefrigeratingChamberAsString, 
