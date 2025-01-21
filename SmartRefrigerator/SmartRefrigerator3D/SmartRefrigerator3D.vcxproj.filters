@@ -85,6 +85,9 @@
     <Image Include="Resources\Images\Milk_carton_box.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Resources\Images\Blue_snowflake_icon.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Font Include="Resources\Fonts\times.ttf">

@@ -163,6 +163,7 @@
   <ItemGroup>
     <Image Include="Resources\Images\Fish_sticks_package.png" />
     <Image Include="Resources\Images\Milk_carton_box.png" />
+    <Image Include="Resources\Images\Blue_snowflake_icon.png" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="Resources\Fonts\times.ttf" />
