@@ -75,7 +75,7 @@ private:
 		{
 			std::cout << "FreeType library was not initialized!" << std::endl;
 			FT_Done_FreeType(ft);
-			errorCode = 9;
+			errorCode = 10;
 
 			return;
 		}
@@ -91,7 +91,7 @@ private:
 			std::cout << "Font was not loaded!" << std::endl;
 			FT_Done_Face(face);
 			FT_Done_FreeType(ft);
-			errorCode = 10;
+			errorCode = 11;
 
 			return;
 		}

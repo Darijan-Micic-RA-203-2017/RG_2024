@@ -13,7 +13,8 @@ int windowHeight = 600;
 
 // All settings are kept in an instance of the camera class.
 Camera *camera = NULL;
-
+// The cursor that will be shown when the mouse is hovering over the freezing chamber in the orthogonal projection mode.
+GLFWcursor *blueSnowflakeCursor = NULL;
 // Is this the first time the mouse entry is captured?
 bool firstMouseEntry = true;
 // Previous cursor position is initialized to the half of the window's size.
@@ -1135,19 +1136,42 @@ int main()
 
 	// Generate textures, set their wrapping and filtering parameters, load the images-to-become-textures from
 	// the file system and generate all the required mipmaps using the helper class.
-	Texture fishSticksPackage("Resources/Images/Fish_sticks_package.png");
+	Texture fishSticksPackage("Resources/Images/Fish_sticks_package.png", false);
 	if (fishSticksPackage.errorCode)
 	{
 		glfwTerminate();
 
 		return fishSticksPackage.errorCode;
 	}
-	Texture milkCartonBox("Resources/Images/Milk_carton_box.png");
+	Texture milkCartonBox("Resources/Images/Milk_carton_box.png", false);
 	if (milkCartonBox.errorCode)
 	{
 		glfwTerminate();
 
 		return milkCartonBox.errorCode;
+	}
+	Texture *blueSnowflakeIcon = new Texture("Resources/Images/Blue_snowflake_icon.png", true);
+	int errorCodeOfBlueSnowflakeIcon = blueSnowflakeIcon->errorCode;
+	if (errorCodeOfBlueSnowflakeIcon)
+	{
+		// De-allocate the texture used for the mouse cursor using its destructor.
+		delete blueSnowflakeIcon;
+		glfwTerminate();
+
+		return errorCodeOfBlueSnowflakeIcon;
+	}
+
+	// REFERENCE: https://www.glfw.org/docs/3.3/input_guide.html#cursor_custom
+	GLFWimage imageOfBlueSnowflake;
+	imageOfBlueSnowflake.width = blueSnowflakeIcon->width;
+	imageOfBlueSnowflake.height = blueSnowflakeIcon->height;
+	imageOfBlueSnowflake.pixels = blueSnowflakeIcon->pixels;
+	blueSnowflakeCursor = glfwCreateCursor(&imageOfBlueSnowflake, 0, 0);
+	if (blueSnowflakeCursor == NULL)
+	{
+		glfwTerminate();
+
+		return 9;
 	}
 
 	Font timesNewRomanFont("Resources/Fonts/times.ttf", textVAO, textVBO);
@@ -1584,7 +1608,11 @@ int main()
 	firstMouseEntry = true;
 
 	// REFERENCE: https://www.geeksforgeeks.org/destructors-c/
-	// De-allocate shader programs using their destructors.
+	// De-allocate the camera using its destructor.
+	delete camera;
+	// De-allocate the texture used for the mouse cursor using its destructor.
+	delete blueSnowflakeIcon;
+	// De-allocate the shader programs using their destructors.
 	delete shaderProgramForLogoText;
 	delete shaderProgramForNonlogoText;
 	delete shaderProgramForRefrigerator;
@@ -1749,6 +1777,19 @@ void cursor_pos_callback(GLFWwindow *window, double xpos, double ypos)
 	// Do not allow moving the camera when the orthogonal projection is turned on.
 	if (orthogonalProjectionTurnedOn)
 	{
+		// REFERENCE: https://www.glfw.org/docs/3.3/input_guide.html#cursor_set
+		// If the mouse cursor is positioned above the freezing chamber, turn it to a blue snowflake.
+		if (xpos >= 0.335 * windowWidth && xpos <= 0.66375 * windowWidth 
+			&& ypos >= 0.396667 * windowHeight && ypos <= 0.605 * windowHeight)
+		{
+			glfwSetCursor(window, blueSnowflakeCursor);
+		}
+		// Otherwise, reset the mouse cursor to the default arrow one.
+		else
+		{
+			glfwSetCursor(window, NULL);
+		}
+
 		return;
 	}
 
@@ -1861,6 +1902,8 @@ void processInput(GLFWwindow *window)
 			// Tell the GLFW library to capture and hide the mouse cursor. Capturing the mouse cursor means fixating it
 			// to the center of the application's window and only letting it move if the application loses focus or quits.
 			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+			// Reset the mouse cursor to the default arrow one.
+			glfwSetCursor(window, NULL);
 			// Reset the first mouse entry indicator to prevent the possible disappearance of the refrigerator from
 			// the camera's view frustum.
 			firstMouseEntry = true;
