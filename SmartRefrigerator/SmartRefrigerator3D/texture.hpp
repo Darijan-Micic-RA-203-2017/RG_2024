@@ -52,10 +52,7 @@ public:
 			format = GL_RGBA;
 			break;
 		default:
-			if (!usedForCursor)
-			{
-				stbi_image_free(pixels);
-			}
+			stbi_image_free(pixels);
 			errorCode = 8;
 
 			return;
@@ -100,9 +97,6 @@ public:
 	// REFERENCE: https://www.geeksforgeeks.org/destructors-c/
 	virtual ~Texture()
 	{
-		// Free the image memory.
-		stbi_image_free(pixels);
-
 		glDeleteTextures(1, &id);
 	}
 };

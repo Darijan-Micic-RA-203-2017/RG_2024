@@ -1150,25 +1150,24 @@ int main()
 
 		return milkCartonBox.errorCode;
 	}
-	Texture *blueSnowflakeIcon = new Texture("Resources/Images/Blue_snowflake_icon.png", true);
-	int errorCodeOfBlueSnowflakeIcon = blueSnowflakeIcon->errorCode;
-	if (errorCodeOfBlueSnowflakeIcon)
+	Texture blueSnowflakeIcon("Resources/Images/Blue_snowflake_icon.png", true);
+	if (blueSnowflakeIcon.errorCode)
 	{
-		// De-allocate the texture used for the mouse cursor using its destructor.
-		delete blueSnowflakeIcon;
 		glfwTerminate();
 
-		return errorCodeOfBlueSnowflakeIcon;
+		return blueSnowflakeIcon.errorCode;
 	}
 
 	// REFERENCE: https://www.glfw.org/docs/3.3/input_guide.html#cursor_custom
 	GLFWimage imageOfBlueSnowflake;
-	imageOfBlueSnowflake.width = blueSnowflakeIcon->width;
-	imageOfBlueSnowflake.height = blueSnowflakeIcon->height;
-	imageOfBlueSnowflake.pixels = blueSnowflakeIcon->pixels;
+	imageOfBlueSnowflake.width = blueSnowflakeIcon.width;
+	imageOfBlueSnowflake.height = blueSnowflakeIcon.height;
+	imageOfBlueSnowflake.pixels = blueSnowflakeIcon.pixels;
 	blueSnowflakeCursor = glfwCreateCursor(&imageOfBlueSnowflake, 0, 0);
 	if (blueSnowflakeCursor == NULL)
 	{
+		// De-allocate the texture used for the mouse cursor using the "stb_image.h" library's "stbi_image_free" method.
+		stbi_image_free(blueSnowflakeIcon.pixels);
 		glfwTerminate();
 
 		return 9;
@@ -1610,8 +1609,8 @@ int main()
 	// REFERENCE: https://www.geeksforgeeks.org/destructors-c/
 	// De-allocate the camera using its destructor.
 	delete camera;
-	// De-allocate the texture used for the mouse cursor using its destructor.
-	delete blueSnowflakeIcon;
+	// De-allocate the texture used for the mouse cursor using the "stb_image.h" library's "stbi_image_free" method.
+	stbi_image_free(blueSnowflakeIcon.pixels);
 	// De-allocate the shader programs using their destructors.
 	delete shaderProgramForLogoText;
 	delete shaderProgramForNonlogoText;
