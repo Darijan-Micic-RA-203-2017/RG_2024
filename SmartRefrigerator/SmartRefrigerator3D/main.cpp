@@ -85,6 +85,7 @@ float seeThroughModeTurnedOn = false;
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void mouse_button_callback(GLFWwindow *window, int button, int action, int mods);
 void cursor_pos_callback(GLFWwindow *window, double xpos, double ypos);
+void scroll_callback(GLFWwindow *window, double xoffset, double yoffset);
 void processInput(GLFWwindow *window);
 
 int main()
@@ -116,6 +117,7 @@ int main()
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 	glfwSetMouseButtonCallback(window, mouse_button_callback);
 	glfwSetCursorPosCallback(window, cursor_pos_callback);
+	glfwSetScrollCallback(window, scroll_callback);
 
 	// Initialize the GLEW library.
 	if (glewInit() != GLEW_OK)
@@ -1820,6 +1822,17 @@ void cursor_pos_callback(GLFWwindow *window, double xpos, double ypos)
 
 	// 2. step onward: done in the "Camera" class.
 	camera->processMovementOfMouse(xOffset, yOffset);
+}
+
+// Function that will be called every time the user scrolls the mouse's middle button.
+void scroll_callback(GLFWwindow *window, double xoffset, double yoffset)
+{
+	if (orthogonalProjectionTurnedOn)
+	{
+		return;
+	}
+
+	camera->processMouseScroll(static_cast<float>(yoffset));
 }
 
 // Input processing function.
