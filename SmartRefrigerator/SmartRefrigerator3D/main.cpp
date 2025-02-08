@@ -38,6 +38,7 @@ float previousFrameTime = 0.0F;
 ShaderProgram *shaderProgramForGrocery = NULL;
 ShaderProgram *shaderProgramForChamber = NULL;
 ShaderProgram *shaderProgramForRefrigerator = NULL;
+ShaderProgram *shaderProgramForLightSourceInsideRefrigerator = NULL;
 ShaderProgram *shaderProgramForNonlogoText = NULL;
 ShaderProgram *shaderProgramForLogoText = NULL;
 
@@ -162,6 +163,15 @@ int main()
 
 		return shaderProgramForRefrigerator->errorCode;
 	}
+	shaderProgramForLightSourceInsideRefrigerator = new ShaderProgram(
+		"Shaders/LightSourceInsideRefrigerator/vertex_shader_of_light_source_inside_refrigerator.glsl", 
+		"Shaders/LightSourceInsideRefrigerator/fragment_shader_of_light_source_inside_refrigerator.glsl");
+	if (shaderProgramForLightSourceInsideRefrigerator->errorCode != 0)
+	{
+		glfwTerminate();
+
+		return shaderProgramForLightSourceInsideRefrigerator->errorCode;
+	}
 	shaderProgramForNonlogoText = new ShaderProgram("Shaders/NonlogoText/vertex_shader_of_nonlogo_text.glsl", 
 		"Shaders/NonlogoText/fragment_shader_of_nonlogo_text.glsl");
 	if (shaderProgramForNonlogoText->errorCode != 0)
@@ -178,9 +188,6 @@ int main()
 
 		return shaderProgramForLogoText->errorCode;
 	}
-
-	// Draw only the lines connecting the vertices. In other words, activate "the wireframe" mode.
-	// glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	// Vertices in the normalized device coordinates system (from -1.0F to 1.0F).
 	// Since the vertex by itself doesn't have a surface (the vertex is simply a single point in space), its surrounding
@@ -438,42 +445,6 @@ int main()
 		  -0.9F,    0.9F,   -1.2F,  0.0F,  1.0F,  0.0F,  0.9F,  0.9F,  0.9F, 1.0F, 
 		   0.9F,    0.9F,   -1.1F,  0.0F,  1.0F,  0.0F,  0.9F,  0.9F,  0.9F, 1.0F, 
 		   0.9F,    0.9F,   -1.2F,  0.0F,  1.0F,  0.0F,  0.9F,  0.9F,  0.9F, 1.0F, 
-		  -0.7F,    0.5F, -1.095F,  0.0F,  0.0F, -1.0F,  0.0F,  0.0F,  1.0F, 1.0F, // spotlight inside refrigerator
-		   0.7F,    0.5F, -1.095F,  0.0F,  0.0F, -1.0F,  0.0F,  0.0F,  1.0F, 1.0F, // - back side
-		  -0.7F,    0.7F, -1.095F,  0.0F,  0.0F, -1.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
-		  -0.7F,    0.7F, -1.095F,  0.0F,  0.0F, -1.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
-		   0.7F,    0.5F, -1.095F,  0.0F,  0.0F, -1.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
-		   0.7F,    0.7F, -1.095F,  0.0F,  0.0F, -1.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
-		  -0.7F,    0.5F, -0.995F,  0.0F,  0.0F,  1.0F,  0.0F,  0.0F,  1.0F, 1.0F, // spotlight inside refrigerator
-		   0.7F,    0.5F, -0.995F,  0.0F,  0.0F,  1.0F,  0.0F,  0.0F,  1.0F, 1.0F, // - front side
-		  -0.7F,    0.7F, -0.995F,  0.0F,  0.0F,  1.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
-		  -0.7F,    0.7F, -0.995F,  0.0F,  0.0F,  1.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
-		   0.7F,    0.5F, -0.995F,  0.0F,  0.0F,  1.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
-		   0.7F,    0.7F, -0.995F,  0.0F,  0.0F,  1.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
-		  -0.7F,    0.5F, -1.095F, -1.0F,  0.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, // spotlight inside refrigerator
-		  -0.7F,    0.5F, -0.995F, -1.0F,  0.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, // - left side
-		  -0.7F,    0.7F, -1.095F, -1.0F,  0.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
-		  -0.7F,    0.7F, -1.095F, -1.0F,  0.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
-		  -0.7F,    0.5F, -0.995F, -1.0F,  0.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
-		  -0.7F,    0.7F, -0.995F, -1.0F,  0.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
-		   0.7F,    0.5F, -0.995F,  1.0F,  0.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, // spotlight inside refrigerator
-		   0.7F,    0.5F, -1.095F,  1.0F,  0.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, // - right side
-		   0.7F,    0.7F, -0.995F,  1.0F,  0.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
-		   0.7F,    0.7F, -0.995F,  1.0F,  0.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
-		   0.7F,    0.5F, -1.095F,  1.0F,  0.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
-		   0.7F,    0.7F, -1.095F,  1.0F,  0.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
-		  -0.7F,    0.5F, -1.095F,  0.0F, -1.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, // spotlight inside refrigerator
-		   0.7F,    0.5F, -1.095F,  0.0F, -1.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, // - bottom side
-		  -0.7F,    0.5F, -0.995F,  0.0F, -1.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
-		  -0.7F,    0.5F, -0.995F,  0.0F, -1.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
-		   0.7F,    0.5F, -1.095F,  0.0F, -1.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
-		   0.7F,    0.5F, -0.995F,  0.0F, -1.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
-		  -0.7F,    0.7F, -0.995F,  0.0F,  1.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, // spotlight inside refrigerator
-		   0.7F,    0.7F, -0.995F,  0.0F,  1.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, // - top side
-		  -0.7F,    0.7F, -1.095F,  0.0F,  1.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
-		  -0.7F,    0.7F, -1.095F,  0.0F,  1.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
-		   0.7F,    0.7F, -0.995F,  0.0F,  1.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
-		   0.7F,    0.7F, -1.095F,  0.0F,  1.0F,  0.0F,  0.0F,  0.0F,  1.0F, 1.0F, 
 		  -0.9F,   -0.9F,    0.9F,  0.0F,  0.0F, -1.0F,  0.9F,  0.9F,  0.9F, 0.5F, // refrigerator (front side)
 		   0.9F,   -0.9F,    0.9F,  0.0F,  0.0F, -1.0F,  0.9F,  0.9F,  0.9F, 0.5F, // - back side
 		  -0.9F,    0.9F,    0.9F,  0.0F,  0.0F, -1.0F,  0.9F,  0.9F,  0.9F, 0.5F, 
@@ -1078,16 +1049,55 @@ int main()
 		   0.7F,   0.47F,  1.027F,  0.0F,  0.0F,  1.0F,  1.0F,  1.0F,  1.0F, 1.0F, 
 		   0.7F,   0.53F,  1.027F,  0.0F,  0.0F,  1.0F,  1.0F,  1.0F,  1.0F, 1.0F
 	};
+	float verticesOfLightSourceInsideRefrigerator[] = {
+		// position
+		  -0.7F,    0.5F, -1.095F, // - back side
+		   0.7F,    0.5F, -1.095F, 
+		  -0.7F,    0.7F, -1.095F, 
+		  -0.7F,    0.7F, -1.095F, 
+		   0.7F,    0.5F, -1.095F, 
+		   0.7F,    0.7F, -1.095F, 
+		  -0.7F,    0.5F, -0.995F, // - front side
+		   0.7F,    0.5F, -0.995F, 
+		  -0.7F,    0.7F, -0.995F, 
+		  -0.7F,    0.7F, -0.995F, 
+		   0.7F,    0.5F, -0.995F, 
+		   0.7F,    0.7F, -0.995F, 
+		  -0.7F,    0.5F, -1.095F, // - left side
+		  -0.7F,    0.5F, -0.995F, 
+		  -0.7F,    0.7F, -1.095F, 
+		  -0.7F,    0.7F, -1.095F, 
+		  -0.7F,    0.5F, -0.995F, 
+		  -0.7F,    0.7F, -0.995F, 
+		   0.7F,    0.5F, -0.995F, // - right side
+		   0.7F,    0.5F, -1.095F, 
+		   0.7F,    0.7F, -0.995F, 
+		   0.7F,    0.7F, -0.995F, 
+		   0.7F,    0.5F, -1.095F, 
+		   0.7F,    0.7F, -1.095F, 
+		  -0.7F,    0.5F, -1.095F, // - bottom side
+		   0.7F,    0.5F, -1.095F, 
+		  -0.7F,    0.5F, -0.995F, 
+		  -0.7F,    0.5F, -0.995F, 
+		   0.7F,    0.5F, -1.095F, 
+		   0.7F,    0.5F, -0.995F, 
+		  -0.7F,    0.7F, -0.995F, // - top side
+		   0.7F,    0.7F, -0.995F, 
+		  -0.7F,    0.7F, -1.095F, 
+		  -0.7F,    0.7F, -1.095F, 
+		   0.7F,    0.7F, -0.995F, 
+		   0.7F,    0.7F, -1.095F
+	};
 
 	// Create memory on the GPU where vertex data and index data will be stored.
 	// Said data will be handled by VAO and vertex/element buffer objects inside that VAO.
 	// Core OpenGL REQUIRES the use of VAOs!
-	unsigned int groceriesVAO, chambersVAO, refrigeratorVAO, textVAO;
+	unsigned int groceriesVAO, chambersVAO, refrigeratorVAO, lightSourceInsideRefrigeratorVAO, textVAO;
 	glGenVertexArrays(1, &groceriesVAO); glGenVertexArrays(1, &chambersVAO); glGenVertexArrays(1, &refrigeratorVAO);
-	glGenVertexArrays(1, &textVAO);
-	unsigned int groceriesVBO, chambersVBO, refrigeratorVBO, textVBO;
+	glGenVertexArrays(1, &lightSourceInsideRefrigeratorVAO); glGenVertexArrays(1, &textVAO);
+	unsigned int groceriesVBO, chambersVBO, refrigeratorVBO, lightSourceInsideRefrigeratorVBO, textVBO;
 	glGenBuffers(1, &groceriesVBO); glGenBuffers(1, &chambersVBO); glGenBuffers(1, &refrigeratorVBO);
-	glGenBuffers(1, &textVBO);
+	glGenBuffers(1, &lightSourceInsideRefrigeratorVBO); glGenBuffers(1, &textVBO);
 
 	// Bind (assign) the newly created VAO to OpenGL's context.
 	glBindVertexArray(groceriesVAO);
@@ -1151,6 +1161,20 @@ int main()
 	glVertexAttribPointer(2U, 4, GL_FLOAT, GL_FALSE, 10U * sizeof(float), (void*) (6U * sizeof(float)));
 	// Enable vertex's color attribute.
 	glEnableVertexAttribArray(2U);
+
+	// Bind (assign) the newly created VAO to OpenGL's context.
+	glBindVertexArray(lightSourceInsideRefrigeratorVAO);
+	// Bind (assign) the newly created VBO to OpenGL's context.
+	glBindBuffer(GL_ARRAY_BUFFER, lightSourceInsideRefrigeratorVBO);
+	// Copy user-defined data into the currently bound buffer.
+	// Vertex data is now stored on the graphics card's memory.
+	glBufferData(GL_ARRAY_BUFFER, sizeof(verticesOfLightSourceInsideRefrigerator), 
+		verticesOfLightSourceInsideRefrigerator, GL_STATIC_DRAW);
+	// Tell OpenGL how it should interpret vertex data, per vertex attribute.
+	// Position attribute.
+	glVertexAttribPointer(0U, 3, GL_FLOAT, GL_FALSE, 3U * sizeof(float), (void*) 0U);
+	// Enable vertex's position attribute.
+	glEnableVertexAttribArray(0U);
 
 	// Bind (assign) the newly created VAO to OpenGL's context.
 	glBindVertexArray(textVAO);
@@ -1464,53 +1488,61 @@ int main()
 			glBindVertexArray(refrigeratorVAO);
 			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
 			glDrawArrays(GL_TRIANGLES, 0, 36);      // refrigerator (back side)
-			glDrawArrays(GL_TRIANGLES, 36, 36);     // spotlight inside refrigerator
-			glDrawArrays(GL_TRIANGLES, 72, 36);     // refrigerator (front side)
-			glDrawArrays(GL_TRIANGLES, 108, 36);    // refrigerator (left side)
-			glDrawArrays(GL_TRIANGLES, 144, 36);    // refrigerator (right side)
-			glDrawArrays(GL_TRIANGLES, 180, 36);    // refrigerator (bottom side)
-			glDrawArrays(GL_TRIANGLES, 216, 36);    // refrigerator (top side)
+			glDrawArrays(GL_TRIANGLES, 36, 36);     // refrigerator (front side)
+			glDrawArrays(GL_TRIANGLES, 72, 36);     // refrigerator (left side)
+			glDrawArrays(GL_TRIANGLES, 108, 36);    // refrigerator (right side)
+			glDrawArrays(GL_TRIANGLES, 144, 36);    // refrigerator (bottom side)
+			glDrawArrays(GL_TRIANGLES, 180, 36);    // refrigerator (top side)
 
 			// Always turn on the blending when rendering the graphical elements and text, due to the way the "FreeType"
 			// library is implemented.
 			glEnable(GL_BLEND);
 
-			// glDrawArrays(GL_TRIANGLES, 216, 36); // digital clock rectangle widget
-			glDrawArrays(GL_TRIANGLES, 252, 36); // digital clock rectangle widget
-			// glDrawArrays(GL_TRIANGLES, 252, 36); // see-through mode activation button
-			glDrawArrays(GL_TRIANGLES, 288, 36); // see-through mode activation button
-			// glDrawArrays(GL_TRIANGLES, 288, 6);  // rectangle symbol on the see-through mode activation button
-			glDrawArrays(GL_TRIANGLES, 324, 6);  // rectangle symbol on the see-through mode activation button
-			// glDrawArrays(GL_TRIANGLES, 294, 36); // "-" button, left of point light intensity widget
-			glDrawArrays(GL_TRIANGLES, 330, 36); // "-" button, left of point light intensity widget
-			// glDrawArrays(GL_LINES, 330, 2);      // line representing the "-" sign itself
-			glDrawArrays(GL_LINES, 366, 2);      // line representing the "-" sign itself
-			// glDrawArrays(GL_TRIANGLES, 332, 36); // point light intensity widget
-			glDrawArrays(GL_TRIANGLES, 368, 36); // point light intensity widget
-			// glDrawArrays(GL_TRIANGLES, 368, 36); // "+" button, right of point light intensity widget
-			glDrawArrays(GL_TRIANGLES, 404, 36); // "+" button, right of point light intensity widget
-			// glDrawArrays(GL_LINES, 404, 4);      // lines representing the "+" sign itself
-			glDrawArrays(GL_LINES, 440, 4);      // lines representing the "+" sign itself
-			// glDrawArrays(GL_TRIANGLES, 408, 36); // "-" button, left of freezing chamber temperature widget
-			glDrawArrays(GL_TRIANGLES, 444, 36); // "-" button, left of freezing chamber temperature widget
-			// glDrawArrays(GL_LINES, 444, 2);      // line representing the "-" sign itself
-			glDrawArrays(GL_LINES, 480, 2);      // line representing the "-" sign itself
-			// glDrawArrays(GL_TRIANGLES, 446, 36); // freezing chamber temperature widget
-			glDrawArrays(GL_TRIANGLES, 482, 36); // freezing chamber temperature widget
-			// glDrawArrays(GL_TRIANGLES, 482, 36); // "+" button, right of freezing chamber temperature widget
-			glDrawArrays(GL_TRIANGLES, 518, 36); // "+" button, right of freezing chamber temperature widget
-			// glDrawArrays(GL_LINES, 518, 4);      // lines representing the "+" sign itself
-			glDrawArrays(GL_LINES, 554, 4);      // lines representing the "+" sign itself
-			// glDrawArrays(GL_TRIANGLES, 522, 36); // "-" button, left of refrigerating chamber temperature widget
-			glDrawArrays(GL_TRIANGLES, 558, 36); // "-" button, left of refrigerating chamber temperature widget
-			// glDrawArrays(GL_LINES, 558, 2);      // line representing the "-" sign itself
-			glDrawArrays(GL_LINES, 594, 2);      // line representing the "-" sign itself
-			// glDrawArrays(GL_TRIANGLES, 560, 36); // refrigerating chamber temperature widget
-			glDrawArrays(GL_TRIANGLES, 596, 36); // refrigerating chamber temperature widget
-			// glDrawArrays(GL_TRIANGLES, 596, 36); // "+" button, right of refrigerating chamber temperature widget
-			glDrawArrays(GL_TRIANGLES, 632, 36); // "+" button, right of refrigerating chamber temperature widget
-			// glDrawArrays(GL_LINES, 632, 4);      // lines representing the "+" sign itself
-			glDrawArrays(GL_LINES, 668, 4);      // lines representing the "+" sign itself
+			glDrawArrays(GL_TRIANGLES, 216, 36); // digital clock rectangle widget
+			glDrawArrays(GL_TRIANGLES, 252, 36); // see-through mode activation button
+			glDrawArrays(GL_TRIANGLES, 288, 6);  // rectangle symbol on the see-through mode activation button
+			glDrawArrays(GL_TRIANGLES, 294, 36); // "-" button, left of point light intensity widget
+			glDrawArrays(GL_LINES, 330, 2);      // line representing the "-" sign itself
+			glDrawArrays(GL_TRIANGLES, 332, 36); // point light intensity widget
+			glDrawArrays(GL_TRIANGLES, 368, 36); // "+" button, right of point light intensity widget
+			glDrawArrays(GL_LINES, 404, 4);      // lines representing the "+" sign itself
+			glDrawArrays(GL_TRIANGLES, 408, 36); // "-" button, left of freezing chamber temperature widget
+			glDrawArrays(GL_LINES, 444, 2);      // line representing the "-" sign itself
+			glDrawArrays(GL_TRIANGLES, 446, 36); // freezing chamber temperature widget
+			glDrawArrays(GL_TRIANGLES, 482, 36); // "+" button, right of freezing chamber temp
+			glDrawArrays(GL_LINES, 518, 4);      // lines representing the "+" sign itself
+			glDrawArrays(GL_TRIANGLES, 522, 36); // "-" button, left of refrigerating chamber temperature widget
+			glDrawArrays(GL_LINES, 558, 2);      // line representing the "-" sign itself
+			glDrawArrays(GL_TRIANGLES, 560, 36); // refrigerating chamber temperature widget
+			glDrawArrays(GL_TRIANGLES, 596, 36); // "+" button, right of refrigerating chamber temperature widget
+			glDrawArrays(GL_LINES, 632, 4);      // lines representing the "+" sign itself
+
+			// Activate the desired shader program.
+			// Every shader and rendering call from now on will use this shader program object.
+			shaderProgramForLightSourceInsideRefrigerator->useProgram();
+
+			// Set the projection matrix. This matrix changes each frame.
+			shaderProgramForLightSourceInsideRefrigerator->setFloatMat4Uniform("projectionMatrix", projectionMatrix);
+			// Set the view matrix. This matrix changes each frame.
+			shaderProgramForLightSourceInsideRefrigerator->setFloatMat4Uniform("viewMatrix", viewMatrix);
+			// Set the model matrix. This matrix changes each frame.
+			shaderProgramForLightSourceInsideRefrigerator->setFloatMat4Uniform("modelMatrix", modelMatrix);
+
+			// Set the current temperatures of refrigerator uniform.
+			float currentAvgTemperatureOfRefrigerator = 
+				(currentTemperatureOfFreezingChamber + currentTemperatureOfRefrigeratingChamber) / 2.0F;
+			shaderProgramForLightSourceInsideRefrigerator->setFloatUniform(
+				"currentAvgTemperatureOfRefrigerator", currentAvgTemperatureOfRefrigerator);
+
+			// Bind (assign) the desired VAO to OpenGL's context.
+			glBindVertexArray(lightSourceInsideRefrigeratorVAO);
+			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
+			glDrawArrays(GL_TRIANGLES, 0, 36);      // light source inside refrigerator (back side)
+			glDrawArrays(GL_TRIANGLES, 36, 36);     // light source inside refrigerator (front side)
+			glDrawArrays(GL_TRIANGLES, 72, 36);     // light source inside refrigerator (left side)
+			glDrawArrays(GL_TRIANGLES, 108, 36);    // light source inside refrigerator (right side)
+			glDrawArrays(GL_TRIANGLES, 144, 36);    // light source inside refrigerator (bottom side)
+			glDrawArrays(GL_TRIANGLES, 180, 36);    // light source inside refrigerator (top side)
 
 			// Activate the desired shader program.
 			// Every shader and rendering call from now on will use this shader program object.

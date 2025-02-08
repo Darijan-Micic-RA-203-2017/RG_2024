@@ -65,6 +65,12 @@
     <None Include="Shaders\Refrigerator\fragment_shader_of_refrigerator.glsl">
       <Filter>Shader Files</Filter>
     </None>
+    <None Include="Shaders\LightSourceInsideRefrigerator\vertex_shader_of_light_source_inside_refrigerator.glsl">
+      <Filter>Shader Files</Filter>
+    </None>
+    <None Include="Shaders\LightSourceInsideRefrigerator\fragment_shader_of_light_source_inside_refrigerator.glsl">
+      <Filter>Shader Files</Filter>
+    </None>
     <None Include="Shaders\NonlogoText\vertex_shader_of_nonlogo_text.glsl">
       <Filter>Shader Files</Filter>
     </None>
