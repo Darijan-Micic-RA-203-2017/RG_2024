@@ -17,7 +17,6 @@ private:
 	glm::vec3 upVector = glm::vec3(0.0F, 1.0F, 0.0F);
 	glm::vec3 right = glm::vec3(0.0F);
 	glm::vec3 up = glm::vec3(0.0F);
-
 	// The camera's movement is presented with the Euler angles - a set of 3 values that can represent any rotation in a
 	// 3D space.
 	// The fly-like camera requires the use of only the first two of the Euler angles: the pitch angle (top/bottom,
@@ -30,6 +29,7 @@ private:
 	// because the camera is set up to look away from user, towards the negative z-axis. Therefore, the yaw angle should
 	// be initialized with a negative value, which means clockwise rotation.
 	float yaw = -90.0F;
+	const float sensitivityOfMouse = 0.05F;
 public:
 	glm::vec3 position = glm::vec3(0.0F, 0.0F, 3.55F);
 	// This vector acts as insurance that however the user moves the camera, it will always keep looking straight ahead.
@@ -145,9 +145,8 @@ public:
 	{
 		// 2. step: add the offset values to the camera's pitch and yaw angles.
 		// The mouse movement would be too erratic if it had not been scaled by a sensitivity variable.
-		const float sensitivity = 0.05F;
-		xoffset *= sensitivity;
-		yoffset *= sensitivity;
+		xoffset *= sensitivityOfMouse;
+		yoffset *= sensitivityOfMouse;
 		pitch += yoffset;
 		yaw += xoffset;
 

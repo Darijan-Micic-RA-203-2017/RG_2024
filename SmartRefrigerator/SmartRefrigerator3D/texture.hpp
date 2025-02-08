@@ -20,8 +20,8 @@ public:
 	Texture(const char *imagePath, bool usedForCursor)
 	{
 		// Tell the "stb_image.h" library to flip the y-axis during the image loading. This call is necessary because
-		// OpenGL expects the 0.0f coordinate on the y-axis to be on the bottom side of the image, but images
-		// usually have 0.0f at the top of the y-axis.
+		// OpenGL expects the 0.0F coordinate on the y-axis to be on the bottom side of the image, but images
+		// usually have 0.0F at the top of the y-axis.
 		stbi_set_flip_vertically_on_load(true);
 
 		// Load the image that will be used as a texture.
@@ -63,7 +63,7 @@ public:
 		// Bind (assign) the newly created texture to OpenGL's context.
 		glBindTexture(GL_TEXTURE_2D, id);
 
-		// Set the texture wrapping parameters. The texture coordinates are in range [0.0f, 1.0f]. If the texture
+		// Set the texture wrapping parameters. The texture coordinates are in range [0.0F, 1.0F]. If the texture
 		// coordinates are specified outside of the mentioned range, the texture wrapping option determines the look.
 		// Each texture wrapping option can be set per coordinate axis (s, t and r if 3D textures are used).
 		// s-axis, t-axis and r-axis correspond to x-axis, y-axis and z-axis, respectively.
