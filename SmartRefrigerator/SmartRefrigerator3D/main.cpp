@@ -76,6 +76,8 @@ const float maxTemperatureOfFreezingChamber = -18.0F;
 const float minTemperatureOfRefrigeratingChamber = 0.0F;
 float currentTemperatureOfRefrigeratingChamber = 3.5F;
 const float maxTemperatureOfRefrigeratingChamber = 7.0F;
+const float minAvgTemperatureOfRefrigerator = -20.0F;
+const float maxAvgTemperatureOfRefrigerator = -5.5F;
 // This factor affects not only the intensity of background, but all elements of graphic display.
 float intensityOfBackgroundLight = 1.0F;
 
@@ -1480,6 +1482,53 @@ int main()
 			shaderProgramForRefrigerator->setFloatMat4Uniform("viewMatrix", viewMatrix);
 			// Set the model matrix. This matrix changes each frame.
 			shaderProgramForRefrigerator->setFloatMat4Uniform("modelMatrix", modelMatrix);
+			// The normal matrix is a model matrix specifically tailored for normal vectors. Normal matrix is
+			// defined as the transpose of the inverse of the upper-left 3x3 part of the model matrix.
+			// Non-uniform scaling would transform vertex in such a way that the normal vector would no longer be
+			// perpendicular to the vertex's surface. This means that the lighting of surface would be distorted.
+			// Non-uniform scaling is mitigated by multiplying the normal vector with normal matrix.
+			glm::mat3 normalMatrix = glm::mat3(glm::transpose(glm::inverse(modelMatrix)));
+			// Set the normal matrix. This matrix changes each frame.
+			shaderProgramForRefrigerator->setFloatMat3Uniform("normalMatrix", normalMatrix);
+
+			// REFERENCE: https://learnopengl.com/Lighting/Light-casters
+			// Set position of viewer to field "position" of global object "camera".
+			shaderProgramForRefrigerator->setFloatVec3Uniform("positionOfViewer", camera->position);
+
+			// Spotlight inside refrigerator uniforms.
+			shaderProgramForRefrigerator->setFloatVec3Uniform(
+				"lightSourceInsideRefrigerator.direction", glm::vec3(0.0F, 0.0F, 1.0F));
+			shaderProgramForRefrigerator->setFloatVec3Uniform(
+				"lightSourceInsideRefrigerator.position", glm::vec3(0.0F, 0.6F, -0.995F));
+			shaderProgramForRefrigerator->setFloatUniform(
+				"lightSourceInsideRefrigerator.cosOfInnerCutoffAngle", glm::cos(glm::radians(1.0F)));
+			shaderProgramForRefrigerator->setFloatUniform(
+				"lightSourceInsideRefrigerator.cosOfOuterCutoffAngle", glm::cos(glm::radians(2.0F)));
+			float currentAvgTemperatureOfRefrigerator = 
+				(currentTemperatureOfFreezingChamber + currentTemperatureOfRefrigeratingChamber) / 2.0F;
+			float blueColorComponentOfLight = (currentAvgTemperatureOfRefrigerator - minAvgTemperatureOfRefrigerator) / 
+				(maxAvgTemperatureOfRefrigerator - minAvgTemperatureOfRefrigerator);
+			shaderProgramForRefrigerator->setFloatVec3Uniform(
+				"lightSourceInsideRefrigerator.ambientColor", glm::vec3(1.0F, 1.0F, blueColorComponentOfLight));
+			shaderProgramForRefrigerator->setFloatVec3Uniform(
+				"lightSourceInsideRefrigerator.diffuseColor", glm::vec3(1.0F, 1.0F, blueColorComponentOfLight));
+			shaderProgramForRefrigerator->setFloatVec3Uniform(
+				"lightSourceInsideRefrigerator.specularColor", glm::vec3(1.0F, 1.0F, 1.0F));
+			// REFERENCE: https://wiki.ogre3d.org/tiki-index.php?page=-Point+Light+Attenuation
+			// REFERENCE: https://wiki.ogre3d.org/Light%20Attenuation%20Shortcut
+			// kC = 1.0F, kL = 4.5F / d, kQ = 75.0F / d^2; d = 5.0F
+			shaderProgramForRefrigerator->setFloatUniform("lightSourceInsideRefrigerator.kC", 1.0F);
+			shaderProgramForRefrigerator->setFloatUniform("lightSourceInsideRefrigerator.kL", 0.9F);
+			shaderProgramForRefrigerator->setFloatUniform("lightSourceInsideRefrigerator.kQ", 3.0F);
+
+			// Set the shininess of the specular highlight. Shininess value of highligt (light source's beam) determines
+			// the size (radius) and the scattering of specular highlight. This value should be a degree of number 2
+			// (2, 4, 8, 16, 32, ...)
+			// Higher value results in a smaller, focused specular highlight. The light will be reflected more properly.
+			// Lower value results in a larger, scattered specular highlight. The light will be reflected less properly.
+			float shininessOfSpecularHighlight = 32.0F;
+			shaderProgramForRefrigerator->setFloatUniform(
+				"material.shininessOfSpecularHighlight", shininessOfSpecularHighlight);
 
 			// Set the current intensity of background light uniform.
 			shaderProgramForRefrigerator->setFloatUniform("intensityOfBackgroundLight", intensityOfBackgroundLight);
@@ -1529,8 +1578,6 @@ int main()
 			shaderProgramForLightSourceInsideRefrigerator->setFloatMat4Uniform("modelMatrix", modelMatrix);
 
 			// Set the current temperatures of refrigerator uniform.
-			float currentAvgTemperatureOfRefrigerator = 
-				(currentTemperatureOfFreezingChamber + currentTemperatureOfRefrigeratingChamber) / 2.0F;
 			shaderProgramForLightSourceInsideRefrigerator->setFloatUniform(
 				"currentAvgTemperatureOfRefrigerator", currentAvgTemperatureOfRefrigerator);
 
