@@ -28,13 +28,13 @@ in vec4 Color;
 
 out vec4 FragColor;
 
-uniform float intensityOfBackgroundLight;
 // Pass the position of viewer (needed for specular component of the Phong's lighting model).
 uniform vec3 positionOfViewer;
 // Pass the spotlight.
 uniform Spotlight lightSourceInsideRefrigerator;
 // Pass the material of object (needed for all 3 components of the Phong's lighting model).
 uniform Material material;
+uniform float intensityOfBackgroundLight;
 
 void main()
 {
@@ -46,9 +46,10 @@ void main()
 	vec3 diffuseColor = lightSourceInsideRefrigerator.diffuseColor * diffuseFactor * vec3(Color);
 
 	vec3 viewDirection = normalize(positionOfViewer - FragPos);
-	vec3 reflectionDirection = reflect(-lightDirection, normal);
-	float specularFactor = 
-		pow(max(0.0F, dot(viewDirection, reflectionDirection)), material.shininessOfSpecularHighlight);
+	// REFERENCE: https://learnopengl.com/Advanced-Lighting/Advanced-Lighting
+	vec3 halfwayVectorBetweenLightAndViewDirections = normalize(lightDirection + viewDirection);
+	float specularFactor = pow(max(0.0F, dot(normal, halfwayVectorBetweenLightAndViewDirections)), 
+		material.shininessOfSpecularHighlight);
 	vec3 specularColor = lightSourceInsideRefrigerator.specularColor * specularFactor * vec3(Color);
 
 	float cosOfAngleBetweenLightDirAndSpotDir = 

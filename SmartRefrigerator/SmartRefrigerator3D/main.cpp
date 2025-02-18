@@ -1501,9 +1501,9 @@ int main()
 			shaderProgramForRefrigerator->setFloatVec3Uniform(
 				"lightSourceInsideRefrigerator.position", glm::vec3(0.0F, 0.6F, -0.995F));
 			shaderProgramForRefrigerator->setFloatUniform(
-				"lightSourceInsideRefrigerator.cosOfInnerCutoffAngle", glm::cos(glm::radians(1.0F)));
+				"lightSourceInsideRefrigerator.cosOfInnerCutoffAngle", glm::cos(glm::radians(20.0F)));
 			shaderProgramForRefrigerator->setFloatUniform(
-				"lightSourceInsideRefrigerator.cosOfOuterCutoffAngle", glm::cos(glm::radians(2.0F)));
+				"lightSourceInsideRefrigerator.cosOfOuterCutoffAngle", glm::cos(glm::radians(30.0F)));
 			float currentAvgTemperatureOfRefrigerator = 
 				(currentTemperatureOfFreezingChamber + currentTemperatureOfRefrigeratingChamber) / 2.0F;
 			float blueColorComponentOfLight = (currentAvgTemperatureOfRefrigerator - minAvgTemperatureOfRefrigerator) / 
@@ -1526,7 +1526,7 @@ int main()
 			// (2, 4, 8, 16, 32, ...)
 			// Higher value results in a smaller, focused specular highlight. The light will be reflected more properly.
 			// Lower value results in a larger, scattered specular highlight. The light will be reflected less properly.
-			float shininessOfSpecularHighlight = 32.0F;
+			float shininessOfSpecularHighlight = 4.0F;
 			shaderProgramForRefrigerator->setFloatUniform(
 				"material.shininessOfSpecularHighlight", shininessOfSpecularHighlight);
 
