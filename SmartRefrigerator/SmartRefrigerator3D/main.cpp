@@ -66,6 +66,7 @@ float bottomLeftYOfLogoText = 0.4F * windowHeight;
 bool graphicalModeTurnedOn = true;
 float timeWhenGraphicalModeWasActivated = 0.0F;
 GLenum polygonMode = GL_FILL;
+bool sceneLit = true;
 // When the orthogonal projection is turned on, this 3D project acts as the 2D project and the mouse cursor is visible.
 // Otherwise, the entire refrigerator can be seen and the mouse cursor is hidden.
 bool orthogonalProjectionTurnedOn = true;
@@ -1491,44 +1492,50 @@ int main()
 			// Set the normal matrix. This matrix changes each frame.
 			shaderProgramForRefrigerator->setFloatMat3Uniform("normalMatrix", normalMatrix);
 
-			// REFERENCE: https://learnopengl.com/Lighting/Light-casters
-			// Set position of viewer to field "position" of global object "camera".
-			shaderProgramForRefrigerator->setFloatVec3Uniform("positionOfViewer", camera->position);
-
-			// Spotlight inside refrigerator uniforms.
-			shaderProgramForRefrigerator->setFloatVec3Uniform(
-				"lightSourceInsideRefrigerator.direction", glm::vec3(0.0F, 0.0F, 1.0F));
-			shaderProgramForRefrigerator->setFloatVec3Uniform(
-				"lightSourceInsideRefrigerator.position", glm::vec3(0.0F, 0.6F, -0.995F));
-			shaderProgramForRefrigerator->setFloatUniform(
-				"lightSourceInsideRefrigerator.cosOfInnerCutoffAngle", glm::cos(glm::radians(20.0F)));
-			shaderProgramForRefrigerator->setFloatUniform(
-				"lightSourceInsideRefrigerator.cosOfOuterCutoffAngle", glm::cos(glm::radians(30.0F)));
 			float currentAvgTemperatureOfRefrigerator = 
 				(currentTemperatureOfFreezingChamber + currentTemperatureOfRefrigeratingChamber) / 2.0F;
-			float blueColorComponentOfLight = (currentAvgTemperatureOfRefrigerator - minAvgTemperatureOfRefrigerator) / 
-				(maxAvgTemperatureOfRefrigerator - minAvgTemperatureOfRefrigerator);
-			shaderProgramForRefrigerator->setFloatVec3Uniform(
-				"lightSourceInsideRefrigerator.ambientColor", glm::vec3(1.0F, 1.0F, blueColorComponentOfLight));
-			shaderProgramForRefrigerator->setFloatVec3Uniform(
-				"lightSourceInsideRefrigerator.diffuseColor", glm::vec3(1.0F, 1.0F, blueColorComponentOfLight));
-			shaderProgramForRefrigerator->setFloatVec3Uniform(
-				"lightSourceInsideRefrigerator.specularColor", glm::vec3(1.0F, 1.0F, 1.0F));
-			// REFERENCE: https://wiki.ogre3d.org/tiki-index.php?page=-Point+Light+Attenuation
-			// REFERENCE: https://wiki.ogre3d.org/Light%20Attenuation%20Shortcut
-			// kC = 1.0F, kL = 4.5F / d, kQ = 75.0F / d^2; d = 5.0F
-			shaderProgramForRefrigerator->setFloatUniform("lightSourceInsideRefrigerator.kC", 1.0F);
-			shaderProgramForRefrigerator->setFloatUniform("lightSourceInsideRefrigerator.kL", 0.9F);
-			shaderProgramForRefrigerator->setFloatUniform("lightSourceInsideRefrigerator.kQ", 3.0F);
+			// Set the is scene lit uniform.
+			shaderProgramForRefrigerator->setBoolUniform("sceneLit", sceneLit);
+			if (sceneLit)
+			{
+				// REFERENCE: https://learnopengl.com/Lighting/Light-casters
+				// Set position of viewer to field "position" of global object "camera".
+				shaderProgramForRefrigerator->setFloatVec3Uniform("positionOfViewer", camera->position);
 
-			// Set the shininess of the specular highlight. Shininess value of highligt (light source's beam) determines
-			// the size (radius) and the scattering of specular highlight. This value should be a degree of number 2
-			// (2, 4, 8, 16, 32, ...)
-			// Higher value results in a smaller, focused specular highlight. The light will be reflected more properly.
-			// Lower value results in a larger, scattered specular highlight. The light will be reflected less properly.
-			float shininessOfSpecularHighlight = 4.0F;
-			shaderProgramForRefrigerator->setFloatUniform(
-				"material.shininessOfSpecularHighlight", shininessOfSpecularHighlight);
+				// Set the spotlight inside refrigerator uniforms.
+				shaderProgramForRefrigerator->setFloatVec3Uniform(
+					"lightSourceInsideRefrigerator.direction", glm::vec3(0.0F, 0.0F, 1.0F));
+				shaderProgramForRefrigerator->setFloatVec3Uniform(
+					"lightSourceInsideRefrigerator.position", glm::vec3(0.0F, 0.6F, -0.995F));
+				shaderProgramForRefrigerator->setFloatUniform(
+					"lightSourceInsideRefrigerator.cosOfInnerCutoffAngle", glm::cos(glm::radians(20.0F)));
+				shaderProgramForRefrigerator->setFloatUniform(
+					"lightSourceInsideRefrigerator.cosOfOuterCutoffAngle", glm::cos(glm::radians(30.0F)));
+				float blueColorComponentOfLight = 
+					(currentAvgTemperatureOfRefrigerator - minAvgTemperatureOfRefrigerator) / 
+					(maxAvgTemperatureOfRefrigerator - minAvgTemperatureOfRefrigerator);
+				shaderProgramForRefrigerator->setFloatVec3Uniform(
+					"lightSourceInsideRefrigerator.ambientColor", glm::vec3(1.0F, 1.0F, blueColorComponentOfLight));
+				shaderProgramForRefrigerator->setFloatVec3Uniform(
+					"lightSourceInsideRefrigerator.diffuseColor", glm::vec3(1.0F, 1.0F, blueColorComponentOfLight));
+				shaderProgramForRefrigerator->setFloatVec3Uniform(
+					"lightSourceInsideRefrigerator.specularColor", glm::vec3(1.0F, 1.0F, 1.0F));
+				// REFERENCE: https://wiki.ogre3d.org/tiki-index.php?page=-Point+Light+Attenuation
+				// REFERENCE: https://wiki.ogre3d.org/Light%20Attenuation%20Shortcut
+				// kC = 1.0F, kL = 4.5F / d, kQ = 75.0F / d^2; d = 5.0F
+				shaderProgramForRefrigerator->setFloatUniform("lightSourceInsideRefrigerator.kC", 1.0F);
+				shaderProgramForRefrigerator->setFloatUniform("lightSourceInsideRefrigerator.kL", 0.9F);
+				shaderProgramForRefrigerator->setFloatUniform("lightSourceInsideRefrigerator.kQ", 3.0F);
+
+				// Set the shininess of the specular highlight. Shininess value of highlight (the light source's beam)
+				// determines the size (radius) and the scattering of specular highlight. This value should be a degree
+				// of number 2 (2, 4, 8, 16, 32, ...).
+				// Higher value results in a smaller, focused specular highlight. The light is reflected more properly.
+				// Lower value results in a larger, scattered specular highlight. The light is reflected less properly.
+				float shininessOfSpecularHighlight = 4.0F;
+				shaderProgramForRefrigerator->setFloatUniform(
+					"material.shininessOfSpecularHighlight", shininessOfSpecularHighlight);
+			}
 
 			// Set the current intensity of background light uniform.
 			shaderProgramForRefrigerator->setFloatUniform("intensityOfBackgroundLight", intensityOfBackgroundLight);
@@ -2008,6 +2015,14 @@ void processInput(GLFWwindow *window)
 		if (glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS)
 		{
 			polygonMode = GL_FILL;
+			sceneLit = false;
+
+			return;
+		}
+		if (glfwGetKey(window, GLFW_KEY_I) == GLFW_PRESS)
+		{
+			polygonMode = GL_FILL;
+			sceneLit = true;
 
 			return;
 		}

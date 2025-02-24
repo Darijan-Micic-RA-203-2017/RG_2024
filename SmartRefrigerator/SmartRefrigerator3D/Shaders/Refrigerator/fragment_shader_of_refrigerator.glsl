@@ -28,16 +28,26 @@ in vec4 Color;
 
 out vec4 FragColor;
 
+// Should the scene be lit at all?
+uniform bool sceneLit;
 // Pass the position of viewer (needed for specular component of the Phong's lighting model).
 uniform vec3 positionOfViewer;
 // Pass the spotlight.
 uniform Spotlight lightSourceInsideRefrigerator;
 // Pass the material of object (needed for all 3 components of the Phong's lighting model).
 uniform Material material;
+// Strength of the light shining the scene.
 uniform float intensityOfBackgroundLight;
 
 void main()
 {
+	if (!sceneLit)
+	{
+		FragColor = vec4(intensityOfBackgroundLight * Color.rgb, Color.a);
+
+		return;
+	}
+
 	vec3 ambientColor = lightSourceInsideRefrigerator.ambientColor * vec3(Color);
 
 	vec3 normal = normalize(Normal);
