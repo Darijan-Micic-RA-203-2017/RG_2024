@@ -3,7 +3,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
-#include "shader_program.hpp"
+#include "shader_programs.hpp"
 #include "texture.hpp"
 #include "text.hpp"
 #include "camera.hpp"
@@ -33,14 +33,6 @@ float frameRate = 0.0F;
 const float desiredMaxDeltaTime = 0.016667F; // 1 / 60
 // The time (in seconds) it took to render the previous frame.
 float previousFrameTime = 0.0F;
-
-// Shader programs.
-ShaderProgram *shaderProgramForGrocery = NULL;
-ShaderProgram *shaderProgramForChamber = NULL;
-ShaderProgram *shaderProgramForRefrigerator = NULL;
-ShaderProgram *shaderProgramForLightSourceInsideRefrigerator = NULL;
-ShaderProgram *shaderProgramForNonlogoText = NULL;
-ShaderProgram *shaderProgramForLogoText = NULL;
 
 // The logo mode starts 5 seconds after the user last clicked on the refrigerator's graphic display and ends when the
 // user clicks on it again. Logo mode consists of showing the "LOK" company logo over the screen.
@@ -142,54 +134,12 @@ int main()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	// Compile the shaders and link the shader programs using the helper "ShaderProgram" class.
-	shaderProgramForGrocery = new ShaderProgram("Shaders/Grocery/vertex_shader_of_grocery.glsl", 
-		"Shaders/Grocery/fragment_shader_of_grocery.glsl");
-	if (shaderProgramForGrocery->errorCode != 0)
+	int errorCode = compileShadersAndLinkShaderPrograms();
+	if (errorCode != 0)
 	{
 		glfwTerminate();
 
-		return shaderProgramForGrocery->errorCode;
-	}
-	shaderProgramForChamber = new ShaderProgram("Shaders/Chamber/vertex_shader_of_chamber.glsl", 
-		"Shaders/Chamber/fragment_shader_of_chamber.glsl");
-	if (shaderProgramForChamber->errorCode != 0)
-	{
-		glfwTerminate();
-
-		return shaderProgramForChamber->errorCode;
-	}
-	shaderProgramForRefrigerator = new ShaderProgram("Shaders/Refrigerator/vertex_shader_of_refrigerator.glsl", 
-		"Shaders/Refrigerator/fragment_shader_of_refrigerator.glsl");
-	if (shaderProgramForRefrigerator->errorCode != 0)
-	{
-		glfwTerminate();
-
-		return shaderProgramForRefrigerator->errorCode;
-	}
-	shaderProgramForLightSourceInsideRefrigerator = new ShaderProgram(
-		"Shaders/LightSourceInsideRefrigerator/vertex_shader_of_light_source_inside_refrigerator.glsl", 
-		"Shaders/LightSourceInsideRefrigerator/fragment_shader_of_light_source_inside_refrigerator.glsl");
-	if (shaderProgramForLightSourceInsideRefrigerator->errorCode != 0)
-	{
-		glfwTerminate();
-
-		return shaderProgramForLightSourceInsideRefrigerator->errorCode;
-	}
-	shaderProgramForNonlogoText = new ShaderProgram("Shaders/NonlogoText/vertex_shader_of_nonlogo_text.glsl", 
-		"Shaders/NonlogoText/fragment_shader_of_nonlogo_text.glsl");
-	if (shaderProgramForNonlogoText->errorCode != 0)
-	{
-		glfwTerminate();
-
-		return shaderProgramForNonlogoText->errorCode;
-	}
-	shaderProgramForLogoText = new ShaderProgram("Shaders/LogoText/vertex_shader_of_logo_text.glsl", 
-		"Shaders/LogoText/fragment_shader_of_logo_text.glsl");
-	if (shaderProgramForLogoText->errorCode != 0)
-	{
-		glfwTerminate();
-
-		return shaderProgramForLogoText->errorCode;
+		return errorCode;
 	}
 
 	// Vertices in the normalized device coordinates system (from -1.0F to 1.0F).
@@ -1739,6 +1689,7 @@ int main()
 	// De-allocate the shader programs using their destructors.
 	delete shaderProgramForLogoText;
 	delete shaderProgramForNonlogoText;
+	delete shaderProgramForLightSourceInsideRefrigerator;
 	delete shaderProgramForRefrigerator;
 	delete shaderProgramForChamber;
 	delete shaderProgramForGrocery;

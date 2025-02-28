@@ -138,6 +138,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="shader_program.hpp" />
+    <ClInclude Include="shader_programs.hpp" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="texture.hpp" />
     <ClInclude Include="include\ft2build.h" />
@@ -145,6 +146,7 @@
     <ClInclude Include="camera.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="shader_programs.cpp" />
     <ClCompile Include="stb_image.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>

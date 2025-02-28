@@ -167,7 +167,7 @@ public:
 	// Utility functions for updating the various types of uniform variables.
 	void setBoolUniform(const std::string &name, bool value) const
 	{
-		glUniform1i(glGetUniformLocation(id, name.c_str()), (int) value);
+		glUniform1i(glGetUniformLocation(id, name.c_str()), static_cast<int>(value));
 	}
 
 	void setUnsignedIntegerUniform(const std::string &name, unsigned int value) const
