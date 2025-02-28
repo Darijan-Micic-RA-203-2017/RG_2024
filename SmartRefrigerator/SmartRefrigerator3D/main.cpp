@@ -137,6 +137,8 @@ int main()
 	int errorCode = compileShadersAndLinkShaderPrograms();
 	if (errorCode != 0)
 	{
+		// De-allocate the shader programs using their destructors.
+		destroyShaderPrograms();
 		glfwTerminate();
 
 		return errorCode;
@@ -1687,12 +1689,7 @@ int main()
 	// De-allocate the texture used for the mouse cursor using the "stb_image.h" library's "stbi_image_free" method.
 	stbi_image_free(blueSnowflakeIcon.pixels);
 	// De-allocate the shader programs using their destructors.
-	delete shaderProgramForLogoText;
-	delete shaderProgramForNonlogoText;
-	delete shaderProgramForLightSourceInsideRefrigerator;
-	delete shaderProgramForRefrigerator;
-	delete shaderProgramForChamber;
-	delete shaderProgramForGrocery;
+	destroyShaderPrograms();
 
 	// Terminate the GLFW library, which frees up all allocated resources.
 	glfwTerminate();

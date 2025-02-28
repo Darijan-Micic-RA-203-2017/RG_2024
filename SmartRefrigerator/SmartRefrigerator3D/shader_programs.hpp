@@ -16,5 +16,6 @@ extern ShaderProgram *shaderProgramForNonlogoText;
 extern ShaderProgram *shaderProgramForLogoText;
 
 int compileShadersAndLinkShaderPrograms();
+void destroyShaderPrograms();
 
 #endif

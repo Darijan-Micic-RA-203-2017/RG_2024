@@ -51,3 +51,14 @@ int compileShadersAndLinkShaderPrograms()
 
 	return 0;
 }
+
+// De-allocate the shader programs using their destructors.
+void destroyShaderPrograms()
+{
+	delete shaderProgramForLogoText;
+	delete shaderProgramForNonlogoText;
+	delete shaderProgramForLightSourceInsideRefrigerator;
+	delete shaderProgramForRefrigerator;
+	delete shaderProgramForChamber;
+	delete shaderProgramForGrocery;
+}
