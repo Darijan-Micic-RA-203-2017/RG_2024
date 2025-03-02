@@ -4,7 +4,7 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include "shader_programs.hpp"
-#include "vertices.hpp"
+#include "vaos_and_vbos.hpp"
 #include "texture.hpp"
 #include "text.hpp"
 #include "camera.hpp"
@@ -145,112 +145,9 @@ int main()
 		return errorCode;
 	}
 
-	// Create memory on the GPU where vertex data and index data will be stored.
-	// Said data will be handled by VAO and vertex/element buffer objects inside that VAO.
-	// Core OpenGL REQUIRES the use of VAOs!
-	unsigned int groceriesVAO, chambersVAO, refrigeratorVAO, lightSourceInsideRefrigeratorVAO, textVAO;
-	glGenVertexArrays(1, &groceriesVAO); glGenVertexArrays(1, &chambersVAO); glGenVertexArrays(1, &refrigeratorVAO);
-	glGenVertexArrays(1, &lightSourceInsideRefrigeratorVAO); glGenVertexArrays(1, &textVAO);
-	unsigned int groceriesVBO, chambersVBO, refrigeratorVBO, lightSourceInsideRefrigeratorVBO, textVBO;
-	glGenBuffers(1, &groceriesVBO); glGenBuffers(1, &chambersVBO); glGenBuffers(1, &refrigeratorVBO);
-	glGenBuffers(1, &lightSourceInsideRefrigeratorVBO); glGenBuffers(1, &textVBO);
-
-	// Bind (assign) the newly created VAO to OpenGL's context.
-	glBindVertexArray(groceriesVAO);
-	// Bind (assign) the newly created VBO to OpenGL's context.
-	glBindBuffer(GL_ARRAY_BUFFER, groceriesVBO);
-	// Copy user-defined data into the currently bound buffer.
-	// Vertex data is now stored on the graphics card's memory.
-	glBufferData(GL_ARRAY_BUFFER, sizeof(verticesOfGroceries), verticesOfGroceries, GL_STATIC_DRAW);
-	// Tell OpenGL how it should interpret vertex data, per vertex attribute.
-	// Position attribute.
-	glVertexAttribPointer(0U, 3, GL_FLOAT, GL_FALSE, 8U * sizeof(float), (void*) 0U);
-	// Enable vertex's position attribute.
-	glEnableVertexAttribArray(0U);
-	// Normal vector attribute.
-	glVertexAttribPointer(1U, 3, GL_FLOAT, GL_FALSE, 8U * sizeof(float), (void*) (3U * sizeof(float)));
-	// Enable vertex's normal vector attribute.
-	glEnableVertexAttribArray(1U);
-	// Texture coordinates attribute.
-	glVertexAttribPointer(2U, 2, GL_FLOAT, GL_FALSE, 8U * sizeof(float), (void*) (6U * sizeof(float)));
-	// Enable vertex's texture coodinates attribute.
-	glEnableVertexAttribArray(2U);
-
-	// Bind (assign) the newly created VAO to OpenGL's context.
-	glBindVertexArray(chambersVAO);
-	// Bind (assign) the newly created VBO to OpenGL's context.
-	glBindBuffer(GL_ARRAY_BUFFER, chambersVBO);
-	// Copy user-defined data into the currently bound buffer.
-	// Vertex data is now stored on the graphics card's memory.
-	glBufferData(GL_ARRAY_BUFFER, sizeof(verticesOfChambers), verticesOfChambers, GL_STATIC_DRAW);
-	// Tell OpenGL how it should interpret vertex data, per vertex attribute.
-	// Position attribute.
-	glVertexAttribPointer(0U, 3, GL_FLOAT, GL_FALSE, 10U * sizeof(float), (void*) 0U);
-	// Enable vertex's position attribute.
-	glEnableVertexAttribArray(0U);
-	// Normal vector attribute.
-	glVertexAttribPointer(1U, 3, GL_FLOAT, GL_FALSE, 10U * sizeof(float), (void*) (3U * sizeof(float)));
-	// Enable vertex's normal vector attribute.
-	glEnableVertexAttribArray(1U);
-	// Color attribute.
-	glVertexAttribPointer(2U, 4, GL_FLOAT, GL_FALSE, 10U * sizeof(float), (void*) (6U * sizeof(float)));
-	// Enable vertex's color attribute.
-	glEnableVertexAttribArray(2U);
-
-	// Bind (assign) the newly created VAO to OpenGL's context.
-	glBindVertexArray(refrigeratorVAO);
-	// Bind (assign) the newly created VBO to OpenGL's context.
-	glBindBuffer(GL_ARRAY_BUFFER, refrigeratorVBO);
-	// Copy user-defined data into the currently bound buffer.
-	// Vertex data is now stored on the graphics card's memory.
-	glBufferData(GL_ARRAY_BUFFER, sizeof(verticesOfRefrigerator), verticesOfRefrigerator, GL_STATIC_DRAW);
-	// Tell OpenGL how it should interpret vertex data, per vertex attribute.
-	// Position attribute.
-	glVertexAttribPointer(0U, 3, GL_FLOAT, GL_FALSE, 10U * sizeof(float), (void*) 0U);
-	// Enable vertex's position attribute.
-	glEnableVertexAttribArray(0U);
-	// Normal vector attribute.
-	glVertexAttribPointer(1U, 3, GL_FLOAT, GL_FALSE, 10U * sizeof(float), (void*) (3U * sizeof(float)));
-	// Enable vertex's normal vector attribute.
-	glEnableVertexAttribArray(1U);
-	// Color attribute.
-	glVertexAttribPointer(2U, 4, GL_FLOAT, GL_FALSE, 10U * sizeof(float), (void*) (6U * sizeof(float)));
-	// Enable vertex's color attribute.
-	glEnableVertexAttribArray(2U);
-
-	// Bind (assign) the newly created VAO to OpenGL's context.
-	glBindVertexArray(lightSourceInsideRefrigeratorVAO);
-	// Bind (assign) the newly created VBO to OpenGL's context.
-	glBindBuffer(GL_ARRAY_BUFFER, lightSourceInsideRefrigeratorVBO);
-	// Copy user-defined data into the currently bound buffer.
-	// Vertex data is now stored on the graphics card's memory.
-	glBufferData(GL_ARRAY_BUFFER, sizeof(verticesOfLightSourceInsideRefrigerator), 
-		verticesOfLightSourceInsideRefrigerator, GL_STATIC_DRAW);
-	// Tell OpenGL how it should interpret vertex data, per vertex attribute.
-	// Position attribute.
-	glVertexAttribPointer(0U, 3, GL_FLOAT, GL_FALSE, 3U * sizeof(float), (void*) 0U);
-	// Enable vertex's position attribute.
-	glEnableVertexAttribArray(0U);
-
-	// Bind (assign) the newly created VAO to OpenGL's context.
-	glBindVertexArray(textVAO);
-	// Bind (assign) the newly created VBO to OpenGL's context.
-	glBindBuffer(GL_ARRAY_BUFFER, textVBO);
-	// Copy user-defined data into the currently bound buffer.
-	// Vertex data is now stored on the graphics card's memory.
-	glBufferData(GL_ARRAY_BUFFER, 6U * 4U * sizeof(float), NULL, GL_DYNAMIC_DRAW); // For often updates of the content.
-	// Tell OpenGL how it should interpret vertex data, per vertex attribute.
-	// Position and texture coordinates (combined) attribute.
-	glVertexAttribPointer(0U, 4, GL_FLOAT, GL_FALSE, 4U * sizeof(float), (void*) 0U);
-	// Enable vertex's position and texture coordinates (combined) attribute.
-	glEnableVertexAttribArray(0U);
-
-	// Unbind VBO and VAO for safety reasons. This is not neccessary.
-	// VAO stores the glBindBuffer calls when the target is GL_ELEMENT_ARRAY_BUFFER.
-	// This also means it stores its unbind calls, so
-	// DO NOT EVER unbind EBO before unbinding VAO, otherwise it won't have a configured EBO.
-	glBindBuffer(GL_ARRAY_BUFFER, 0U);
-	glBindVertexArray(0U);
+	// Generate vertex arrays and buffers, copy user-defined data to GPU and tell OpenGL how it should interpret it.
+	// Finally, unbind VBO and VAO for safety reasons.
+	setUpVAOsAndVBOs();
 
 	// Generate textures, set their wrapping and filtering parameters, load the images-to-become-textures from
 	// the file system and generate all the required mipmaps using the helper class.
@@ -610,15 +507,15 @@ int main()
 			glDrawArrays(GL_TRIANGLES, 216, 36); // digital clock rectangle widget
 			glDrawArrays(GL_TRIANGLES, 252, 36); // see-through mode activation button
 			glDrawArrays(GL_TRIANGLES, 288, 6);  // rectangle symbol on the see-through mode activation button
-			glDrawArrays(GL_TRIANGLES, 294, 36); // "-" button, left of refrigerating chamber temperature widget
+			glDrawArrays(GL_TRIANGLES, 294, 36); // "-" button, left of freezing chamber temperature widget
 			glDrawArrays(GL_LINES, 330, 2);      // line representing the "-" sign itself
-			glDrawArrays(GL_TRIANGLES, 332, 36); // refrigerating chamber temperature widget
-			glDrawArrays(GL_TRIANGLES, 368, 36); // "+" button, right of refrigerating chamber temperature widget
+			glDrawArrays(GL_TRIANGLES, 332, 36); // freezing chamber temperature widget
+			glDrawArrays(GL_TRIANGLES, 368, 36); // "+" button, right of freezing chamber temperature widget
 			glDrawArrays(GL_LINES, 404, 4);      // lines representing the "+" sign itself
-			glDrawArrays(GL_TRIANGLES, 408, 36); // "-" button, left of freezing chamber temperature widget
+			glDrawArrays(GL_TRIANGLES, 408, 36); // "-" button, left of refrigerating chamber temperature widget
 			glDrawArrays(GL_LINES, 444, 2);      // line representing the "-" sign itself
-			glDrawArrays(GL_TRIANGLES, 446, 36); // freezing chamber temperature widget
-			glDrawArrays(GL_TRIANGLES, 482, 36); // "+" button, right of freezing chamber temp
+			glDrawArrays(GL_TRIANGLES, 446, 36); // refrigerating chamber temperature widget
+			glDrawArrays(GL_TRIANGLES, 482, 36); // "+" button, right of refrigerating chamber temp
 			glDrawArrays(GL_LINES, 518, 4);      // lines representing the "+" sign itself
 			glDrawArrays(GL_TRIANGLES, 522, 36); // "-" button, left of point light intensity widget
 			glDrawArrays(GL_LINES, 558, 2);      // line representing the "-" sign itself

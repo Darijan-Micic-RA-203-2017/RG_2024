@@ -28,6 +28,9 @@
     <ClInclude Include="vertices.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="vaos_and_vbos.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="stb_image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -49,6 +52,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="vertices.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vaos_and_vbos.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="stb_image.cpp">
