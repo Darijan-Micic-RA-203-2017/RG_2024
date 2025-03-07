@@ -12,11 +12,13 @@
 extern unsigned int groceriesVAO;
 extern unsigned int chambersVAO;
 extern unsigned int refrigeratorVAO;
+extern unsigned int refrigeratorDoorsVAO;
 extern unsigned int lightSourceInsideRefrigeratorVAO;
 extern unsigned int textVAO;
 extern unsigned int groceriesVBO;
 extern unsigned int chambersVBO;
 extern unsigned int refrigeratorVBO;
+extern unsigned int refrigeratorDoorsVBO;
 extern unsigned int lightSourceInsideRefrigeratorVBO;
 extern unsigned int textVBO;
 

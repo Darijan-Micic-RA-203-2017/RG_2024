@@ -494,34 +494,38 @@ int main()
 			glBindVertexArray(refrigeratorVAO);
 			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
 			glDrawArrays(GL_TRIANGLES, 0, 36);      // refrigerator (back side)
-			glDrawArrays(GL_TRIANGLES, 36, 36);     // refrigerator (front side)
-			glDrawArrays(GL_TRIANGLES, 72, 36);     // refrigerator (left side)
-			glDrawArrays(GL_TRIANGLES, 108, 36);    // refrigerator (right side)
-			glDrawArrays(GL_TRIANGLES, 144, 36);    // refrigerator (bottom side)
-			glDrawArrays(GL_TRIANGLES, 180, 36);    // refrigerator (top side)
+			glDrawArrays(GL_TRIANGLES, 36, 36);     // refrigerator (left side)
+			glDrawArrays(GL_TRIANGLES, 72, 36);     // refrigerator (right side)
+			glDrawArrays(GL_TRIANGLES, 108, 36);    // refrigerator (bottom side)
+			glDrawArrays(GL_TRIANGLES, 144, 36);    // refrigerator (top side)
+
+			// Bind (assign) the desired VAO to OpenGL's context.
+			glBindVertexArray(refrigeratorDoorsVAO);
+			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
+			glDrawArrays(GL_TRIANGLES, 0, 36);    // refrigerator (front side)
 
 			// Always turn on the blending when rendering the graphical elements and text, due to the way the "FreeType"
 			// library is implemented.
 			glEnable(GL_BLEND);
 
-			glDrawArrays(GL_TRIANGLES, 216, 36); // digital clock rectangle widget
-			glDrawArrays(GL_TRIANGLES, 252, 36); // see-through mode activation button
-			glDrawArrays(GL_TRIANGLES, 288, 6);  // rectangle symbol on the see-through mode activation button
-			glDrawArrays(GL_TRIANGLES, 294, 36); // "-" button, left of freezing chamber temperature widget
-			glDrawArrays(GL_LINES, 330, 2);      // line representing the "-" sign itself
-			glDrawArrays(GL_TRIANGLES, 332, 36); // freezing chamber temperature widget
-			glDrawArrays(GL_TRIANGLES, 368, 36); // "+" button, right of freezing chamber temperature widget
-			glDrawArrays(GL_LINES, 404, 4);      // lines representing the "+" sign itself
-			glDrawArrays(GL_TRIANGLES, 408, 36); // "-" button, left of refrigerating chamber temperature widget
-			glDrawArrays(GL_LINES, 444, 2);      // line representing the "-" sign itself
-			glDrawArrays(GL_TRIANGLES, 446, 36); // refrigerating chamber temperature widget
-			glDrawArrays(GL_TRIANGLES, 482, 36); // "+" button, right of refrigerating chamber temp
-			glDrawArrays(GL_LINES, 518, 4);      // lines representing the "+" sign itself
-			glDrawArrays(GL_TRIANGLES, 522, 36); // "-" button, left of point light intensity widget
-			glDrawArrays(GL_LINES, 558, 2);      // line representing the "-" sign itself
-			glDrawArrays(GL_TRIANGLES, 560, 36); // point light intensity widget
-			glDrawArrays(GL_TRIANGLES, 596, 36); // "+" button, right of point light intensity widget
-			glDrawArrays(GL_LINES, 632, 4);      // lines representing the "+" sign itself
+			glDrawArrays(GL_TRIANGLES, 36, 36);  // digital clock rectangle widget
+			glDrawArrays(GL_TRIANGLES, 72, 36);  // see-through mode activation button
+			glDrawArrays(GL_TRIANGLES, 108, 6);  // rectangle symbol on the see-through mode activation button
+			glDrawArrays(GL_TRIANGLES, 114, 36); // "-" button, left of freezing chamber temperature widget
+			glDrawArrays(GL_LINES, 150, 2);      // line representing the "-" sign itself
+			glDrawArrays(GL_TRIANGLES, 152, 36); // freezing chamber temperature widget
+			glDrawArrays(GL_TRIANGLES, 188, 36); // "+" button, right of freezing chamber temperature widget
+			glDrawArrays(GL_LINES, 224, 4);      // lines representing the "+" sign itself
+			glDrawArrays(GL_TRIANGLES, 228, 36); // "-" button, left of refrigerating chamber temperature widget
+			glDrawArrays(GL_LINES, 264, 2);      // line representing the "-" sign itself
+			glDrawArrays(GL_TRIANGLES, 266, 36); // refrigerating chamber temperature widget
+			glDrawArrays(GL_TRIANGLES, 302, 36); // "+" button, right of refrigerating chamber temperature widget
+			glDrawArrays(GL_LINES, 338, 4);      // lines representing the "+" sign itself
+			glDrawArrays(GL_TRIANGLES, 342, 36); // "-" button, left of point light intensity widget
+			glDrawArrays(GL_LINES, 378, 2);      // line representing the "-" sign itself
+			glDrawArrays(GL_TRIANGLES, 380, 36); // point light intensity widget
+			glDrawArrays(GL_TRIANGLES, 416, 36); // "+" button, right of point light intensity widget
+			glDrawArrays(GL_LINES, 452, 4);      // lines representing the "+" sign itself
 
 			// Activate the desired shader program.
 			// Every shader and rendering call from now on will use this shader program object.

@@ -8,7 +8,8 @@
 // REFERENCE: https://stackoverflow.com/questions/56735173/variable-already-defined-in-obj-what-is-going-on-here
 extern float verticesOfGroceries[1152U];
 extern float verticesOfChambers[600U];
-extern float verticesOfRefrigerator[6360U];
+extern float verticesOfRefrigerator[1800U];
+extern float verticesOfRefrigeratorDoors[4560U];
 extern float verticesOfLightSourceInsideRefrigerator[108U];
 
 #endif
