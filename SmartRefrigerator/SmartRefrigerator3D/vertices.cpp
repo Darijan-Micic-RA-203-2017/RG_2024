@@ -14,12 +14,12 @@ are needed to render the cube (6 sides * 2 triangles per side * 3 vertices for e
 float verticesOfGroceries[1152U] = {
 	// position           // normal vector     // texture coordinates
 	// in the freezing chamber
-	-0.45F, -0.2F,  0.3F,  0.0F,  0.0F, -1.0F, 1.0F, 0.0F, // left fish sticks package
-	-0.05F, -0.2F,  0.3F,  0.0F,  0.0F, -1.0F, 0.0F, 0.0F, // - back side
-	-0.45F,  0.2F,  0.3F,  0.0F,  0.0F, -1.0F, 1.0F, 1.0F, 
-	-0.45F,  0.2F,  0.3F,  0.0F,  0.0F, -1.0F, 1.0F, 1.0F, 
-	-0.05F, -0.2F,  0.3F,  0.0F,  0.0F, -1.0F, 0.0F, 0.0F, 
+	-0.05F, -0.2F,  0.3F,  0.0F,  0.0F, -1.0F, 0.0F, 0.0F, // left fish sticks package
+	-0.45F, -0.2F,  0.3F,  0.0F,  0.0F, -1.0F, 1.0F, 0.0F, // - back side
 	-0.05F,  0.2F,  0.3F,  0.0F,  0.0F, -1.0F, 0.0F, 1.0F, 
+	-0.05F,  0.2F,  0.3F,  0.0F,  0.0F, -1.0F, 0.0F, 1.0F, 
+	-0.45F, -0.2F,  0.3F,  0.0F,  0.0F, -1.0F, 1.0F, 0.0F, 
+	-0.45F,  0.2F,  0.3F,  0.0F,  0.0F, -1.0F, 1.0F, 1.0F, 
 	-0.45F, -0.2F,  0.6F,  0.0F,  0.0F,  1.0F, 0.0F, 0.0F, // left fish sticks package
 	-0.05F, -0.2F,  0.6F,  0.0F,  0.0F,  1.0F, 1.0F, 0.0F, // - front side
 	-0.45F,  0.2F,  0.6F,  0.0F,  0.0F,  1.0F, 0.0F, 1.0F, 
@@ -50,12 +50,12 @@ float verticesOfGroceries[1152U] = {
 	-0.45F,  0.2F,  0.3F,  0.0F,  1.0F,  0.0F, 0.0F, 1.0F, 
 	-0.05F,  0.2F,  0.6F,  0.0F,  1.0F,  0.0F, 1.0F, 0.0F, 
 	-0.05F,  0.2F,  0.3F,  0.0F,  1.0F,  0.0F, 1.0F, 1.0F, 
-	 0.05F, -0.2F,  0.3F,  0.0F,  0.0F, -1.0F, 1.0F, 0.0F, // right fish sticks package
-	 0.45F, -0.2F,  0.3F,  0.0F,  0.0F, -1.0F, 0.0F, 0.0F, // - back side
-	 0.05F,  0.2F,  0.3F,  0.0F,  0.0F, -1.0F, 1.0F, 1.0F, 
-	 0.05F,  0.2F,  0.3F,  0.0F,  0.0F, -1.0F, 1.0F, 1.0F, 
-	 0.45F, -0.2F,  0.3F,  0.0F,  0.0F, -1.0F, 0.0F, 0.0F, 
+	 0.45F, -0.2F,  0.3F,  0.0F,  0.0F, -1.0F, 0.0F, 0.0F, // right fish sticks package
+	 0.05F, -0.2F,  0.3F,  0.0F,  0.0F, -1.0F, 1.0F, 0.0F, // - back side
 	 0.45F,  0.2F,  0.3F,  0.0F,  0.0F, -1.0F, 0.0F, 1.0F, 
+	 0.45F,  0.2F,  0.3F,  0.0F,  0.0F, -1.0F, 0.0F, 1.0F, 
+	 0.05F, -0.2F,  0.3F,  0.0F,  0.0F, -1.0F, 1.0F, 0.0F, 
+	 0.05F,  0.2F,  0.3F,  0.0F,  0.0F, -1.0F, 1.0F, 1.0F, 
 	 0.05F, -0.2F,  0.6F,  0.0F,  0.0F,  1.0F, 0.0F, 0.0F, // right fish sticks package
 	 0.45F, -0.2F,  0.6F,  0.0F,  0.0F,  1.0F, 1.0F, 0.0F, // - front side
 	 0.05F,  0.2F,  0.6F,  0.0F,  0.0F,  1.0F, 0.0F, 1.0F, 
@@ -87,12 +87,12 @@ float verticesOfGroceries[1152U] = {
 	 0.45F,  0.2F,  0.6F,  0.0F,  1.0F,  0.0F, 1.0F, 0.0F, 
 	 0.45F,  0.2F,  0.3F,  0.0F,  1.0F,  0.0F, 1.0F, 1.0F, 
 	 // in the refrigerating chamber
-	-0.45F, -0.7F,  0.3F,  0.0F,  0.0F, -1.0F, 1.0F, 0.0F, // left milk carton box
-	-0.05F, -0.7F,  0.3F,  0.0F,  0.0F, -1.0F, 0.0F, 0.0F, // - back side
-	-0.45F, -0.3F,  0.3F,  0.0F,  0.0F, -1.0F, 1.0F, 1.0F, 
-	-0.45F, -0.3F,  0.3F,  0.0F,  0.0F, -1.0F, 1.0F, 1.0F, 
-	-0.05F, -0.7F,  0.3F,  0.0F,  0.0F, -1.0F, 0.0F, 0.0F, 
+	-0.05F, -0.7F,  0.3F,  0.0F,  0.0F, -1.0F, 0.0F, 0.0F, // left milk carton box
+	-0.45F, -0.7F,  0.3F,  0.0F,  0.0F, -1.0F, 1.0F, 0.0F, // - back side
 	-0.05F, -0.3F,  0.3F,  0.0F,  0.0F, -1.0F, 0.0F, 1.0F, 
+	-0.05F, -0.3F,  0.3F,  0.0F,  0.0F, -1.0F, 0.0F, 1.0F, 
+	-0.45F, -0.7F,  0.3F,  0.0F,  0.0F, -1.0F, 1.0F, 0.0F, 
+	-0.45F, -0.3F,  0.3F,  0.0F,  0.0F, -1.0F, 1.0F, 1.0F, 
 	-0.45F, -0.7F,  0.6F,  0.0F,  0.0F,  1.0F, 0.0F, 0.0F, // left milk carton box
 	-0.05F, -0.7F,  0.6F,  0.0F,  0.0F,  1.0F, 1.0F, 0.0F, // - front side
 	-0.45F, -0.3F,  0.6F,  0.0F,  0.0F,  1.0F, 0.0F, 1.0F, 
@@ -123,12 +123,12 @@ float verticesOfGroceries[1152U] = {
 	-0.45F, -0.3F,  0.3F,  0.0F,  1.0F,  0.0F, 0.0F, 1.0F, 
 	-0.05F, -0.3F,  0.6F,  0.0F,  1.0F,  0.0F, 1.0F, 0.0F, 
 	-0.05F, -0.3F,  0.3F,  0.0F,  1.0F,  0.0F, 1.0F, 1.0F, 
-	 0.05F, -0.7F,  0.3F,  0.0F,  0.0F, -1.0F, 1.0F, 0.0F, // right milk carton box
-	 0.45F, -0.7F,  0.3F,  0.0F,  0.0F, -1.0F, 0.0F, 0.0F, // - back side
-	 0.05F, -0.3F,  0.3F,  0.0F,  0.0F, -1.0F, 1.0F, 1.0F, 
-	 0.05F, -0.3F,  0.3F,  0.0F,  0.0F, -1.0F, 1.0F, 1.0F, 
-	 0.45F, -0.7F,  0.3F,  0.0F,  0.0F, -1.0F, 0.0F, 0.0F, 
+	 0.45F, -0.7F,  0.3F,  0.0F,  0.0F, -1.0F, 0.0F, 0.0F, // right milk carton box
+	 0.05F, -0.7F,  0.3F,  0.0F,  0.0F, -1.0F, 1.0F, 0.0F, // - back side
 	 0.45F, -0.3F,  0.3F,  0.0F,  0.0F, -1.0F, 0.0F, 1.0F, 
+	 0.45F, -0.3F,  0.3F,  0.0F,  0.0F, -1.0F, 0.0F, 1.0F, 
+	 0.05F, -0.7F,  0.3F,  0.0F,  0.0F, -1.0F, 1.0F, 0.0F, 
+	 0.05F, -0.3F,  0.3F,  0.0F,  0.0F, -1.0F, 1.0F, 1.0F, 
 	 0.05F, -0.7F,  0.6F,  0.0F,  0.0F,  1.0F, 0.0F, 0.0F, // right milk carton box
 	 0.45F, -0.7F,  0.6F,  0.0F,  0.0F,  1.0F, 1.0F, 0.0F, // - front side
 	 0.05F, -0.3F,  0.6F,  0.0F,  0.0F,  1.0F, 0.0F, 1.0F, 
