@@ -129,6 +129,8 @@ int main()
 
 	// Enable the depth testing.
 	glEnable(GL_DEPTH_TEST);
+	// Enable the face culling.
+	glEnable(GL_CULL_FACE);
 	// Set the blending function. Its parameters:
 	// 1) the source color factor - the factor of the output variable of the fragment shader;
 	// 2) the destination color factor - the factor of the color of the fragment we are drawing over.
@@ -710,7 +712,7 @@ void framebuffer_size_callback(GLFWwindow *window, int width, int height)
 	glViewport(0, 0, width, height);
 }
 
-// Funtion that processes clicking on mouse buttons.
+// Function that processes clicking on mouse buttons.
 void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 {
 	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
