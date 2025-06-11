@@ -422,8 +422,8 @@ int main()
 			// Bind (assign) the desired VAO to OpenGL's context.
 			glBindVertexArray(chambersVAO);
 			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
-			glDrawArrays(GL_TRIANGLES, 0, 30);  // see-through, blue-tinted freezing chamber plastic
-			glDrawArrays(GL_TRIANGLES, 30, 30); // see-through, blue-tinted refrigerating chamber plastic
+			glDrawArrays(GL_TRIANGLES, 0, 180);  // see-through, blue-tinted freezing chamber plastic
+			glDrawArrays(GL_TRIANGLES, 180, 30); // see-through, blue-tinted refrigerating chamber plastic
 
 			// Activate the desired shader program.
 			// Every shader and rendering call from now on will use this shader program object.
