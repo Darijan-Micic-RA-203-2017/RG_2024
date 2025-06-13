@@ -137,21 +137,37 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="window_dimensions.hpp" />
+    <ClInclude Include="temperature_variables.hpp" />
+    <ClInclude Include="graphical_mode_variables.hpp" />
+    <ClInclude Include="logo_mode_variables.hpp" />
+    <ClInclude Include="frame_rate_variables.hpp" />
+    <ClInclude Include="cursors_and_their_variables.hpp" />
     <ClInclude Include="shader_program.hpp" />
     <ClInclude Include="shader_programs.hpp" />
     <ClInclude Include="vertices.hpp" />
     <ClInclude Include="vaos_and_vbos.hpp" />
+    <ClInclude Include="camera.hpp" />
+    <ClInclude Include="global_variables.hpp" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="texture.hpp" />
     <ClInclude Include="include\ft2build.h" />
     <ClInclude Include="text.hpp" />
-    <ClInclude Include="camera.hpp" />
+    <ClInclude Include="input_processing.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="window_dimensions.cpp" />
+    <ClCompile Include="temperature_variables.cpp" />
+    <ClCompile Include="graphical_mode_variables.cpp" />
+    <ClCompile Include="logo_mode_variables.cpp" />
+    <ClCompile Include="frame_rate_variables.cpp" />
+    <ClCompile Include="cursors_and_their_variables.cpp" />
     <ClCompile Include="shader_programs.cpp" />
     <ClCompile Include="vertices.cpp" />
     <ClCompile Include="vaos_and_vbos.cpp" />
+    <ClCompile Include="global_variables.cpp" />
     <ClCompile Include="stb_image.cpp" />
+    <ClCompile Include="input_processing.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
