@@ -9,7 +9,7 @@
 extern float verticesOfGroceries[1152U];
 extern float verticesOfChambers[3600U];
 extern float verticesOfRefrigerator[1800U];
-extern float verticesOfRefrigeratorDoors[4560U];
+extern float verticesOfRefrigeratorDoors[6000U];
 extern float verticesOfLightSourceInsideRefrigerator[108U];
 
 #endif
