@@ -21,3 +21,6 @@ float intensityOfBackgroundLight = 1.0F;
 // The see-through mode starts after the user clicks on that mode activation button during the graphical mode.
 // See-through mode consists of showing the groceries inside the smart refrigerator.
 float seeThroughModeTurnedOn = false;
+
+// If the user clicks on the door handle, it should open.
+bool doorOpen = false;

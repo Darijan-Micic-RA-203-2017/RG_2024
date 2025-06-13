@@ -28,4 +28,7 @@ extern float intensityOfBackgroundLight;
 // See-through mode consists of showing the groceries inside the smart refrigerator.
 extern float seeThroughModeTurnedOn;
 
+// If the user clicks on the door handle, it should open.
+extern bool doorOpen;
+
 #endif

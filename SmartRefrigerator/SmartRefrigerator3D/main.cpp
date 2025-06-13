@@ -429,6 +429,38 @@ int main()
 			glDrawArrays(GL_TRIANGLES, 108, 36);    // refrigerator (bottom side)
 			glDrawArrays(GL_TRIANGLES, 144, 36);    // refrigerator (top side)
 
+			if (doorOpen)
+			{
+				float doorsAngle = currentFrameTime;
+				modelMatrix = glm::rotate(modelMatrix, doorsAngle, glm::vec3(0.0F, 1.0F, 0.0F));
+
+				// Set the model matrix. This matrix changes each frame.
+				shaderProgramForRefrigerator->setFloatMat4Uniform("modelMatrix", modelMatrix);
+				// The normal matrix is a model matrix specifically tailored for normal vectors. Normal matrix is
+				// defined as the transpose of the inverse of the upper-left 3x3 part of the model matrix.
+				// Non-uniform scaling would transform vertex in such a way that the normal vector would no longer be
+				// perpendicular to the vertex's surface. This means that the lighting of surface would be distorted.
+				// Non-uniform scaling is mitigated by multiplying the normal vector with normal matrix.
+				normalMatrix = glm::mat3(glm::transpose(glm::inverse(modelMatrix)));
+				// Set the normal matrix. This matrix changes each frame.
+				shaderProgramForRefrigerator->setFloatMat3Uniform("normalMatrix", normalMatrix);
+			}
+			else
+			{
+				modelMatrix = glm::mat4(1.0F);
+
+				// Set the model matrix. This matrix changes each frame.
+				shaderProgramForRefrigerator->setFloatMat4Uniform("modelMatrix", modelMatrix);
+				// The normal matrix is a model matrix specifically tailored for normal vectors. Normal matrix is
+				// defined as the transpose of the inverse of the upper-left 3x3 part of the model matrix.
+				// Non-uniform scaling would transform vertex in such a way that the normal vector would no longer be
+				// perpendicular to the vertex's surface. This means that the lighting of surface would be distorted.
+				// Non-uniform scaling is mitigated by multiplying the normal vector with normal matrix.
+				normalMatrix = glm::mat3(glm::transpose(glm::inverse(modelMatrix)));
+				// Set the normal matrix. This matrix changes each frame.
+				shaderProgramForRefrigerator->setFloatMat3Uniform("normalMatrix", normalMatrix);
+			}
+
 			// Bind (assign) the desired VAO to OpenGL's context.
 			glBindVertexArray(refrigeratorDoorsVAO);
 			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
@@ -441,21 +473,25 @@ int main()
 			glDrawArrays(GL_TRIANGLES, 36, 36);  // digital clock rectangle widget
 			glDrawArrays(GL_TRIANGLES, 72, 36);  // see-through mode activation button
 			glDrawArrays(GL_TRIANGLES, 108, 6);  // rectangle symbol on the see-through mode activation button
-			glDrawArrays(GL_TRIANGLES, 114, 36); // "-" button, left of freezing chamber temperature widget
-			glDrawArrays(GL_LINES, 150, 2);      // line representing the "-" sign itself
-			glDrawArrays(GL_TRIANGLES, 152, 36); // freezing chamber temperature widget
-			glDrawArrays(GL_TRIANGLES, 188, 36); // "+" button, right of freezing chamber temperature widget
-			glDrawArrays(GL_LINES, 224, 4);      // lines representing the "+" sign itself
-			glDrawArrays(GL_TRIANGLES, 228, 36); // "-" button, left of refrigerating chamber temperature widget
-			glDrawArrays(GL_LINES, 264, 2);      // line representing the "-" sign itself
-			glDrawArrays(GL_TRIANGLES, 266, 36); // refrigerating chamber temperature widget
-			glDrawArrays(GL_TRIANGLES, 302, 36); // "+" button, right of refrigerating chamber temperature widget
-			glDrawArrays(GL_LINES, 338, 4);      // lines representing the "+" sign itself
-			glDrawArrays(GL_TRIANGLES, 342, 36); // "-" button, left of point light intensity widget
-			glDrawArrays(GL_LINES, 378, 2);      // line representing the "-" sign itself
-			glDrawArrays(GL_TRIANGLES, 380, 36); // point light intensity widget
-			glDrawArrays(GL_TRIANGLES, 416, 36); // "+" button, right of point light intensity widget
-			glDrawArrays(GL_LINES, 452, 4);      // lines representing the "+" sign itself
+			glDrawArrays(GL_TRIANGLES, 114, 36); // doors handle, base
+			glDrawArrays(GL_TRIANGLES, 150, 36); // doors handle, lower connector
+			glDrawArrays(GL_TRIANGLES, 186, 36); // doors handle, upper connector
+			glDrawArrays(GL_TRIANGLES, 222, 36); // doors handle, actual handle
+			glDrawArrays(GL_TRIANGLES, 258, 36); // "-" button, left of freezing chamber temperature widget
+			glDrawArrays(GL_LINES, 294, 2);      // line representing the "-" sign itself
+			glDrawArrays(GL_TRIANGLES, 296, 36); // freezing chamber temperature widget
+			glDrawArrays(GL_TRIANGLES, 332, 36); // "+" button, right of freezing chamber temperature widget
+			glDrawArrays(GL_LINES, 368, 4);      // lines representing the "+" sign itself
+			glDrawArrays(GL_TRIANGLES, 372, 36); // "-" button, left of refrigerating chamber temperature widget
+			glDrawArrays(GL_LINES, 408, 2);      // line representing the "-" sign itself
+			glDrawArrays(GL_TRIANGLES, 410, 36); // refrigerating chamber temperature widget
+			glDrawArrays(GL_TRIANGLES, 446, 36); // "+" button, right of refrigerating chamber temperature widget
+			glDrawArrays(GL_LINES, 482, 4);      // lines representing the "+" sign itself
+			glDrawArrays(GL_TRIANGLES, 486, 36); // "-" button, left of point light intensity widget
+			glDrawArrays(GL_LINES, 522, 2);      // line representing the "-" sign itself
+			glDrawArrays(GL_TRIANGLES, 524, 36); // point light intensity widget
+			glDrawArrays(GL_TRIANGLES, 560, 36); // "+" button, right of point light intensity widget
+			glDrawArrays(GL_LINES, 596, 4);      // lines representing the "+" sign itself
 
 			// Activate the desired shader program.
 			// Every shader and rendering call from now on will use this shader program object.
@@ -466,6 +502,7 @@ int main()
 			// Set the view matrix. This matrix changes each frame.
 			shaderProgramForLightSourceInsideRefrigerator->setFloatMat4Uniform("viewMatrix", viewMatrix);
 			// Set the model matrix. This matrix changes each frame.
+			modelMatrix = glm::mat4(1.0F);
 			shaderProgramForLightSourceInsideRefrigerator->setFloatMat4Uniform("modelMatrix", modelMatrix);
 
 			// Set the current temperatures of refrigerator uniform.
@@ -582,7 +619,7 @@ int main()
 		glEnable(GL_BLEND);
 
 		// Activate the desired shader program.
-			// Every shader and rendering call from now on will use this shader program object.
+		// Every shader and rendering call from now on will use this shader program object.
 		shaderProgramForNonlogoText->useProgram();
 
 		// Text rendering usually does not require the use of the perspective projection. Therefore, an ortographic
@@ -671,6 +708,13 @@ void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 			double xpos, ypos;
 			glfwGetCursorPos(window, &xpos, &ypos);
 			std::cout << "Cursor pos (x, y): (" << xpos << ", " << ypos << ")." << std::endl;
+
+			// door handle
+			if (xpos >= 0.21125 * windowWidth && xpos <= 0.245 * windowWidth 
+				&& ypos >= 0.425 * windowHeight && ypos <= 0.573333 * windowHeight)
+			{
+				doorOpen = true;
+			}
 
 			// see-through mode activation button
 			if (xpos >= 0.2225 * windowWidth && xpos <= 0.33 * windowWidth 
