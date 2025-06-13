@@ -429,7 +429,7 @@ int main()
 			glDrawArrays(GL_TRIANGLES, 108, 36);    // refrigerator (bottom side)
 			glDrawArrays(GL_TRIANGLES, 144, 36);    // refrigerator (top side)
 
-			if (doorOpen)
+			if (doorState == DoorState::OPENING)
 			{
 				float doorsAngle = currentFrameTime;
 				modelMatrix = glm::rotate(modelMatrix, doorsAngle, glm::vec3(0.0F, 1.0F, 0.0F));
@@ -713,7 +713,9 @@ void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 			if (xpos >= 0.21125 * windowWidth && xpos <= 0.245 * windowWidth 
 				&& ypos >= 0.425 * windowHeight && ypos <= 0.573333 * windowHeight)
 			{
-				doorOpen = true;
+				doorState = DoorState::OPENING;
+
+				return;
 			}
 
 			// see-through mode activation button

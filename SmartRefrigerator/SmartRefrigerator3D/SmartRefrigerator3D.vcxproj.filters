@@ -19,6 +19,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="door_state.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="window_dimensions.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>

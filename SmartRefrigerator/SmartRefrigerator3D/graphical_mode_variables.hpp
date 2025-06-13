@@ -5,6 +5,7 @@
 #define GRAPHICAL_MODE_VARIABLES_H
 
 #include <GL/glew.h>
+#include "door_state.hpp"
 
 // REFERENCE: https://cplusplus.com/forum/general/131319/#msg707907
 // REFERENCE: https://stackoverflow.com/questions/56735173/variable-already-defined-in-obj-what-is-going-on-here
@@ -29,6 +30,6 @@ extern float intensityOfBackgroundLight;
 extern float seeThroughModeTurnedOn;
 
 // If the user clicks on the door handle, it should open.
-extern bool doorOpen;
+extern DoorState doorState;
 
 #endif

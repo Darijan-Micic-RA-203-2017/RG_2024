@@ -23,4 +23,4 @@ float intensityOfBackgroundLight = 1.0F;
 float seeThroughModeTurnedOn = false;
 
 // If the user clicks on the door handle, it should open.
-bool doorOpen = false;
+DoorState doorState = DoorState::CLOSED;

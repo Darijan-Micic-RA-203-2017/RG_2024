@@ -137,6 +137,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="door_state.hpp" />
     <ClInclude Include="window_dimensions.hpp" />
     <ClInclude Include="temperature_variables.hpp" />
     <ClInclude Include="graphical_mode_variables.hpp" />
