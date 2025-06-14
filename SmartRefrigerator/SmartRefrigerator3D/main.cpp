@@ -432,6 +432,12 @@ int main()
 			if (doorState == DoorState::OPENING)
 			{
 				// Set the model matrix. This matrix changes each frame.
+				doorTranslation += 0.4F * deltaTime;
+				if (doorTranslation > maxDoorTranslation)
+				{
+					doorTranslation = maxDoorTranslation;
+				}
+				modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0F, 0.0F, doorTranslation));
 				doorAngle += 0.2F * deltaTime;
 				if (doorAngle > maxDoorAngle)
 				{
@@ -448,6 +454,12 @@ int main()
 			else if (doorState == DoorState::CLOSING)
 			{
 				// Set the model matrix. This matrix changes each frame.
+				doorTranslation -= 0.4F * deltaTime;
+				if (doorTranslation < minDoorTranslation)
+				{
+					doorTranslation = minDoorTranslation;
+				}
+				modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0F, 0.0F, doorTranslation));
 				doorAngle -= 0.2F * deltaTime;
 				if (doorAngle < minDoorAngle)
 				{
@@ -464,6 +476,8 @@ int main()
 			else if (doorState == DoorState::OPEN)
 			{
 				// Set the model matrix. This matrix changes each frame.
+				doorTranslation = maxDoorTranslation;
+				modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0F, 0.0F, doorTranslation));
 				doorAngle = maxDoorAngle;
 				modelMatrix = glm::rotate(modelMatrix, doorAngle, glm::vec3(0.0F, 1.0F, 0.0F));
 				shaderProgramForRefrigerator->setFloatMat4Uniform("modelMatrix", modelMatrix);

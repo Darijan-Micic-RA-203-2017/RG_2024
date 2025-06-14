@@ -35,5 +35,8 @@ extern DoorState doorState;
 extern const float minDoorAngle;
 extern float doorAngle;
 extern const float maxDoorAngle;
+extern const float minDoorTranslation;
+extern float doorTranslation;
+extern const float maxDoorTranslation;
 
 #endif

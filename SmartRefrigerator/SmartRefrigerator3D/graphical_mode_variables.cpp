@@ -25,5 +25,8 @@ float seeThroughModeTurnedOn = false;
 // If the user clicks on the door handle, it should open.
 DoorState doorState = DoorState::CLOSED;
 const float minDoorAngle = glm::radians(0.0F);  // 0  degrees
-float doorAngle = 0.0F;
+float doorAngle = glm::radians(0.0F);
 const float maxDoorAngle = glm::radians(90.0F); // 90 degrees
+const float minDoorTranslation = 0.0F;
+float doorTranslation = 0.0F;
+const float maxDoorTranslation = 1.8F;
