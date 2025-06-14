@@ -431,33 +431,55 @@ int main()
 
 			if (doorState == DoorState::OPENING)
 			{
-				float doorsAngle = currentFrameTime;
-				modelMatrix = glm::rotate(modelMatrix, doorsAngle, glm::vec3(0.0F, 1.0F, 0.0F));
-
 				// Set the model matrix. This matrix changes each frame.
+				doorAngle += 0.2F * deltaTime;
+				if (doorAngle > maxDoorAngle)
+				{
+					doorAngle = maxDoorAngle;
+					doorState = DoorState::OPEN;
+				}
+				modelMatrix = glm::rotate(modelMatrix, doorAngle, glm::vec3(0.0F, 1.0F, 0.0F));
 				shaderProgramForRefrigerator->setFloatMat4Uniform("modelMatrix", modelMatrix);
-				// The normal matrix is a model matrix specifically tailored for normal vectors. Normal matrix is
-				// defined as the transpose of the inverse of the upper-left 3x3 part of the model matrix.
-				// Non-uniform scaling would transform vertex in such a way that the normal vector would no longer be
-				// perpendicular to the vertex's surface. This means that the lighting of surface would be distorted.
-				// Non-uniform scaling is mitigated by multiplying the normal vector with normal matrix.
-				normalMatrix = glm::mat3(glm::transpose(glm::inverse(modelMatrix)));
+
 				// Set the normal matrix. This matrix changes each frame.
+				normalMatrix = glm::mat3(glm::transpose(glm::inverse(modelMatrix)));
+				shaderProgramForRefrigerator->setFloatMat3Uniform("normalMatrix", normalMatrix);
+			}
+			else if (doorState == DoorState::CLOSING)
+			{
+				// Set the model matrix. This matrix changes each frame.
+				doorAngle -= 0.2F * deltaTime;
+				if (doorAngle < minDoorAngle)
+				{
+					doorAngle = minDoorAngle;
+					doorState = DoorState::CLOSED;
+				}
+				modelMatrix = glm::rotate(modelMatrix, doorAngle, glm::vec3(0.0F, 1.0F, 0.0F));
+				shaderProgramForRefrigerator->setFloatMat4Uniform("modelMatrix", modelMatrix);
+
+				// Set the normal matrix. This matrix changes each frame.
+				normalMatrix = glm::mat3(glm::transpose(glm::inverse(modelMatrix)));
+				shaderProgramForRefrigerator->setFloatMat3Uniform("normalMatrix", normalMatrix);
+			}
+			else if (doorState == DoorState::OPEN)
+			{
+				// Set the model matrix. This matrix changes each frame.
+				doorAngle = maxDoorAngle;
+				modelMatrix = glm::rotate(modelMatrix, doorAngle, glm::vec3(0.0F, 1.0F, 0.0F));
+				shaderProgramForRefrigerator->setFloatMat4Uniform("modelMatrix", modelMatrix);
+
+				// Set the normal matrix. This matrix changes each frame.
+				normalMatrix = glm::mat3(glm::transpose(glm::inverse(modelMatrix)));
 				shaderProgramForRefrigerator->setFloatMat3Uniform("normalMatrix", normalMatrix);
 			}
 			else
 			{
-				modelMatrix = glm::mat4(1.0F);
-
 				// Set the model matrix. This matrix changes each frame.
+				modelMatrix = glm::mat4(1.0F);
 				shaderProgramForRefrigerator->setFloatMat4Uniform("modelMatrix", modelMatrix);
-				// The normal matrix is a model matrix specifically tailored for normal vectors. Normal matrix is
-				// defined as the transpose of the inverse of the upper-left 3x3 part of the model matrix.
-				// Non-uniform scaling would transform vertex in such a way that the normal vector would no longer be
-				// perpendicular to the vertex's surface. This means that the lighting of surface would be distorted.
-				// Non-uniform scaling is mitigated by multiplying the normal vector with normal matrix.
-				normalMatrix = glm::mat3(glm::transpose(glm::inverse(modelMatrix)));
+
 				// Set the normal matrix. This matrix changes each frame.
+				normalMatrix = glm::mat3(glm::transpose(glm::inverse(modelMatrix)));
 				shaderProgramForRefrigerator->setFloatMat3Uniform("normalMatrix", normalMatrix);
 			}
 
@@ -713,7 +735,14 @@ void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 			if (xpos >= 0.21125 * windowWidth && xpos <= 0.245 * windowWidth 
 				&& ypos >= 0.425 * windowHeight && ypos <= 0.573333 * windowHeight)
 			{
-				doorState = DoorState::OPENING;
+				if (doorState == DoorState::CLOSED)
+				{
+					doorState = DoorState::OPENING;
+				}
+				else if (doorState == DoorState::OPEN)
+				{
+					doorState = DoorState::CLOSING;
+				}
 
 				return;
 			}

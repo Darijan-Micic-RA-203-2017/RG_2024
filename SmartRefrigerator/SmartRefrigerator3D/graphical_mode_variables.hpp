@@ -5,6 +5,7 @@
 #define GRAPHICAL_MODE_VARIABLES_H
 
 #include <GL/glew.h>
+#include <glm/glm.hpp>
 #include "door_state.hpp"
 
 // REFERENCE: https://cplusplus.com/forum/general/131319/#msg707907
@@ -31,5 +32,8 @@ extern float seeThroughModeTurnedOn;
 
 // If the user clicks on the door handle, it should open.
 extern DoorState doorState;
+extern const float minDoorAngle;
+extern float doorAngle;
+extern const float maxDoorAngle;
 
 #endif
