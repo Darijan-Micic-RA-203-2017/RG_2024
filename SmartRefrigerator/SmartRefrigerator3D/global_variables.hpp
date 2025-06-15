@@ -10,7 +10,7 @@
 #include "frame_rate_variables.hpp"
 #include "cursors_and_their_variables.hpp"
 #include "shader_programs.hpp"
-#include "vaos_and_vbos.hpp"
+#include "array_and_buffer_objects.hpp"
 #include "camera.hpp"
 
 // REFERENCE: https://cplusplus.com/forum/general/131319/#msg707907

@@ -147,7 +147,7 @@
     <ClInclude Include="shader_program.hpp" />
     <ClInclude Include="shader_programs.hpp" />
     <ClInclude Include="vertices.hpp" />
-    <ClInclude Include="vaos_and_vbos.hpp" />
+    <ClInclude Include="array_and_buffer_objects.hpp" />
     <ClInclude Include="camera.hpp" />
     <ClInclude Include="global_variables.hpp" />
     <ClInclude Include="stb_image.h" />
@@ -165,7 +165,7 @@
     <ClCompile Include="cursors_and_their_variables.cpp" />
     <ClCompile Include="shader_programs.cpp" />
     <ClCompile Include="vertices.cpp" />
-    <ClCompile Include="vaos_and_vbos.cpp" />
+    <ClCompile Include="array_and_buffer_objects.cpp" />
     <ClCompile Include="global_variables.cpp" />
     <ClCompile Include="stb_image.cpp" />
     <ClCompile Include="input_processing.cpp" />

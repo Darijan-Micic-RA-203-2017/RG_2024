@@ -49,7 +49,7 @@
     <ClInclude Include="vertices.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vaos_and_vbos.hpp">
+    <ClInclude Include="array_and_buffer_objects.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="camera.hpp">
@@ -99,7 +99,7 @@
     <ClCompile Include="vertices.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="vaos_and_vbos.cpp">
+    <ClCompile Include="array_and_buffer_objects.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="global_variables.cpp">
