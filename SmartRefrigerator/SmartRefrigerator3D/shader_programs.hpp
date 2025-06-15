@@ -17,6 +17,7 @@ extern ShaderProgram *shaderProgramForNonlogoText;
 extern ShaderProgram *shaderProgramForLogoText;
 
 int compileShadersAndLinkShaderPrograms();
+// De-allocate the shader programs using their destructors.
 void destroyShaderPrograms();
 
 #endif
