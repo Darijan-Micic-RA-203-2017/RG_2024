@@ -8,8 +8,12 @@ out vec4 Color;
 
 // Pass the transformational matrices to the vertex shader.
 uniform mat4 modelMatrix;
-uniform mat4 viewMatrix;
-uniform mat4 projectionMatrix;
+// REFERENCE: https://learnopengl.com/Advanced-OpenGL/Advanced-GLSL
+layout (std140) uniform ViewAndProjectionMatrices
+{
+	mat4 viewMatrix;
+	mat4 projectionMatrix;
+};
 
 void main()
 {

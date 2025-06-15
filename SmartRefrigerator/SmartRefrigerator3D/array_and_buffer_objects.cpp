@@ -3,18 +3,20 @@
 // REFERENCE: https://cplusplus.com/forum/general/131319/#msg707907
 // REFERENCE: https://stackoverflow.com/questions/56735173/variable-already-defined-in-obj-what-is-going-on-here
 
-unsigned int groceriesVAO;
-unsigned int chambersVAO;
-unsigned int refrigeratorVAO;
-unsigned int refrigeratorDoorsVAO;
-unsigned int lightSourceInsideRefrigeratorVAO;
-unsigned int textVAO;
-unsigned int groceriesVBO;
-unsigned int chambersVBO;
-unsigned int refrigeratorVBO;
-unsigned int refrigeratorDoorsVBO;
-unsigned int lightSourceInsideRefrigeratorVBO;
-unsigned int textVBO;
+unsigned int groceriesVAO = 0U;
+unsigned int chambersVAO = 0U;
+unsigned int refrigeratorVAO = 0U;
+unsigned int refrigeratorDoorsVAO = 0U;
+unsigned int lightSourceInsideRefrigeratorVAO = 0U;
+unsigned int textVAO = 0U;
+unsigned int groceriesVBO = 0U;
+unsigned int chambersVBO = 0U;
+unsigned int refrigeratorVBO = 0U;
+unsigned int refrigeratorDoorsVBO = 0U;
+unsigned int lightSourceInsideRefrigeratorVBO = 0U;
+unsigned int textVBO = 0U;
+unsigned int viewAndProjectionMatricesUBO = 0U;
+unsigned int projectionMatrixUBO = 0U;
 
 void generateArrayAndBufferObjects()
 {
@@ -34,6 +36,9 @@ void generateArrayAndBufferObjects()
 	glGenBuffers(1, &refrigeratorDoorsVBO);
 	glGenBuffers(1, &lightSourceInsideRefrigeratorVBO);
 	glGenBuffers(1, &textVBO);
+
+	glGenBuffers(1, &viewAndProjectionMatricesUBO);
+	glGenBuffers(1, &projectionMatrixUBO);
 }
 
 void copyUserDefinedDataToGPUAndTellOpenGLHowItShouldInterpretIt()
@@ -148,14 +153,41 @@ void copyUserDefinedDataToGPUAndTellOpenGLHowItShouldInterpretIt()
 	glVertexAttribPointer(0U, 4, GL_FLOAT, GL_FALSE, 4U * sizeof(float), (void*) 0U);
 	// Enable vertex's position and texture coordinates (combined) attribute.
 	glEnableVertexAttribArray(0U);
+
+	// REFERENCE: https://learnopengl.com/Advanced-OpenGL/Advanced-GLSL
+
+	// Bind (assign) the newly created UBO to OpenGL's context.
+	glBindBuffer(GL_UNIFORM_BUFFER, viewAndProjectionMatricesUBO);
+	// Allocate enough space in graphics card's memory to hold contents of this UBO.
+	glBufferData(GL_UNIFORM_BUFFER, 2U * sizeof(glm::mat4), NULL, GL_STATIC_DRAW);
+	// Bind the binding point to its UBO (the one currently set up).
+	glBindBuffer(GL_UNIFORM_BUFFER, 0U);
+	// Bind the UBO to its binding point using either the "glBindBufferBase()" function or the
+	// "glBindBufferRange()" function. From this point on, both sides of the binding point are linked.
+	// "glBindbufferBase()" function expects a target, a binding point index and a UBO.
+	// "glBindBufferRange()" function enables linking multiple different uniform blocks to a single UBO.
+	glBindBufferRange(GL_UNIFORM_BUFFER, 0U, viewAndProjectionMatricesUBO, 0, 2U * sizeof(glm::mat4));
+
+	// Bind (assign) the newly created UBO to OpenGL's context.
+	glBindBuffer(GL_UNIFORM_BUFFER, projectionMatrixUBO);
+	// Allocate enough space in graphics card's memory to hold contents of this UBO.
+	glBufferData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), NULL, GL_STATIC_DRAW);
+	// Bind the binding point to its UBO (the one currently set up).
+	glBindBuffer(GL_UNIFORM_BUFFER, 1U);
+	// Bind the UBO to its binding point using either the "glBindBufferBase()" function or the
+	// "glBindBufferRange()" function. From this point on, both sides of the binding point are linked.
+	// "glBindbufferBase()" function expects a target, a binding point index and a UBO.
+	// "glBindBufferRange()" function enables linking multiple different uniform blocks to a single UBO.
+	glBindBufferRange(GL_UNIFORM_BUFFER, 1U, projectionMatrixUBO, 0, sizeof(glm::mat4));
 }
 
 void unbindArrayAndBufferObjectsForSafetyReasons()
 {
-	// Unbind VBO and VAO for safety reasons. This is not neccessary.
+	// Unbind UBO, VBO and VAO for safety reasons. This is not neccessary.
 	// VAO stores the glBindBuffer calls when the target is GL_ELEMENT_ARRAY_BUFFER.
 	// This also means it stores its unbind calls, so
 	// DO NOT EVER unbind EBO before unbinding VAO, otherwise it won't have a configured EBO.
+	glBindBuffer(GL_UNIFORM_BUFFER, 0U);
 	glBindBuffer(GL_ARRAY_BUFFER, 0U);
 	glBindVertexArray(0U);
 }

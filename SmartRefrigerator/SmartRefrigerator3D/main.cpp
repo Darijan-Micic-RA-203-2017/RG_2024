@@ -75,9 +75,9 @@ int main()
 		return errorCode;
 	}
 
-	// Generate vertex arrays and buffers, copy user-defined data to GPU and tell OpenGL how it should interpret it.
-	// Finally, unbind VBO and VAO for safety reasons.
-	setUpVAOsAndVBOs();
+	// Generate array and buffer objects, copy user-defined data to GPU and tell OpenGL how it should interpret it.
+	// Finally, unbind array and buffer objects for safety reasons.
+	setUpArrayAndBufferObjects();
 
 	// Generate textures, set their wrapping and filtering parameters, load the images-to-become-textures from
 	// the file system and generate all the required mipmaps using the helper class.
@@ -132,17 +132,63 @@ int main()
 	// Tell OpenGL to which texture unit each shader sampler belongs to, by setting each sampler.
 	shaderProgramForGrocery->setIntegerUniform("fishSticksPackage", 0);
 	shaderProgramForGrocery->setIntegerUniform("milkCartonBox", 1);
+	// REFERENCE: https://learnopengl.com/Advanced-OpenGL/Advanced-GLSL
+	// Retrieve the location index of the uniform block named "ViewAndProjectionMatrices".
+	unsigned int locationOfUniformBlock = 
+		glGetUniformBlockIndex(shaderProgramForGrocery->id, "ViewAndProjectionMatrices");
+	// Tell OpenGL to what binding point each uniform block is set to.
+	glUniformBlockBinding(shaderProgramForGrocery->id, locationOfUniformBlock, 0U);
+
+	// Activate the desired shader program.
+	// Every shader and rendering call from now on will use this shader program object.
+	shaderProgramForChamber->useProgram();
+	// REFERENCE: https://learnopengl.com/Advanced-OpenGL/Advanced-GLSL
+	// Retrieve the location index of the uniform block named "ViewAndProjectionMatrices".
+	locationOfUniformBlock = glGetUniformBlockIndex(shaderProgramForChamber->id, "ViewAndProjectionMatrices");
+	// Tell OpenGL to what binding point each uniform block is set to.
+	glUniformBlockBinding(shaderProgramForChamber->id, locationOfUniformBlock, 0U);
+
+	// Activate the desired shader program.
+	// Every shader and rendering call from now on will use this shader program object.
+	shaderProgramForRefrigerator->useProgram();
+	// REFERENCE: https://learnopengl.com/Advanced-OpenGL/Advanced-GLSL
+	// Retrieve the location index of the uniform block named "ViewAndProjectionMatrices".
+	locationOfUniformBlock = 
+		glGetUniformBlockIndex(shaderProgramForRefrigerator->id, "ViewAndProjectionMatrices");
+	// Tell OpenGL to what binding point each uniform block is set to.
+	glUniformBlockBinding(shaderProgramForRefrigerator->id, locationOfUniformBlock, 0U);
+
+	// Activate the desired shader program.
+	// Every shader and rendering call from now on will use this shader program object.
+	shaderProgramForLightSourceInsideRefrigerator->useProgram();
+	// REFERENCE: https://learnopengl.com/Advanced-OpenGL/Advanced-GLSL
+	// Retrieve the location index of the uniform block named "ViewAndProjectionMatrices".
+	locationOfUniformBlock = 
+		glGetUniformBlockIndex(shaderProgramForLightSourceInsideRefrigerator->id, "ViewAndProjectionMatrices");
+	// Tell OpenGL to what binding point each uniform block is set to.
+	glUniformBlockBinding(shaderProgramForLightSourceInsideRefrigerator->id, locationOfUniformBlock, 0U);
 
 	// Activate the desired shader program.
 	// Every shader and rendering call from now on will use this shader program object.
 	shaderProgramForNonlogoText->useProgram();
 	// Tell OpenGL to which texture unit each shader sampler belongs to, by setting each sampler.
 	shaderProgramForNonlogoText->setIntegerUniform("text", 0);
+	// REFERENCE: https://learnopengl.com/Advanced-OpenGL/Advanced-GLSL
+	// Retrieve the location index of the uniform block named "ProjectionMatrix".
+	locationOfUniformBlock = glGetUniformBlockIndex(shaderProgramForNonlogoText->id, "ProjectionMatrix");
+	// Tell OpenGL to what binding point each uniform block is set to.
+	glUniformBlockBinding(shaderProgramForNonlogoText->id, locationOfUniformBlock, 1U);
+
 	// Activate the desired shader program.
 	// Every shader and rendering call from now on will use this shader program object.
 	shaderProgramForLogoText->useProgram();
 	// Tell OpenGL to which texture unit each shader sampler belongs to, by setting each sampler.
 	shaderProgramForLogoText->setIntegerUniform("text", 0);
+	// REFERENCE: https://learnopengl.com/Advanced-OpenGL/Advanced-GLSL
+	// Retrieve the location index of the uniform block named "ProjectionMatrix".
+	locationOfUniformBlock = glGetUniformBlockIndex(shaderProgramForLogoText->id, "ProjectionMatrix");
+	// Tell OpenGL to what binding point each uniform block is set to.
+	glUniformBlockBinding(shaderProgramForLogoText->id, locationOfUniformBlock, 1U);
 
 	// Create the camera with the default position, front vector and up vector using the helper "Camera" class.
 	// The default position is glm::vec3(0.0F, 0.0F, 3.55F), the default front vector is glm::vec3(0.0F, 0.0F, -1.0F)
@@ -197,7 +243,10 @@ int main()
 			glm::mat4 projectionMatrix = 
 				glm::ortho(0.0F, static_cast<float>(windowWidth), 0.0F, static_cast<float>(windowHeight));
 			// Set the projection matrix. This matrix changes each frame.
-			shaderProgramForLogoText->setFloatMat4Uniform("projectionMatrix", projectionMatrix);
+			glBindBuffer(GL_UNIFORM_BUFFER, projectionMatrixUBO);
+			glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), &projectionMatrix[0U][0U]);
+			// Unbind UBO for safety reasons.
+			glBindBuffer(GL_UNIFORM_BUFFER, 0U);
 
 			// Set the current window width uniform.
 			shaderProgramForLogoText->setFloatUniform("windowWidth", static_cast<float>(windowWidth));
@@ -283,13 +332,19 @@ int main()
 			glm::mat4 projectionMatrix = glm::perspective(glm::radians(camera->fov), 
 				static_cast<float>(windowWidth) / static_cast<float>(windowHeight), 0.1F, 100.0F);
 			// Set the projection matrix. This matrix changes each frame.
-			shaderProgramForGrocery->setFloatMat4Uniform("projectionMatrix", projectionMatrix);
+			glBindBuffer(GL_UNIFORM_BUFFER, viewAndProjectionMatricesUBO);
+			glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), &projectionMatrix[0U][0U]);
+			// Unbind UBO for safety reasons.
+			glBindBuffer(GL_UNIFORM_BUFFER, 0U);
 
 			// The view matrix transforms the world-space coordinates to the view-space coordinates.
 			// The world (scene) will be transformed by moving the camera using the keyboard.
 			glm::mat4 viewMatrix = camera->getCalculatedViewMatrix();
 			// Set the view matrix. This matrix changes each frame.
-			shaderProgramForGrocery->setFloatMat4Uniform("viewMatrix", viewMatrix);
+			glBindBuffer(GL_UNIFORM_BUFFER, viewAndProjectionMatricesUBO);
+			glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), &viewMatrix[0U][0U]);
+			// Unbind UBO for safety reasons.
+			glBindBuffer(GL_UNIFORM_BUFFER, 0U);
 
 			// The model matrix transforms the local-space coordinates to the world-space coordinates.
 			// The model matrix is simply an identity matrix, no transformation is applied.
@@ -331,10 +386,6 @@ int main()
 			// Every shader and rendering call from now on will use this shader program object.
 			shaderProgramForChamber->useProgram();
 
-			// Set the projection matrix. This matrix changes each frame.
-			shaderProgramForChamber->setFloatMat4Uniform("projectionMatrix", projectionMatrix);
-			// Set the view matrix. This matrix changes each frame.
-			shaderProgramForChamber->setFloatMat4Uniform("viewMatrix", viewMatrix);
 			// Set the model matrix. This matrix changes each frame.
 			shaderProgramForChamber->setFloatMat4Uniform("modelMatrix", modelMatrix);
 
@@ -357,10 +408,6 @@ int main()
 			// Every shader and rendering call from now on will use this shader program object.
 			shaderProgramForRefrigerator->useProgram();
 
-			// Set the projection matrix. This matrix changes each frame.
-			shaderProgramForRefrigerator->setFloatMat4Uniform("projectionMatrix", projectionMatrix);
-			// Set the view matrix. This matrix changes each frame.
-			shaderProgramForRefrigerator->setFloatMat4Uniform("viewMatrix", viewMatrix);
 			// Set the model matrix. This matrix changes each frame.
 			shaderProgramForRefrigerator->setFloatMat4Uniform("modelMatrix", modelMatrix);
 			// The normal matrix is a model matrix specifically tailored for normal vectors. Normal matrix is
@@ -533,10 +580,6 @@ int main()
 			// Every shader and rendering call from now on will use this shader program object.
 			shaderProgramForLightSourceInsideRefrigerator->useProgram();
 
-			// Set the projection matrix. This matrix changes each frame.
-			shaderProgramForLightSourceInsideRefrigerator->setFloatMat4Uniform("projectionMatrix", projectionMatrix);
-			// Set the view matrix. This matrix changes each frame.
-			shaderProgramForLightSourceInsideRefrigerator->setFloatMat4Uniform("viewMatrix", viewMatrix);
 			// Set the model matrix. This matrix changes each frame.
 			modelMatrix = glm::mat4(1.0F);
 			shaderProgramForLightSourceInsideRefrigerator->setFloatMat4Uniform("modelMatrix", modelMatrix);
@@ -568,7 +611,10 @@ int main()
 			// bottom-left corner.
 			projectionMatrix = glm::ortho(0.0F, static_cast<float>(windowWidth), 0.0F, static_cast<float>(windowHeight));
 			// Set the projection matrix. This matrix changes each frame.
-			shaderProgramForNonlogoText->setFloatMat4Uniform("projectionMatrix", projectionMatrix);
+			glBindBuffer(GL_UNIFORM_BUFFER, projectionMatrixUBO);
+			glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), &projectionMatrix[0U][0U]);
+			// Unbind UBO for safety reasons.
+			glBindBuffer(GL_UNIFORM_BUFFER, 0U);
 
 			// REFERENCE: https://labex.io/tutorials/c-creating-a-simple-clock-animation-using-opengl-298829
 			time_t rawTime;
@@ -669,7 +715,10 @@ int main()
 		glm::mat4 projectionMatrix = 
 			glm::ortho(0.0F, static_cast<float>(windowWidth), 0.0F, static_cast<float>(windowHeight));
 		// Set the projection matrix. This matrix changes each frame.
-		shaderProgramForNonlogoText->setFloatMat4Uniform("projectionMatrix", projectionMatrix);
+		glBindBuffer(GL_UNIFORM_BUFFER, projectionMatrixUBO);
+		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), &projectionMatrix[0U][0U]);
+		// Unbind UBO for safety reasons.
+		glBindBuffer(GL_UNIFORM_BUFFER, 0U);
 
 		// Set the current window width uniform.
 		shaderProgramForNonlogoText->setFloatUniform("windowWidth", static_cast<float>(windowWidth));

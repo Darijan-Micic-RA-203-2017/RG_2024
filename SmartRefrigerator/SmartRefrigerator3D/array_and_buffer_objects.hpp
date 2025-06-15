@@ -5,6 +5,7 @@
 #define ARRAY_AND_BUFFER_OBJECTS_H
 
 #include <GL/glew.h>
+#include <glm/glm.hpp>
 #include "vertices.hpp"
 
 // REFERENCE: https://cplusplus.com/forum/general/131319/#msg707907
@@ -22,6 +23,8 @@ extern unsigned int refrigeratorVBO;
 extern unsigned int refrigeratorDoorsVBO;
 extern unsigned int lightSourceInsideRefrigeratorVBO;
 extern unsigned int textVBO;
+extern unsigned int viewAndProjectionMatricesUBO;
+extern unsigned int projectionMatrixUBO;
 
 void generateArrayAndBufferObjects();
 void copyUserDefinedDataToGPUAndTellOpenGLHowItShouldInterpretIt();

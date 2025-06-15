@@ -12,7 +12,11 @@ out vec2 TexCoords;
 // The projection matrix's bottom parameter is set to 0.0F and its top parameter equal to the window's height.
 // The result is that coordinates can be specified with y-values ranging from the bottom part of the screen (0.0F) to
 // the top part of the screen (window's height). The point (0.0F, 0.0F) now corresponds to the bottom-left corner.
-uniform mat4 projectionMatrix;
+// REFERENCE: https://learnopengl.com/Advanced-OpenGL/Advanced-GLSL
+layout (std140) uniform ProjectionMatrix
+{
+	mat4 projectionMatrix;
+};
 
 void main()
 {
