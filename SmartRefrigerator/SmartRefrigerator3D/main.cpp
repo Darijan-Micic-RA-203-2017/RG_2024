@@ -316,9 +316,9 @@ int main()
 			glDrawArrays(GL_TRIANGLES, 72, 36);  // left milk carton box
 			glDrawArrays(GL_TRIANGLES, 108, 36); // right milk carton box
 
-			// Depending on whether the see-through mode is turned on or off, render the chambers and the refrigerator
-			// doors differently.
-			if (seeThroughModeTurnedOn)
+			// Depending on whether the see-through mode is turned on or off and whether the door is not closed or
+			// is closed, render the chambers and the refrigerator door differently.
+			if (seeThroughModeTurnedOn || doorState != DoorState::CLOSED)
 			{
 				glEnable(GL_BLEND);
 			}
