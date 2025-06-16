@@ -623,23 +623,22 @@ int main()
 			// Every shader and rendering call from now on will use this shader program object.
 			shaderProgramForLightSourceInsideRefrigerator->useProgram();
 
-			// Set the model matrix. This matrix changes each frame.
-			modelMatrix = glm::mat4(1.0F);
-			shaderProgramForLightSourceInsideRefrigerator->setFloatMat4Uniform("modelMatrix", modelMatrix);
-
 			// Set the current temperatures of refrigerator uniform.
 			shaderProgramForLightSourceInsideRefrigerator->setFloatUniform(
 				"currentAvgTemperatureOfRefrigerator", currentAvgTemperatureOfRefrigerator);
 
 			// Bind (assign) the desired VAO to OpenGL's context.
 			glBindVertexArray(lightSourceInsideRefrigeratorVAO);
+
+			// The model matrix transforms the local-space coordinates to the world-space coordinates.
+			modelMatrix = glm::mat4(1.0F);
+			// The light source inside refrigerator is 0.6F ABOVE and 1.045F FURTHER of the (0.0F, 0.0F, 0.0F).
+			modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0F, 0.6F, -1.045F));
+			// Set the model matrix. This matrix changes each frame.
+			shaderProgramForLightSourceInsideRefrigerator->setFloatMat4Uniform("modelMatrix", modelMatrix);
+
 			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
-			glDrawArrays(GL_TRIANGLES, 0, 36);      // light source inside refrigerator (back side)
-			glDrawArrays(GL_TRIANGLES, 36, 36);     // light source inside refrigerator (front side)
-			glDrawArrays(GL_TRIANGLES, 72, 36);     // light source inside refrigerator (left side)
-			glDrawArrays(GL_TRIANGLES, 108, 36);    // light source inside refrigerator (right side)
-			glDrawArrays(GL_TRIANGLES, 144, 36);    // light source inside refrigerator (bottom side)
-			glDrawArrays(GL_TRIANGLES, 180, 36);    // light source inside refrigerator (top side)
+			glDrawArrays(GL_TRIANGLES, 0, 36); // light source inside refrigerator
 
 			// Activate the desired shader program.
 			// Every shader and rendering call from now on will use this shader program object.
