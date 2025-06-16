@@ -3,16 +3,16 @@
 // REFERENCE: https://cplusplus.com/forum/general/131319/#msg707907
 // REFERENCE: https://stackoverflow.com/questions/56735173/variable-already-defined-in-obj-what-is-going-on-here
 
-unsigned int groceriesVAO = 0U;
-unsigned int chambersVAO = 0U;
+unsigned int groceryVAO = 0U;
+unsigned int chamberVAO = 0U;
 unsigned int refrigeratorVAO = 0U;
-unsigned int refrigeratorDoorsVAO = 0U;
+unsigned int refrigeratorDoorVAO = 0U;
 unsigned int lightSourceInsideRefrigeratorVAO = 0U;
 unsigned int textVAO = 0U;
-unsigned int groceriesVBO = 0U;
-unsigned int chambersVBO = 0U;
+unsigned int groceryVBO = 0U;
+unsigned int chamberVBO = 0U;
 unsigned int refrigeratorVBO = 0U;
-unsigned int refrigeratorDoorsVBO = 0U;
+unsigned int refrigeratorDoorVBO = 0U;
 unsigned int lightSourceInsideRefrigeratorVBO = 0U;
 unsigned int textVBO = 0U;
 unsigned int viewAndProjectionMatricesUBO = 0U;
@@ -23,17 +23,17 @@ void generateArrayAndBufferObjects()
 	// Create memory on the GPU where vertex data and index data will be stored.
 	// Said data will be handled by VAO and vertex/element buffer objects inside that VAO.
 	// Core OpenGL REQUIRES the use of VAOs!
-	glGenVertexArrays(1, &groceriesVAO);
-	glGenVertexArrays(1, &chambersVAO);
+	glGenVertexArrays(1, &groceryVAO);
+	glGenVertexArrays(1, &chamberVAO);
 	glGenVertexArrays(1, &refrigeratorVAO);
-	glGenVertexArrays(1, &refrigeratorDoorsVAO);
+	glGenVertexArrays(1, &refrigeratorDoorVAO);
 	glGenVertexArrays(1, &lightSourceInsideRefrigeratorVAO);
 	glGenVertexArrays(1, &textVAO);
 
-	glGenBuffers(1, &groceriesVBO);
-	glGenBuffers(1, &chambersVBO);
+	glGenBuffers(1, &groceryVBO);
+	glGenBuffers(1, &chamberVBO);
 	glGenBuffers(1, &refrigeratorVBO);
-	glGenBuffers(1, &refrigeratorDoorsVBO);
+	glGenBuffers(1, &refrigeratorDoorVBO);
 	glGenBuffers(1, &lightSourceInsideRefrigeratorVBO);
 	glGenBuffers(1, &textVBO);
 
@@ -44,12 +44,12 @@ void generateArrayAndBufferObjects()
 void copyUserDefinedDataToGPUAndTellOpenGLHowItShouldInterpretIt()
 {
 	// Bind (assign) the newly created VAO to OpenGL's context.
-	glBindVertexArray(groceriesVAO);
+	glBindVertexArray(groceryVAO);
 	// Bind (assign) the newly created VBO to OpenGL's context.
-	glBindBuffer(GL_ARRAY_BUFFER, groceriesVBO);
+	glBindBuffer(GL_ARRAY_BUFFER, groceryVBO);
 	// Copy user-defined data into the currently bound buffer.
 	// Vertex data is now stored on the graphics card's memory.
-	glBufferData(GL_ARRAY_BUFFER, sizeof(verticesOfGroceries), verticesOfGroceries, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(verticesOfGrocery), verticesOfGrocery, GL_STATIC_DRAW);
 	// Tell OpenGL how it should interpret vertex data, per vertex attribute.
 	// Position attribute.
 	glVertexAttribPointer(0U, 3, GL_FLOAT, GL_FALSE, 8U * sizeof(float), (void*) 0U);
@@ -65,12 +65,12 @@ void copyUserDefinedDataToGPUAndTellOpenGLHowItShouldInterpretIt()
 	glEnableVertexAttribArray(2U);
 
 	// Bind (assign) the newly created VAO to OpenGL's context.
-	glBindVertexArray(chambersVAO);
+	glBindVertexArray(chamberVAO);
 	// Bind (assign) the newly created VBO to OpenGL's context.
-	glBindBuffer(GL_ARRAY_BUFFER, chambersVBO);
+	glBindBuffer(GL_ARRAY_BUFFER, chamberVBO);
 	// Copy user-defined data into the currently bound buffer.
 	// Vertex data is now stored on the graphics card's memory.
-	glBufferData(GL_ARRAY_BUFFER, sizeof(verticesOfChambers), verticesOfChambers, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(verticesOfChamber), verticesOfChamber, GL_STATIC_DRAW);
 	// Tell OpenGL how it should interpret vertex data, per vertex attribute.
 	// Position attribute.
 	glVertexAttribPointer(0U, 3, GL_FLOAT, GL_FALSE, 10U * sizeof(float), (void*) 0U);
@@ -107,12 +107,12 @@ void copyUserDefinedDataToGPUAndTellOpenGLHowItShouldInterpretIt()
 	glEnableVertexAttribArray(2U);
 
 	// Bind (assign) the newly created VAO to OpenGL's context.
-	glBindVertexArray(refrigeratorDoorsVAO);
+	glBindVertexArray(refrigeratorDoorVAO);
 	// Bind (assign) the newly created VBO to OpenGL's context.
-	glBindBuffer(GL_ARRAY_BUFFER, refrigeratorDoorsVBO);
+	glBindBuffer(GL_ARRAY_BUFFER, refrigeratorDoorVBO);
 	// Copy user-defined data into the currently bound buffer.
 	// Vertex data is now stored on the graphics card's memory.
-	glBufferData(GL_ARRAY_BUFFER, sizeof(verticesOfRefrigeratorDoors), verticesOfRefrigeratorDoors, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(verticesOfRefrigeratorDoor), verticesOfRefrigeratorDoor, GL_STATIC_DRAW);
 	// Tell OpenGL how it should interpret vertex data, per vertex attribute.
 	// Position attribute.
 	glVertexAttribPointer(0U, 3, GL_FLOAT, GL_FALSE, 10U * sizeof(float), (void*) 0U);
