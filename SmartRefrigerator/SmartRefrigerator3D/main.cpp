@@ -685,14 +685,6 @@ int main()
 				// Reset the first mouse entry indicator to prevent the possible disappearance of the refrigerator from
 				// the camera's view frustum.
 				firstMouseEntry = true;
-
-				// Activate the desired shader program.
-				// Every shader and rendering call from now on will use this shader program object.
-				shaderProgramForChamber->useProgram();
-
-				// Update see-through mode global variable and uniform.
-				seeThroughModeTurnedOn = false;
-				shaderProgramForChamber->setBoolUniform("seeThroughModeTurnedOn", seeThroughModeTurnedOn);
 			}
 			*/
 		}
@@ -765,7 +757,8 @@ void framebuffer_size_callback(GLFWwindow *window, int width, int height)
 // Function that processes clicking on mouse buttons.
 void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 {
-	if (!orthogonalProjectionTurnedOn || !(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS))
+	// Do not process mouse clicks at all if any mouse button other than the left one is pressed.
+	if (!(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS))
 	{
 		return;
 	}
@@ -774,7 +767,6 @@ void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 	{
 		logoModeTurnedOn = false;
 		graphicalModeTurnedOn = true;
-		seeThroughModeTurnedOn = false;
 		// Initialize the graphical mode activation timestamp with the current time.
 		timeWhenGraphicalModeWasActivated = static_cast<float>(glfwGetTime());
 		if (!orthogonalProjectionTurnedOn)
@@ -796,6 +788,11 @@ void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 		double xpos, ypos;
 		glfwGetCursorPos(window, &xpos, &ypos);
 		std::cout << "Cursor pos (x, y): (" << xpos << ", " << ypos << ")." << std::endl;
+		// Do not continue processing mouse clicks if the orthogonal projection is turned off.
+		if (!orthogonalProjectionTurnedOn)
+		{
+			return;
+		}
 
 		// door handle
 		if (xpos >= 0.21125 * windowWidth && xpos <= 0.245 * windowWidth 
@@ -918,7 +915,13 @@ void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 // Function that will be called every time the user moves the mouse while the application has focus.
 void cursor_pos_callback(GLFWwindow *window, double xpos, double ypos)
 {
-	// Do not allow moving the camera when the orthogonal projection is turned on.
+	// Do not process mouse movement at all when the logo mode is turned on.
+	if (logoModeTurnedOn)
+	{
+		return;
+	}
+
+	// Change cursors only when the orthogonal projection mode is turned on.
 	if (orthogonalProjectionTurnedOn)
 	{
 		// REFERENCE: https://www.glfw.org/docs/3.3/input_guide.html#cursor_set
