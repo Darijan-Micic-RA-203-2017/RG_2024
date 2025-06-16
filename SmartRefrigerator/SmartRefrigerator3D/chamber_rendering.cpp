@@ -2,6 +2,17 @@
 
 void renderChamber()
 {
+	// Depending on whether the see-through mode is turned on or off and whether the door is not closed or
+	// is closed, render the chambers and the refrigerator door differently.
+	if (seeThroughModeTurnedOn || doorState != DoorState::CLOSED)
+	{
+		glEnable(GL_BLEND);
+	}
+	else
+	{
+		glDisable(GL_BLEND);
+	}
+
 	// Activate the desired shader program.
 	// Every shader and rendering call from now on will use this shader program object.
 	shaderProgramForChamber->useProgram();
