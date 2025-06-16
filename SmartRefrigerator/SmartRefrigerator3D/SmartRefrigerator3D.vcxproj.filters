@@ -64,22 +64,19 @@
     <ClInclude Include="texture.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="textures.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="include\ft2build.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="text.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="input_processing.hpp">
+    <ClInclude Include="fonts.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="grocery_rendering.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="rendering.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="textures.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="chamber_rendering.hpp">
@@ -97,10 +94,16 @@
     <ClInclude Include="nonlogo_readings_text_rendering.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="fonts.hpp">
+    <ClInclude Include="nonlogo_signature_text_rendering.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="nonlogo_signature_text_rendering.hpp">
+    <ClInclude Include="logo_text_rendering.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rendering.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="input_processing.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -132,22 +135,19 @@
     <ClCompile Include="array_and_buffer_objects.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="textures.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="fonts.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="global_variables.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="stb_image.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="input_processing.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="grocery_rendering.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="textures.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="chamber_rendering.cpp">
@@ -165,10 +165,19 @@
     <ClCompile Include="nonlogo_readings_text_rendering.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="fonts.cpp">
+    <ClCompile Include="nonlogo_signature_text_rendering.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="nonlogo_signature_text_rendering.cpp">
+    <ClCompile Include="logo_text_rendering.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rendering.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="input_processing.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

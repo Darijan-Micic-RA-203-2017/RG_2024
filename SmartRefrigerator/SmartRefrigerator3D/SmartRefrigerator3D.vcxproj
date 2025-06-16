@@ -137,17 +137,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="chamber_rendering.hpp" />
     <ClInclude Include="door_state.hpp" />
-    <ClInclude Include="fonts.hpp" />
-    <ClInclude Include="grocery_rendering.hpp" />
-    <ClInclude Include="light_source_inside_refrigerator_rendering.hpp" />
-    <ClInclude Include="nonlogo_readings_text_rendering.hpp" />
-    <ClInclude Include="nonlogo_signature_text_rendering.hpp" />
-    <ClInclude Include="refrigerator_door_rendering.hpp" />
-    <ClInclude Include="refrigerator_rendering.hpp" />
-    <ClInclude Include="rendering.hpp" />
-    <ClInclude Include="textures.hpp" />
     <ClInclude Include="window_dimensions.hpp" />
     <ClInclude Include="temperature_variables.hpp" />
     <ClInclude Include="graphical_mode_variables.hpp" />
@@ -162,20 +152,22 @@
     <ClInclude Include="global_variables.hpp" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="texture.hpp" />
+    <ClInclude Include="textures.hpp" />
     <ClInclude Include="include\ft2build.h" />
     <ClInclude Include="text.hpp" />
+    <ClInclude Include="fonts.hpp" />
+    <ClInclude Include="grocery_rendering.hpp" />
+    <ClInclude Include="chamber_rendering.hpp" />
+    <ClInclude Include="refrigerator_rendering.hpp" />
+    <ClInclude Include="refrigerator_door_rendering.hpp" />
+    <ClInclude Include="light_source_inside_refrigerator_rendering.hpp" />
+    <ClInclude Include="nonlogo_readings_text_rendering.hpp" />
+    <ClInclude Include="nonlogo_signature_text_rendering.hpp" />
+    <ClInclude Include="logo_text_rendering.hpp" />
+    <ClInclude Include="rendering.hpp" />
     <ClInclude Include="input_processing.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="chamber_rendering.cpp" />
-    <ClCompile Include="fonts.cpp" />
-    <ClCompile Include="grocery_rendering.cpp" />
-    <ClCompile Include="light_source_inside_refrigerator_rendering.cpp" />
-    <ClCompile Include="nonlogo_readings_text_rendering.cpp" />
-    <ClCompile Include="nonlogo_signature_text_rendering.cpp" />
-    <ClCompile Include="refrigerator_door_rendering.cpp" />
-    <ClCompile Include="refrigerator_rendering.cpp" />
-    <ClCompile Include="textures.cpp" />
     <ClCompile Include="window_dimensions.cpp" />
     <ClCompile Include="temperature_variables.cpp" />
     <ClCompile Include="graphical_mode_variables.cpp" />
@@ -185,8 +177,19 @@
     <ClCompile Include="shader_programs.cpp" />
     <ClCompile Include="vertices.cpp" />
     <ClCompile Include="array_and_buffer_objects.cpp" />
+    <ClCompile Include="textures.cpp" />
+    <ClCompile Include="fonts.cpp" />
     <ClCompile Include="global_variables.cpp" />
     <ClCompile Include="stb_image.cpp" />
+    <ClCompile Include="grocery_rendering.cpp" />
+    <ClCompile Include="chamber_rendering.cpp" />
+    <ClCompile Include="refrigerator_rendering.cpp" />
+    <ClCompile Include="refrigerator_door_rendering.cpp" />
+    <ClCompile Include="light_source_inside_refrigerator_rendering.cpp" />
+    <ClCompile Include="nonlogo_readings_text_rendering.cpp" />
+    <ClCompile Include="nonlogo_signature_text_rendering.cpp" />
+    <ClCompile Include="logo_text_rendering.cpp" />
+    <ClCompile Include="rendering.cpp" />
     <ClCompile Include="input_processing.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
