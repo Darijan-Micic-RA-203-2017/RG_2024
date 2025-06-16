@@ -137,6 +137,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="chamber_rendering.hpp" />
     <ClInclude Include="door_state.hpp" />
     <ClInclude Include="grocery_rendering.hpp" />
     <ClInclude Include="rendering.hpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="input_processing.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="chamber_rendering.cpp" />
     <ClCompile Include="grocery_rendering.cpp" />
     <ClCompile Include="textures.cpp" />
     <ClCompile Include="window_dimensions.cpp" />

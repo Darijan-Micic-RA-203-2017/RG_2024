@@ -5,5 +5,6 @@
 #define RENDERING_H
 
 #include "grocery_rendering.hpp"
+#include "chamber_rendering.hpp"
 
 #endif
