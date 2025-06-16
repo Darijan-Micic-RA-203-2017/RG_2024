@@ -29,7 +29,7 @@ void main()
 	// Because of that, the normalized device coordinates (NDCs) used to describe the vertex's position in the main
 	// program have to be converted to the [0.0F, 1.0F] range and multiplied with window's width/height. Only then can
 	// the single values of the "gl_FragCoord" vector be compared with the borders of the chambers.
-	if (gl_FragCoord.y >= 0.38F * windowHeight && gl_FragCoord.y <= 0.62F * windowHeight)
+	if (gl_FragCoord.y >= 0.393333F * windowHeight && gl_FragCoord.y <= 0.603333F * windowHeight)
 	{
 		// minFreezChmbT <= currFreezChmbT <= maxFreezChmbT / + (-left_side)
 		// 0.0F <= currFreezChmbT - minFreezChmbT <= maxFreezChmbT - minFreezChmbT / : right_side

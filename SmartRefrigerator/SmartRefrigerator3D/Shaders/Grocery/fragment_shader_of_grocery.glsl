@@ -20,9 +20,5 @@ void main()
 		resultingColorOfFragment = texture(milkCartonBox, TexCoords);
 	}
 
-	if (resultingColorOfFragment.a < 0.1F)
-	{
-		discard;
-	}
 	FragColor = resultingColorOfFragment;
 }

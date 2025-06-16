@@ -926,8 +926,8 @@ void cursor_pos_callback(GLFWwindow *window, double xpos, double ypos)
 	{
 		// REFERENCE: https://www.glfw.org/docs/3.3/input_guide.html#cursor_set
 		// If the mouse cursor is positioned above the freezing chamber, turn it to a blue snowflake.
-		if (xpos >= 0.335 * windowWidth && xpos <= 0.66375 * windowWidth 
-			&& ypos >= 0.396667 * windowHeight && ypos <= 0.605 * windowHeight)
+		if (xpos >= 0.26875 * windowWidth && xpos <= 0.73 * windowWidth 
+			&& ypos >= 0.393333 * windowHeight && ypos <= 0.603333 * windowHeight)
 		{
 			glfwSetCursor(window, blueSnowflakeCursor);
 		}
