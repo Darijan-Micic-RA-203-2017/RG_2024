@@ -51,7 +51,7 @@ float verticesOfGrocery[288U] = {
 	 0.2F,  0.2F, -0.15F,  0.0F,  1.0F,  0.0F, 1.0F, 1.0F
 };
 
-float verticesOfChamber[1800U] = {
+float verticesOfChamber[2160U] = {
 	// position              // normal vector     // color
 	  0.7F, -0.24F, -0.825F,  0.0F,  0.0F, -1.0F, 0.0F, 0.0F, 1.0F, 0.25F, // see-through, blue-tinted freezing chamber plastic
 	 -0.7F, -0.24F, -0.825F,  0.0F,  0.0F, -1.0F, 0.0F, 0.0F, 1.0F, 0.25F, // - back side (back side)
@@ -65,18 +65,18 @@ float verticesOfChamber[1800U] = {
 	 -0.7F,  0.24F, -0.775F,  0.0F,  0.0F,  1.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
 	  0.7F, -0.24F, -0.775F,  0.0F,  0.0F,  1.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
 	  0.7F,  0.24F, -0.775F,  0.0F,  0.0F,  1.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
-	 -0.7F, -0.24F, -0.775F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // see-through, blue-tinted freezing chamber plastic
-	 -0.7F, -0.24F, -0.825F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // - left side (back side)
-	 -0.7F,  0.24F, -0.775F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
-	 -0.7F,  0.24F, -0.775F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
-	 -0.7F, -0.24F, -0.825F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
-	 -0.7F,  0.24F, -0.825F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
-	  0.7F, -0.24F, -0.825F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // see-through, blue-tinted freezing chamber plastic
-	  0.7F, -0.24F, -0.775F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // - right side (back side)
-	  0.7F,  0.24F, -0.825F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
-	  0.7F,  0.24F, -0.825F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
-	  0.7F, -0.24F, -0.775F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
-	  0.7F,  0.24F, -0.775F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+	  0.7F, -0.24F, -0.775F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // see-through, blue-tinted freezing chamber plastic
+	  0.7F, -0.24F, -0.825F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // - left side (back side)
+	  0.7F,  0.24F, -0.775F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+	  0.7F,  0.24F, -0.775F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+	  0.7F, -0.24F, -0.825F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+	  0.7F,  0.24F, -0.825F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+	 -0.7F, -0.24F, -0.825F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // see-through, blue-tinted freezing chamber plastic
+	 -0.7F, -0.24F, -0.775F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // - right side (back side)
+	 -0.7F,  0.24F, -0.825F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+	 -0.7F,  0.24F, -0.825F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+	 -0.7F, -0.24F, -0.775F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+	 -0.7F,  0.24F, -0.775F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
 	 -0.7F, -0.24F, -0.825F,  0.0F, -1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // see-through, blue-tinted freezing chamber plastic
 	  0.7F, -0.24F, -0.825F,  0.0F, -1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // - bottom side (back side)
 	 -0.7F, -0.24F, -0.775F,  0.0F, -1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
@@ -101,18 +101,18 @@ float verticesOfChamber[1800U] = {
 	 -0.7F,  0.24F,  0.825F,  0.0F,  0.0F,  1.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
 	  0.7F, -0.24F,  0.825F,  0.0F,  0.0F,  1.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
 	  0.7F,  0.24F,  0.825F,  0.0F,  0.0F,  1.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
-	 -0.7F, -0.24F,  0.825F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // see-through, blue-tinted freezing chamber plastic
-	 -0.7F, -0.24F,  0.775F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // - left side (front side)
-	 -0.7F,  0.24F,  0.825F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
-	 -0.7F,  0.24F,  0.825F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
-	 -0.7F, -0.24F,  0.775F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
-	 -0.7F,  0.24F,  0.775F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
-	  0.7F, -0.24F,  0.775F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // see-through, blue-tinted freezing chamber plastic
-	  0.7F, -0.24F,  0.825F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // - right side (front side)
-	  0.7F,  0.24F,  0.775F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
-	  0.7F,  0.24F,  0.775F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
-	  0.7F, -0.24F,  0.825F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
-	  0.7F,  0.24F,  0.825F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+	  0.7F, -0.24F,  0.825F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // see-through, blue-tinted freezing chamber plastic
+	  0.7F, -0.24F,  0.775F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // - left side (front side)
+	  0.7F,  0.24F,  0.825F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+	  0.7F,  0.24F,  0.825F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+	  0.7F, -0.24F,  0.775F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+	  0.7F,  0.24F,  0.775F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+	 -0.7F, -0.24F,  0.775F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // see-through, blue-tinted freezing chamber plastic
+	 -0.7F, -0.24F,  0.825F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // - right side (front side)
+	 -0.7F,  0.24F,  0.775F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+	 -0.7F,  0.24F,  0.775F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+	 -0.7F, -0.24F,  0.825F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+	 -0.7F,  0.24F,  0.825F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
 	 -0.7F, -0.24F,  0.775F,  0.0F, -1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // see-through, blue-tinted freezing chamber plastic
 	  0.7F, -0.24F,  0.775F,  0.0F, -1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // - bottom side (front side)
 	 -0.7F, -0.24F,  0.825F,  0.0F, -1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
@@ -232,7 +232,43 @@ float verticesOfChamber[1800U] = {
 	 -0.7F, -0.22F, -0.775F,  0.0F,  1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
 	 -0.7F, -0.22F, -0.775F,  0.0F,  1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
 	  0.7F, -0.22F,  0.775F,  0.0F,  1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
-	  0.7F, -0.22F, -0.775F,  0.0F,  1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F
+	  0.7F, -0.22F, -0.775F,  0.0F,  1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+	  0.7F,  0.22F, -0.775F,  0.0F,  0.0F, -1.0F, 0.0F, 0.0F, 1.0F, 0.25F, // see-through, blue-tinted freezing chamber plastic
+	 -0.7F,  0.22F, -0.775F,  0.0F,  0.0F, -1.0F, 0.0F, 0.0F, 1.0F, 0.25F, // - back side (top side)
+	  0.7F,  0.24F, -0.775F,  0.0F,  0.0F, -1.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+	  0.7F,  0.24F, -0.775F,  0.0F,  0.0F, -1.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+	 -0.7F,  0.22F, -0.775F,  0.0F,  0.0F, -1.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+	 -0.7F,  0.24F, -0.775F,  0.0F,  0.0F, -1.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+	 -0.7F,  0.22F,  0.775F,  0.0F,  0.0F,  1.0F, 0.0F, 0.0F, 1.0F, 0.25F, // see-through, blue-tinted freezing chamber plastic
+	  0.7F,  0.22F,  0.775F,  0.0F,  0.0F,  1.0F, 0.0F, 0.0F, 1.0F, 0.25F, // - front side (top side)
+	 -0.7F,  0.24F,  0.775F,  0.0F,  0.0F,  1.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+	 -0.7F,  0.24F,  0.775F,  0.0F,  0.0F,  1.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+	  0.7F,  0.22F,  0.775F,  0.0F,  0.0F,  1.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+	  0.7F,  0.24F,  0.775F,  0.0F,  0.0F,  1.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+	  0.7F,  0.22F,  0.775F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // see-through, blue-tinted freezing chamber plastic
+	  0.7F,  0.22F, -0.775F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // - left side (top side)
+	  0.7F,  0.24F,  0.775F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+	  0.7F,  0.24F,  0.775F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+	  0.7F,  0.22F, -0.775F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+	  0.7F,  0.24F, -0.775F, -1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+	 -0.7F,  0.22F, -0.775F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // see-through, blue-tinted freezing chamber plastic
+	 -0.7F,  0.22F,  0.775F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // - right side (top side)
+	 -0.7F,  0.24F, -0.775F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+	 -0.7F,  0.24F, -0.775F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+	 -0.7F,  0.22F,  0.775F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+	 -0.7F,  0.24F,  0.775F,  1.0F,  0.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+	 -0.7F,  0.22F, -0.775F,  0.0F, -1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // see-through, blue-tinted freezing chamber plastic
+	  0.7F,  0.22F, -0.775F,  0.0F, -1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // - bottom side (top side)
+	 -0.7F,  0.22F,  0.775F,  0.0F, -1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+	 -0.7F,  0.22F,  0.775F,  0.0F, -1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+	  0.7F,  0.22F, -0.775F,  0.0F, -1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+	  0.7F,  0.22F,  0.775F,  0.0F, -1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+	 -0.7F,  0.24F,  0.775F,  0.0F,  1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // see-through, blue-tinted freezing chamber plastic
+	  0.7F,  0.24F,  0.775F,  0.0F,  1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, // - top side (top side)
+	 -0.7F,  0.24F, -0.775F,  0.0F,  1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+	 -0.7F,  0.24F, -0.775F,  0.0F,  1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+	  0.7F,  0.24F,  0.775F,  0.0F,  1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 
+	  0.7F,  0.24F, -0.775F,  0.0F,  1.0F,  0.0F, 0.0F, 0.0F, 1.0F, 0.25F
 };
 
 float verticesOfRefrigerator[1800U] = {

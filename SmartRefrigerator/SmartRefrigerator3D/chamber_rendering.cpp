@@ -85,7 +85,7 @@ void renderChamber()
 	glBindVertexArray(chamberVAO);
 
 	// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
-	glDrawArrays(GL_TRIANGLES, 0, 180);   // see-through, blue-tinted freezing chamber plastic
+	glDrawArrays(GL_TRIANGLES, 0, 216);   // see-through, blue-tinted freezing chamber plastic
 
 	// The refrigerating chamber is 0.5F BELOW the freezing chamber.
 	modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0F, -0.5F, 0.0F));
@@ -97,5 +97,5 @@ void renderChamber()
 	shaderProgramForGrocery->setFloatMat3Uniform("normalMatrix", normalMatrix);
 
 	// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
-	glDrawArrays(GL_TRIANGLES, 0, 180); // see-through, blue-tinted refrigerating chamber plastic
+	glDrawArrays(GL_TRIANGLES, 0, 216); // see-through, blue-tinted refrigerating chamber plastic
 }

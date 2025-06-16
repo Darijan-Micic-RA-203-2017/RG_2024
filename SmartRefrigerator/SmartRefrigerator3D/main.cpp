@@ -201,8 +201,6 @@ int main()
 	// and the default up vector is glm::vec3(0.0F, 1.0F, 0.0F).
 	camera = new Camera();
 
-	unsigned int frameCounter = 0U;
-
 	glClearColor(0.1F, 0.1F, 0.1F, 1.0F);
 
 	glfwSetTime(0.0);
@@ -221,16 +219,10 @@ int main()
 			deltaTime = currentFrameTime - previousFrameTime;
 			previousFrameTime = currentFrameTime;
 		}
-		// Print time data of every 5th frame.
-		frameCounter++;
-		if (frameCounter % 5U == 0U)
-		{
-			frameCounter = 0U;
-			std::cout << "-------------------------" << std::endl;
-			std::cout << "             Delta time: " << deltaTime << " s." << std::endl;
-			std::cout << " Frame rate (1 / delta): " << frameRate << " s^(-1)." << std::endl;
-			std::cout << "    Previous frame time: " << previousFrameTime << " s." << std::endl;
-		}
+		std::cout << "-------------------------" << std::endl;
+		std::cout << "             Delta time: " << deltaTime << " s." << std::endl;
+		std::cout << " Frame rate (1 / delta): " << frameRate << " s^(-1)." << std::endl;
+		std::cout << "    Previous frame time: " << previousFrameTime << " s." << std::endl;
 
 		// Second part: process the user's input.
 		processInput(window);
