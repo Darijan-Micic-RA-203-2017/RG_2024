@@ -230,7 +230,12 @@ int main()
 			renderRefrigerator();
 			renderRefrigeratorDoor();
 			renderLightSourceInsideRefrigerator();
-			renderNonlogoReadingsText();
+			// Render the nonlogo readings text only if the orthogonal projection is turned on and
+			// the refrigerator door is closed.
+			if (orthogonalProjectionTurnedOn && doorState == DoorState::CLOSED)
+			{
+				renderNonlogoReadingsText();
+			}
 
 			// If 5 seconds have passed since the graphical mode was activated and no left click was registered, the
 			// application should switch to the logo mode.
