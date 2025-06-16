@@ -85,6 +85,9 @@
     <ClInclude Include="chamber_rendering.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="refrigerator_rendering.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="window_dimensions.cpp">
@@ -133,6 +136,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="chamber_rendering.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="refrigerator_rendering.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

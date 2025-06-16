@@ -14,6 +14,7 @@ extern const float minTemperatureOfRefrigeratingChamber;
 extern float currentTemperatureOfRefrigeratingChamber;
 extern const float maxTemperatureOfRefrigeratingChamber;
 extern const float minAvgTemperatureOfRefrigerator;
+extern float currentAvgTemperatureOfRefrigerator;
 extern const float maxAvgTemperatureOfRefrigerator;
 
 #endif

@@ -6,5 +6,6 @@
 
 #include "grocery_rendering.hpp"
 #include "chamber_rendering.hpp"
+#include "refrigerator_rendering.hpp"
 
 #endif

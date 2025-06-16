@@ -10,4 +10,5 @@ const float minTemperatureOfRefrigeratingChamber = 0.0F;
 float currentTemperatureOfRefrigeratingChamber = 3.5F;
 const float maxTemperatureOfRefrigeratingChamber = 7.0F;
 const float minAvgTemperatureOfRefrigerator = -20.0F;
+float currentAvgTemperatureOfRefrigerator = -12.75F;
 const float maxAvgTemperatureOfRefrigerator = -5.5F;
