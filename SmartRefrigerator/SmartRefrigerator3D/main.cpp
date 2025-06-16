@@ -2,10 +2,12 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
 #include "global_variables.hpp"
-#include "texture.hpp"
 #include "text.hpp"
+#include "rendering.hpp"
 #include "input_processing.hpp"
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
@@ -81,38 +83,26 @@ int main()
 
 	// Generate textures, set their wrapping and filtering parameters, load the images-to-become-textures from
 	// the file system and generate all the required mipmaps using the helper class.
-	Texture fishSticksPackage("Resources/Images/Fish_sticks_package.png", false);
-	if (fishSticksPackage.errorCode)
+	errorCode = setUpTextures();
+	if (errorCode != 0)
 	{
+		// De-allocate the textures using their destructors.
+		destroyTextures();
 		glfwTerminate();
 
-		return fishSticksPackage.errorCode;
-	}
-	Texture milkCartonBox("Resources/Images/Milk_carton_box.png", false);
-	if (milkCartonBox.errorCode)
-	{
-		glfwTerminate();
-
-		return milkCartonBox.errorCode;
-	}
-	Texture blueSnowflakeIcon("Resources/Images/Blue_snowflake_icon.png", true);
-	if (blueSnowflakeIcon.errorCode)
-	{
-		glfwTerminate();
-
-		return blueSnowflakeIcon.errorCode;
+		return errorCode;
 	}
 
 	// REFERENCE: https://www.glfw.org/docs/3.3/input_guide.html#cursor_custom
 	GLFWimage imageOfBlueSnowflake;
-	imageOfBlueSnowflake.width = blueSnowflakeIcon.width;
-	imageOfBlueSnowflake.height = blueSnowflakeIcon.height;
-	imageOfBlueSnowflake.pixels = blueSnowflakeIcon.pixels;
+	imageOfBlueSnowflake.width = blueSnowflakeIcon->width;
+	imageOfBlueSnowflake.height = blueSnowflakeIcon->height;
+	imageOfBlueSnowflake.pixels = blueSnowflakeIcon->pixels;
 	blueSnowflakeCursor = glfwCreateCursor(&imageOfBlueSnowflake, 0, 0);
 	if (blueSnowflakeCursor == NULL)
 	{
 		// De-allocate the texture used for the mouse cursor using the "stb_image.h" library's "stbi_image_free" method.
-		stbi_image_free(blueSnowflakeIcon.pixels);
+		stbi_image_free(blueSnowflakeIcon->pixels);
 		glfwTerminate();
 
 		return 9;
@@ -312,97 +302,7 @@ int main()
 			// Set the active polygon mode (filled meshes mode, wireframe mode or point mode).
 			glPolygonMode(GL_FRONT_AND_BACK, polygonMode);
 
-			// Activate the desired shader program.
-			// Every shader and rendering call from now on will use this shader program object.
-			shaderProgramForGrocery->useProgram();
-
-			// Activate the texture unit (one of 16). After activating a texture unit, a subsequent "glBindTexture"
-			// call will bind that texture to the currently active texture unit. The texture unit "GL_TEXTURE0" is
-			// always active by default, so it isn't necessary to manually activate any texture unit if only one texture
-			// is used.
-			glActiveTexture(GL_TEXTURE0);
-			glBindTexture(GL_TEXTURE_2D, fishSticksPackage.id);
-			glActiveTexture(GL_TEXTURE1);
-			glBindTexture(GL_TEXTURE_2D, milkCartonBox.id);
-
-			// The projection matrix transforms the view-space coordinates to the clip-space coordinates.
-			// The projection that will be used is the perspective projection with the varying field of view (FOV) that
-			// the user sets by scrolling, 0.1F near plane and 100.0F far plane. The ratio of the window's width and
-			// height is called the aspect ratio.
-			glm::mat4 projectionMatrix = glm::perspective(glm::radians(camera->fov), 
-				static_cast<float>(windowWidth) / static_cast<float>(windowHeight), 0.1F, 100.0F);
-			// Set the projection matrix. This matrix changes each frame.
-			glBindBuffer(GL_UNIFORM_BUFFER, viewAndProjectionMatricesUBO);
-			glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), &projectionMatrix[0U][0U]);
-			// Unbind UBO for safety reasons.
-			glBindBuffer(GL_UNIFORM_BUFFER, 0U);
-
-			// The view matrix transforms the world-space coordinates to the view-space coordinates.
-			// The world (scene) will be transformed by moving the camera using the keyboard.
-			glm::mat4 viewMatrix = camera->getCalculatedViewMatrix();
-			// Set the view matrix. This matrix changes each frame.
-			glBindBuffer(GL_UNIFORM_BUFFER, viewAndProjectionMatricesUBO);
-			glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), &viewMatrix[0U][0U]);
-			// Unbind UBO for safety reasons.
-			glBindBuffer(GL_UNIFORM_BUFFER, 0U);
-
-			// Bind (assign) the desired VAO to OpenGL's context.
-			glBindVertexArray(groceryVAO);
-
-			// Set the grocery inside freezer uniform.
-			groceryInsideFreezer = !groceryInsideFreezer;
-			shaderProgramForGrocery->setBoolUniform("groceryInsideFreezer", groceryInsideFreezer);
-
-			// The model matrix transforms the local-space coordinates to the world-space coordinates.
-			glm::mat4 modelMatrix = glm::mat4(1.0F);
-			// The left fish sticks package is 0.25F TO THE LEFT and 0.45F CLOSER of the (0.0F, 0.0F, 0.0F).
-			modelMatrix = glm::translate(modelMatrix, glm::vec3(-0.25F, 0.0F, 0.45F));
-			// Set the model matrix. This matrix changes each frame.
-			shaderProgramForGrocery->setFloatMat4Uniform("modelMatrix", modelMatrix);
-
-			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
-			glDrawArrays(GL_TRIANGLES, 0, 36); // left fish sticks package
-
-			// The right fish sticks package is 0.5F TO THE RIGHT of the left fish sticks package.
-			modelMatrix = glm::mat4(1.0F);
-			modelMatrix = glm::translate(modelMatrix, glm::vec3(0.5F, 0.0F, 0.0F));
-			// The left fish sticks package is 0.25F TO THE LEFT and 0.45F CLOSER of the (0.0F, 0.0F, 0.0F).
-			modelMatrix = glm::translate(modelMatrix, glm::vec3(-0.25F, 0.0F, 0.45F));
-			// Set the model matrix. This matrix changes each frame.
-			shaderProgramForChamber->setFloatMat4Uniform("modelMatrix", modelMatrix);
-
-			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
-			glDrawArrays(GL_TRIANGLES, 0, 36); // right fish sticks package
-
-			// Set the grocery inside freezer uniform.
-			groceryInsideFreezer = !groceryInsideFreezer;
-			shaderProgramForGrocery->setBoolUniform("groceryInsideFreezer", groceryInsideFreezer);
-
-			// The right milk carton box is 0.5F BELOW the right fish sticks package.
-			// Its width and depth are scaled DOWN 2 times.
-			modelMatrix = glm::mat4(1.0F);
-			modelMatrix = glm::translate(modelMatrix, glm::vec3(0.5F, -0.5F, 0.0F));
-			// The left fish sticks package is 0.25F TO THE LEFT and 0.45F CLOSER of the (0.0F, 0.0F, 0.0F).
-			modelMatrix = glm::translate(modelMatrix, glm::vec3(-0.25F, 0.0F, 0.45F));
-			modelMatrix = glm::scale(modelMatrix, glm::vec3(0.5F, 1.0F, 0.5F));
-			// Set the model matrix. This matrix changes each frame.
-			shaderProgramForChamber->setFloatMat4Uniform("modelMatrix", modelMatrix);
-
-			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
-			glDrawArrays(GL_TRIANGLES, 0, 36); // right milk carton box
-
-			// The left milk carton box is 0.5F TO THE LEFT of the right milk carton box.
-			// Its width and depth are scaled DOWN 2 times.
-			modelMatrix = glm::mat4(1.0F);
-			modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0F, -0.5F, 0.0F));
-			// The left fish sticks package is 0.25F TO THE LEFT and 0.45F CLOSER of the (0.0F, 0.0F, 0.0F).
-			modelMatrix = glm::translate(modelMatrix, glm::vec3(-0.25F, 0.0F, 0.45F));
-			modelMatrix = glm::scale(modelMatrix, glm::vec3(0.5F, 1.0F, 0.5F));
-			// Set the model matrix. This matrix changes each frame.
-			shaderProgramForChamber->setFloatMat4Uniform("modelMatrix", modelMatrix);
-
-			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
-			glDrawArrays(GL_TRIANGLES, 0, 36); // left milk carton box
+			renderGrocery();
 
 			// Depending on whether the see-through mode is turned on or off and whether the door is not closed or
 			// is closed, render the chambers and the refrigerator door differently.
@@ -508,7 +408,7 @@ int main()
 			// Set the model matrix. This matrix changes each frame.
 			shaderProgramForRefrigerator->setFloatMat4Uniform("modelMatrix", modelMatrix);
 			// The normal matrix is a model matrix specifically tailored for normal vectors.
-			glm::mat3 normalMatrix = glm::mat3(glm::transpose(glm::inverse(modelMatrix)));
+			normalMatrix = glm::mat3(glm::transpose(glm::inverse(modelMatrix)));
 			// Set the normal matrix. This matrix changes each frame.
 			shaderProgramForRefrigerator->setFloatMat3Uniform("normalMatrix", normalMatrix);
 
@@ -805,7 +705,9 @@ int main()
 	// De-allocate the camera using its destructor.
 	delete camera;
 	// De-allocate the texture used for the mouse cursor using the "stb_image.h" library's "stbi_image_free" method.
-	stbi_image_free(blueSnowflakeIcon.pixels);
+	stbi_image_free(blueSnowflakeIcon->pixels);
+	// De-allocate the textures using their destructors.
+	destroyTextures();
 	// De-allocate the shader programs using their destructors.
 	destroyShaderPrograms();
 

@@ -1,0 +1,9 @@
+// By using these several preprocessor directives at the top of the header file, the compiler is informed to only
+// include and compile this header file if it hasn't been included yet. This applies even if multiple files include the
+// rendering header. This prevents linking conflicts.
+#ifndef RENDERING_H
+#define RENDERING_H
+
+#include "grocery_rendering.hpp"
+
+#endif
