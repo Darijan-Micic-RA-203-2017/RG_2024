@@ -675,7 +675,7 @@ int main()
 			// application should switch to the logo mode.
 			// LOGO MODE IS TEMPORARILY DISABLED IN ORDER TO MAKE THE DEVELOPMENT EASIER (NO CLICKING REQUIRED)!!!
 			/*
-			if (currentFrameTime - timeWhenGraphicalModeWasActivated > 5.0F)
+			if (orthogonalProjectionTurnedOn && currentFrameTime - timeWhenGraphicalModeWasActivated > 5.0F)
 			{
 				logoModeTurnedOn = true;
 				graphicalModeTurnedOn = false;

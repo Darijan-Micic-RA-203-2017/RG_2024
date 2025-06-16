@@ -10,7 +10,7 @@ void processInput(GLFWwindow *window)
 		return;
 	}
 
-	if (!logoModeTurnedOn)
+	if (graphicalModeTurnedOn)
 	{
 		// Move the camera (only when the perspective projection is turned on).
 		if (!orthogonalProjectionTurnedOn)
@@ -73,6 +73,10 @@ void processInput(GLFWwindow *window)
 		// the 3D project).
 		if (glfwGetKey(window, GLFW_KEY_O) == GLFW_PRESS)
 		{
+			// Update the graphical mode activation timestamp with the current time on every switch to the
+			// orthogonal projection.
+			timeWhenGraphicalModeWasActivated = static_cast<float>(glfwGetTime());
+
 			orthogonalProjectionTurnedOn = true;
 			// Tell the GLFW library to release and show the mouse cursor, which is its normal mode.
 			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
@@ -95,6 +99,8 @@ void processInput(GLFWwindow *window)
 
 			return;
 		}
+
+		return;
 	}
 
 	// Activate the desired shader program.
@@ -207,7 +213,5 @@ void processInput(GLFWwindow *window)
 		logoNeedsToMoveLeftRightBetweenEdges = true;
 		shaderProgramForLogoText->setBoolUniform("logoNeedsToMoveLeftRightBetweenEdges", logoNeedsToMoveLeftRightBetweenEdges);
 		logoNowNeedsToMoveTowardsLeftEdge = true;
-
-		return;
 	}
 }
