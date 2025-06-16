@@ -87,6 +87,12 @@ void renderRefrigeratorDoor()
 	}
 	else
 	{
+		// Scene should not be lit if the door is closed, unless the see-through mode is turned on.
+		if (!seeThroughModeTurnedOn)
+		{
+			sceneLit = false;
+		}
+
 		// The model matrix transforms the local-space coordinates to the world-space coordinates.
 		modelMatrix = glm::mat4(1.0F);
 		// The refrigerator door is 1.0875F CLOSER of the (0.0F, 0.0F, 0.0F).

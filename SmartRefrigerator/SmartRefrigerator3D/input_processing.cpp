@@ -64,7 +64,12 @@ void processInput(GLFWwindow *window)
 		if (glfwGetKey(window, GLFW_KEY_I) == GLFW_PRESS)
 		{
 			polygonMode = GL_FILL;
-			sceneLit = true;
+			// Scene should be lit by the spotlight inside the refrigerator only if the see-through mode is
+			// turned on or if the door is not fully closed.
+			if (seeThroughModeTurnedOn || doorState != DoorState::CLOSED)
+			{
+				sceneLit = true;
+			}
 
 			return;
 		}

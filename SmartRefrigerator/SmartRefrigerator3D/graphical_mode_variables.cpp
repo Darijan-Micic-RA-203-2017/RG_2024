@@ -9,7 +9,7 @@
 bool graphicalModeTurnedOn = true;
 float timeWhenGraphicalModeWasActivated = 0.0F;
 GLenum polygonMode = GL_FILL;
-bool sceneLit = true;
+bool sceneLit = false;
 // When the orthogonal projection is turned on, this 3D project acts as the 2D project and the mouse cursor is visible.
 // Otherwise, the entire refrigerator can be seen and the mouse cursor is hidden.
 bool orthogonalProjectionTurnedOn = true;

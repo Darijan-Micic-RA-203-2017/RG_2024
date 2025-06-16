@@ -47,6 +47,8 @@ void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 			if (doorState == DoorState::CLOSED)
 			{
 				doorState = DoorState::OPENING;
+				// Scene should be lit if the refrigerator door is opened.
+				sceneLit = true;
 			}
 			else if (doorState == DoorState::OPEN)
 			{
@@ -60,13 +62,13 @@ void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 		if (xpos >= 0.2225 * windowWidth && xpos <= 0.33 * windowWidth 
 			&& ypos >= 0.236667 * windowHeight && ypos <= 0.286667 * windowHeight)
 		{
-			// Activate the desired shader program.
-			// Every shader and rendering call from now on will use this shader program object.
-			shaderProgramForChamber->useProgram();
-
-			// Update see-through mode global variable and uniform.
+			// Update see-through mode global variable.
 			seeThroughModeTurnedOn = !seeThroughModeTurnedOn;
-			shaderProgramForChamber->setBoolUniform("seeThroughModeTurnedOn", seeThroughModeTurnedOn);
+			// Scene should be lit if the see through mode is turned on.
+			if (seeThroughModeTurnedOn)
+			{
+				sceneLit = true;
+			}
 
 			return;
 		}

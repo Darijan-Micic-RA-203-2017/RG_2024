@@ -25,6 +25,8 @@ void renderChamber()
 	// Set the normal matrix. This matrix changes each frame.
 	shaderProgramForGrocery->setFloatMat3Uniform("normalMatrix", normalMatrix);
 
+	// Set the see-through mode uniform.
+	shaderProgramForChamber->setBoolUniform("seeThroughModeTurnedOn", seeThroughModeTurnedOn);
 	// Set the current window width and height uniforms.
 	shaderProgramForChamber->setFloatUniform("windowWidth", static_cast<float>(windowWidth));
 	shaderProgramForChamber->setFloatUniform("windowHeight", static_cast<float>(windowHeight));
