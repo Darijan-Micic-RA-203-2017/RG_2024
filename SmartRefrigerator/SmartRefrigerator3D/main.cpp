@@ -507,11 +507,7 @@ int main()
 			modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0F, 0.0F, -0.15F));
 			// Set the model matrix. This matrix changes each frame.
 			shaderProgramForRefrigerator->setFloatMat4Uniform("modelMatrix", modelMatrix);
-			// The normal matrix is a model matrix specifically tailored for normal vectors. Normal matrix is
-			// defined as the transpose of the inverse of the upper-left 3x3 part of the model matrix.
-			// Non-uniform scaling would transform vertex in such a way that the normal vector would no longer be
-			// perpendicular to the vertex's surface. This means that the lighting of surface would be distorted.
-			// Non-uniform scaling is mitigated by multiplying the normal vector with normal matrix.
+			// The normal matrix is a model matrix specifically tailored for normal vectors.
 			glm::mat3 normalMatrix = glm::mat3(glm::transpose(glm::inverse(modelMatrix)));
 			// Set the normal matrix. This matrix changes each frame.
 			shaderProgramForRefrigerator->setFloatMat3Uniform("normalMatrix", normalMatrix);
@@ -525,13 +521,21 @@ int main()
 
 			if (doorState == DoorState::OPENING)
 			{
-				// Set the model matrix. This matrix changes each frame.
-				doorTranslation += 0.4F * deltaTime;
-				if (doorTranslation > maxDoorTranslation)
+				// The model matrix transforms the local-space coordinates to the world-space coordinates.
+				modelMatrix = glm::mat4(1.0F);
+				doorXTranslation += 0.2F * deltaTime;
+				if (doorXTranslation > maxDoorXTranslation)
 				{
-					doorTranslation = maxDoorTranslation;
+					doorXTranslation = maxDoorXTranslation;
 				}
-				modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0F, 0.0F, doorTranslation));
+				doorZTranslation += 0.2F * deltaTime;
+				if (doorZTranslation > maxDoorZTranslation)
+				{
+					doorZTranslation = maxDoorZTranslation;
+				}
+				modelMatrix = glm::translate(modelMatrix, glm::vec3(doorXTranslation, 0.0F, doorZTranslation));
+				// The refrigerator door is 1.0875F CLOSER of the (0.0F, 0.0F, 0.0F).
+				modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0F, 0.0F, 1.0875F));
 				doorAngle += 0.2F * deltaTime;
 				if (doorAngle > maxDoorAngle)
 				{
@@ -539,21 +543,31 @@ int main()
 					doorState = DoorState::OPEN;
 				}
 				modelMatrix = glm::rotate(modelMatrix, doorAngle, glm::vec3(0.0F, 1.0F, 0.0F));
+				// Set the model matrix. This matrix changes each frame.
 				shaderProgramForRefrigerator->setFloatMat4Uniform("modelMatrix", modelMatrix);
 
-				// Set the normal matrix. This matrix changes each frame.
+				// The normal matrix is a model matrix specifically tailored for normal vectors.
 				normalMatrix = glm::mat3(glm::transpose(glm::inverse(modelMatrix)));
+				// Set the normal matrix. This matrix changes each frame.
 				shaderProgramForRefrigerator->setFloatMat3Uniform("normalMatrix", normalMatrix);
 			}
 			else if (doorState == DoorState::CLOSING)
 			{
-				// Set the model matrix. This matrix changes each frame.
-				doorTranslation -= 0.4F * deltaTime;
-				if (doorTranslation < minDoorTranslation)
+				// The model matrix transforms the local-space coordinates to the world-space coordinates.
+				modelMatrix = glm::mat4(1.0F);
+				doorXTranslation -= 0.2F * deltaTime;
+				if (doorXTranslation < minDoorXTranslation)
 				{
-					doorTranslation = minDoorTranslation;
+					doorXTranslation = minDoorXTranslation;
 				}
-				modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0F, 0.0F, doorTranslation));
+				doorZTranslation -= 0.2F * deltaTime;
+				if (doorZTranslation < minDoorZTranslation)
+				{
+					doorZTranslation = minDoorZTranslation;
+				}
+				modelMatrix = glm::translate(modelMatrix, glm::vec3(doorXTranslation, 0.0F, doorZTranslation));
+				// The refrigerator door is 1.0875F CLOSER of the (0.0F, 0.0F, 0.0F).
+				modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0F, 0.0F, 1.0875F));
 				doorAngle -= 0.2F * deltaTime;
 				if (doorAngle < minDoorAngle)
 				{
@@ -561,33 +575,45 @@ int main()
 					doorState = DoorState::CLOSED;
 				}
 				modelMatrix = glm::rotate(modelMatrix, doorAngle, glm::vec3(0.0F, 1.0F, 0.0F));
+				// Set the model matrix. This matrix changes each frame.
 				shaderProgramForRefrigerator->setFloatMat4Uniform("modelMatrix", modelMatrix);
 
-				// Set the normal matrix. This matrix changes each frame.
+				// The normal matrix is a model matrix specifically tailored for normal vectors.
 				normalMatrix = glm::mat3(glm::transpose(glm::inverse(modelMatrix)));
+				// Set the normal matrix. This matrix changes each frame.
 				shaderProgramForRefrigerator->setFloatMat3Uniform("normalMatrix", normalMatrix);
 			}
 			else if (doorState == DoorState::OPEN)
 			{
-				// Set the model matrix. This matrix changes each frame.
-				doorTranslation = maxDoorTranslation;
-				modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0F, 0.0F, doorTranslation));
+				// The model matrix transforms the local-space coordinates to the world-space coordinates.
+				modelMatrix = glm::mat4(1.0F);
+				doorXTranslation = maxDoorXTranslation;
+				doorZTranslation = maxDoorZTranslation;
+				modelMatrix = glm::translate(modelMatrix, glm::vec3(doorXTranslation, 0.0F, doorZTranslation));
+				// The refrigerator door is 1.0875F CLOSER of the (0.0F, 0.0F, 0.0F).
+				modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0F, 0.0F, 1.0875F));
 				doorAngle = maxDoorAngle;
 				modelMatrix = glm::rotate(modelMatrix, doorAngle, glm::vec3(0.0F, 1.0F, 0.0F));
+				// Set the model matrix. This matrix changes each frame.
 				shaderProgramForRefrigerator->setFloatMat4Uniform("modelMatrix", modelMatrix);
 
-				// Set the normal matrix. This matrix changes each frame.
+				// The normal matrix is a model matrix specifically tailored for normal vectors.
 				normalMatrix = glm::mat3(glm::transpose(glm::inverse(modelMatrix)));
+				// Set the normal matrix. This matrix changes each frame.
 				shaderProgramForRefrigerator->setFloatMat3Uniform("normalMatrix", normalMatrix);
 			}
 			else
 			{
-				// Set the model matrix. This matrix changes each frame.
+				// The model matrix transforms the local-space coordinates to the world-space coordinates.
 				modelMatrix = glm::mat4(1.0F);
+				// The refrigerator door is 1.0875F CLOSER of the (0.0F, 0.0F, 0.0F).
+				modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0F, 0.0F, 1.0875F));
+				// Set the model matrix. This matrix changes each frame.
 				shaderProgramForRefrigerator->setFloatMat4Uniform("modelMatrix", modelMatrix);
 
-				// Set the normal matrix. This matrix changes each frame.
+				// The normal matrix is a model matrix specifically tailored for normal vectors.
 				normalMatrix = glm::mat3(glm::transpose(glm::inverse(modelMatrix)));
+				// Set the normal matrix. This matrix changes each frame.
 				shaderProgramForRefrigerator->setFloatMat3Uniform("normalMatrix", normalMatrix);
 			}
 
