@@ -128,6 +128,13 @@ int main()
 		glGetUniformBlockIndex(shaderProgramForGrocery->id, "ViewAndProjectionMatrices");
 	// Tell OpenGL to what binding point each uniform block is set to.
 	glUniformBlockBinding(shaderProgramForGrocery->id, locationOfUniformBlock, 0U);
+	/*
+	// Retrieve the location index of the uniform block named "RequiredLightingData".
+	locationOfUniformBlock = 
+		glGetUniformBlockIndex(shaderProgramForGrocery->id, "RequiredLightingData");
+	// Tell OpenGL to what binding point each uniform block is set to.
+	glUniformBlockBinding(shaderProgramForGrocery->id, locationOfUniformBlock, 2U);
+	*/
 
 	// Activate the desired shader program.
 	// Every shader and rendering call from now on will use this shader program object.
@@ -137,6 +144,13 @@ int main()
 	locationOfUniformBlock = glGetUniformBlockIndex(shaderProgramForChamber->id, "ViewAndProjectionMatrices");
 	// Tell OpenGL to what binding point each uniform block is set to.
 	glUniformBlockBinding(shaderProgramForChamber->id, locationOfUniformBlock, 0U);
+	/*
+	// Retrieve the location index of the uniform block named "RequiredLightingData".
+	locationOfUniformBlock = 
+		glGetUniformBlockIndex(shaderProgramForChamber->id, "RequiredLightingData");
+	// Tell OpenGL to what binding point each uniform block is set to.
+	glUniformBlockBinding(shaderProgramForChamber->id, locationOfUniformBlock, 2U);
+	*/
 
 	// Activate the desired shader program.
 	// Every shader and rendering call from now on will use this shader program object.
@@ -147,6 +161,13 @@ int main()
 		glGetUniformBlockIndex(shaderProgramForRefrigerator->id, "ViewAndProjectionMatrices");
 	// Tell OpenGL to what binding point each uniform block is set to.
 	glUniformBlockBinding(shaderProgramForRefrigerator->id, locationOfUniformBlock, 0U);
+	/*
+	// Retrieve the location index of the uniform block named "RequiredLightingData".
+	locationOfUniformBlock = 
+		glGetUniformBlockIndex(shaderProgramForRefrigerator->id, "RequiredLightingData");
+	// Tell OpenGL to what binding point each uniform block is set to.
+	glUniformBlockBinding(shaderProgramForRefrigerator->id, locationOfUniformBlock, 2U);
+	*/
 
 	// Activate the desired shader program.
 	// Every shader and rendering call from now on will use this shader program object.

@@ -17,6 +17,7 @@ unsigned int lightSourceInsideRefrigeratorVBO = 0U;
 unsigned int textVBO = 0U;
 unsigned int viewAndProjectionMatricesUBO = 0U;
 unsigned int projectionMatrixUBO = 0U;
+// unsigned int requiredLightingDataUBO = 0U;
 
 void generateArrayAndBufferObjects()
 {
@@ -39,6 +40,7 @@ void generateArrayAndBufferObjects()
 
 	glGenBuffers(1, &viewAndProjectionMatricesUBO);
 	glGenBuffers(1, &projectionMatrixUBO);
+	// glGenBuffers(1, &requiredLightingDataUBO);
 }
 
 void copyUserDefinedDataToGPUAndTellOpenGLHowItShouldInterpretIt()
@@ -179,6 +181,20 @@ void copyUserDefinedDataToGPUAndTellOpenGLHowItShouldInterpretIt()
 	// "glBindbufferBase()" function expects a target, a binding point index and a UBO.
 	// "glBindBufferRange()" function enables linking multiple different uniform blocks to a single UBO.
 	glBindBufferRange(GL_UNIFORM_BUFFER, 1U, projectionMatrixUBO, 0, sizeof(glm::mat4));
+
+	/*
+	// Bind (assign) the newly created UBO to OpenGL's context.
+	glBindBuffer(GL_UNIFORM_BUFFER, requiredLightingDataUBO);
+	// Allocate enough space in graphics card's memory to hold contents of this UBO.
+	glBufferData(GL_UNIFORM_BUFFER, 164U, NULL, GL_STATIC_DRAW);
+	// Bind the binding point to its UBO (the one currently set up).
+	glBindBuffer(GL_UNIFORM_BUFFER, 2U);
+	// Bind the UBO to its binding point using either the "glBindBufferBase()" function or the
+	// "glBindBufferRange()" function. From this point on, both sides of the binding point are linked.
+	// "glBindbufferBase()" function expects a target, a binding point index and a UBO.
+	// "glBindBufferRange()" function enables linking multiple different uniform blocks to a single UBO.
+	glBindBufferRange(GL_UNIFORM_BUFFER, 2U, requiredLightingDataUBO, 0, 164U);
+	*/
 }
 
 void unbindArrayAndBufferObjectsForSafetyReasons()

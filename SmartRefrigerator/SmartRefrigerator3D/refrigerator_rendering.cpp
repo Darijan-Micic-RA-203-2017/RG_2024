@@ -6,8 +6,6 @@ void renderRefrigerator()
 	// Every shader and rendering call from now on will use this shader program object.
 	shaderProgramForRefrigerator->useProgram();
 
-	currentAvgTemperatureOfRefrigerator = 
-		(currentTemperatureOfFreezingChamber + currentTemperatureOfRefrigeratingChamber) / 2.0F;
 	// Set the is scene lit uniform.
 	shaderProgramForRefrigerator->setBoolUniform("sceneLit", sceneLit);
 	if (sceneLit)
@@ -27,7 +25,7 @@ void renderRefrigerator()
 			"lightSourceInsideRefrigerator.cosOfOuterCutoffAngle", glm::cos(glm::radians(30.0F)));
 		float blueColorComponentOfLight = 
 			(currentAvgTemperatureOfRefrigerator - minAvgTemperatureOfRefrigerator) / 
-			(maxAvgTemperatureOfRefrigerator - minAvgTemperatureOfRefrigerator);
+				(maxAvgTemperatureOfRefrigerator - minAvgTemperatureOfRefrigerator);
 		shaderProgramForRefrigerator->setFloatVec3Uniform(
 			"lightSourceInsideRefrigerator.ambientColor", glm::vec3(1.0F, 1.0F, blueColorComponentOfLight));
 		shaderProgramForRefrigerator->setFloatVec3Uniform(

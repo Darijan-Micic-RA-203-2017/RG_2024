@@ -25,6 +25,7 @@ extern unsigned int lightSourceInsideRefrigeratorVBO;
 extern unsigned int textVBO;
 extern unsigned int viewAndProjectionMatricesUBO;
 extern unsigned int projectionMatrixUBO;
+// extern unsigned int requiredLightingDataUBO;
 
 void generateArrayAndBufferObjects();
 void copyUserDefinedDataToGPUAndTellOpenGLHowItShouldInterpretIt();

@@ -38,6 +38,22 @@ uniform Spotlight lightSourceInsideRefrigerator;
 uniform Material material;
 // Strength of the light shining the scene.
 uniform float intensityOfBackgroundLight;
+// REFERENCE: https://learnopengl.com/Advanced-OpenGL/Advanced-GLSL
+/*
+layout (std140) uniform RequiredLightingData
+{
+	// Should the scene be lit at all?
+	bool sceneLit;
+	// Pass the position of viewer (needed for specular component of the Phong's lighting model).
+	vec3 positionOfViewer;
+	// Pass the spotlight.
+	Spotlight lightSourceInsideRefrigerator;
+	// Pass the material of object (needed for all 3 components of the Phong's lighting model).
+	Material material;
+	// Strength of the light shining the scene.
+	float intensityOfBackgroundLight;
+};
+*/
 
 void main()
 {
