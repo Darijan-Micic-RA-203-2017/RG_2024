@@ -1,5 +1,3 @@
-#define _CRT_SECURE_NO_WARNINGS
-
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
@@ -108,12 +106,14 @@ int main()
 		return 9;
 	}
 
-	Font timesNewRomanFont("Resources/Fonts/times.ttf", textVAO, textVBO);
-	if (timesNewRomanFont.errorCode != 0)
+	errorCode = setUpFonts();
+	if (errorCode != 0)
 	{
+		// De-allocate the fonts using their destructors.
+		destroyFonts();
 		glfwTerminate();
 
-		return timesNewRomanFont.errorCode;
+		return errorCode;
 	}
 
 	// Activate the desired shader program.
@@ -294,7 +294,7 @@ int main()
 			}
 
 			// Render the "LOK" company's logo, scale it 4 times and paint it blue.
-			timesNewRomanFont.renderText(*shaderProgramForLogoText, "LOK", 
+			timesNewRomanFont->renderText(*shaderProgramForLogoText, "LOK", 
 				bottomLeftXOfLogoText, bottomLeftYOfLogoText, 4.0F, glm::vec3(0.0F, 0.0F, 1.0F));
 		}
 		else
@@ -307,79 +307,7 @@ int main()
 			renderRefrigerator();
 			renderRefrigeratorDoor();
 			renderLightSourceInsideRefrigerator();
-
-			// Activate the desired shader program.
-			// Every shader and rendering call from now on will use this shader program object.
-			shaderProgramForNonlogoText->useProgram();
-
-			// Text rendering usually does not require the use of the perspective projection. Therefore, an ortographic
-			// projection matrix will suffice. Using an orthographic projection matrix also allows all vertex coordinates to
-			// be specified in screen-space coordinates. In order to take advantage of this, the projection matrix needs to
-			// be set up this way: glm::mat4 projectionMatrix = glm::ortho(0.0F, windowWidth, 0.0F, windowHeight).
-			// The result is that coordinates can be specified with y-values ranging from the bottom part of the screen
-			// (0.0F) to the top part of the screen (window's height). The point (0.0F, 0.0F) now corresponds to the
-			// bottom-left corner.
-			projectionMatrix = glm::ortho(0.0F, static_cast<float>(windowWidth), 0.0F, static_cast<float>(windowHeight));
-			// Set the projection matrix. This matrix changes each frame.
-			glBindBuffer(GL_UNIFORM_BUFFER, projectionMatrixUBO);
-			glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), &projectionMatrix[0U][0U]);
-			// Unbind UBO for safety reasons.
-			glBindBuffer(GL_UNIFORM_BUFFER, 0U);
-
-			// REFERENCE: https://labex.io/tutorials/c-creating-a-simple-clock-animation-using-opengl-298829
-			time_t rawTime;
-			struct tm *timeInfo;
-			time(&rawTime);
-			timeInfo = localtime(&rawTime);
-			int hours = timeInfo->tm_hour;
-			int minutes = timeInfo->tm_min;
-			int seconds = timeInfo->tm_sec;
-			std::string hoursAsString = std::to_string(hours);
-			if (hours < 10)
-			{
-				hoursAsString.insert(0, "0");
-			}
-			std::string minutesAsString = std::to_string(minutes);
-			if (minutes < 10)
-			{
-				minutesAsString.insert(0, "0");
-			}
-			std::string secondsAsString = std::to_string(seconds);
-			if (seconds < 10)
-			{
-				secondsAsString.insert(0, "0");
-			}
-			std::string currentTimeAsString = 
-				hoursAsString.append(":").append(minutesAsString).append(":").append(secondsAsString);
-			// Render the current time in the digital clock's space, scale it 2/3 times and paint it white.
-			timesNewRomanFont.renderText(*shaderProgramForNonlogoText, currentTimeAsString, 
-				0.22625F * windowWidth, 0.81875F * windowHeight, 0.475F, glm::vec3(1.0F, 1.0F, 1.0F));
-
-			std::string intensityOfBackgroundLightAsString = std::to_string(intensityOfBackgroundLight);
-			intensityOfBackgroundLightAsString = intensityOfBackgroundLightAsString
-				.substr(0U, intensityOfBackgroundLightAsString.size() - 4U);
-			// Render the current intensity of the point light ("background light") in its widget's space, scale it
-			// 2/3 times and paint it white.
-			timesNewRomanFont.renderText(*shaderProgramForNonlogoText, intensityOfBackgroundLightAsString, 
-				0.6275F * windowWidth, 0.653333F * windowHeight, 0.475F, glm::vec3(1.0F, 1.0F, 1.0F));
-
-			std::string currentTemperatureOfFreezingChamberAsString = 
-				std::to_string(currentTemperatureOfFreezingChamber);
-			currentTemperatureOfFreezingChamberAsString = currentTemperatureOfFreezingChamberAsString
-				.substr(0U, currentTemperatureOfFreezingChamberAsString.size() - 5U);
-			// Render the current temperature of the freezing chamber in its widget's space, scale it 2/3 times and
-			// paint it white.
-			timesNewRomanFont.renderText(*shaderProgramForNonlogoText, currentTemperatureOfFreezingChamberAsString, 
-				0.6125F * windowWidth, 0.816667F * windowHeight, 0.666667F, glm::vec3(1.0F, 1.0F, 1.0F));
-
-			std::string currentTemperatureOfRefrigeratingChamberAsString = 
-				std::to_string(currentTemperatureOfRefrigeratingChamber);
-			currentTemperatureOfRefrigeratingChamberAsString = currentTemperatureOfRefrigeratingChamberAsString
-				.substr(0U, currentTemperatureOfRefrigeratingChamberAsString.size() - 5U);
-			// Render the current temperature of the refrigerating chamber in its widget's space, scale it 2/3 times and
-			// paint it white.
-			timesNewRomanFont.renderText(*shaderProgramForNonlogoText, currentTemperatureOfRefrigeratingChamberAsString, 
-				0.63F * windowWidth, 0.718333F * windowHeight, 0.666667F, glm::vec3(1.0F, 1.0F, 1.0F));
+			renderNonlogoReadingsText();
 
 			// If 5 seconds have passed since the graphical mode was activated and no left click was registered, the
 			// application should switch to the logo mode.
@@ -427,7 +355,7 @@ int main()
 
 		// Render the author's signature in the bottom left corner of the screen space, scale it 2/3 times and paint it
 		// yellow.
-		timesNewRomanFont.renderText(*shaderProgramForNonlogoText, "Darijan Micic, RA 203/2017", 
+		timesNewRomanFont->renderText(*shaderProgramForNonlogoText, "Darijan Micic, RA 203/2017", 
 			glm::max(0.0125F * windowWidth, 10.0F), glm::max(0.016667F * windowHeight, 10.0F), 
 			0.666667F, glm::vec3(1.0F, 1.0F, 0.0F));
 
@@ -442,6 +370,8 @@ int main()
 	// REFERENCE: https://www.geeksforgeeks.org/destructors-c/
 	// De-allocate the camera using its destructor.
 	delete camera;
+	// De-allocate the fonts using their destructors.
+	destroyFonts();
 	// De-allocate the texture used for the mouse cursor using the "stb_image.h" library's "stbi_image_free" method.
 	stbi_image_free(blueSnowflakeIcon->pixels);
 	// De-allocate the textures using their destructors.

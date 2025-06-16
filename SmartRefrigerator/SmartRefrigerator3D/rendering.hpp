@@ -9,5 +9,6 @@
 #include "refrigerator_rendering.hpp"
 #include "refrigerator_door_rendering.hpp"
 #include "light_source_inside_refrigerator_rendering.hpp"
+#include "nonlogo_readings_text_rendering.hpp"
 
 #endif

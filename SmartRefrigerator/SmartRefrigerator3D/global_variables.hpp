@@ -12,6 +12,7 @@
 #include "shader_programs.hpp"
 #include "array_and_buffer_objects.hpp"
 #include "textures.hpp"
+#include "fonts.hpp"
 #include "camera.hpp"
 
 // REFERENCE: https://cplusplus.com/forum/general/131319/#msg707907

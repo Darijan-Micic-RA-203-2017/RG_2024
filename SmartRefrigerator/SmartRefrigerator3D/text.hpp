@@ -167,6 +167,12 @@ public:
 		extractNecessaryInfoAboutFontFrom(filePath);
 	}
 
+	// REFERENCE: https://www.geeksforgeeks.org/destructors-c/
+	virtual ~Font()
+	{
+		characters.clear();
+	}
+
 	// Renders text, with position (x, y) being the encompassing text quad's bottom left corner.
 	void renderText(ShaderProgram &shaderProgram, std::string text, float x, float y, float scale, glm::vec3 color)
 	{
