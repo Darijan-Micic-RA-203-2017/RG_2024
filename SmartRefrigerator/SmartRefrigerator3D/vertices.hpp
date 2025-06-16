@@ -6,10 +6,10 @@
 
 // REFERENCE: https://cplusplus.com/forum/general/131319/#msg707907
 // REFERENCE: https://stackoverflow.com/questions/56735173/variable-already-defined-in-obj-what-is-going-on-here
-extern float verticesOfGroceries[1152U];
-extern float verticesOfChambers[3600U];
+extern float verticesOfGrocery[288U];
+extern float verticesOfChamber[1800U];
 extern float verticesOfRefrigerator[1800U];
-extern float verticesOfRefrigeratorDoors[6000U];
+extern float verticesOfRefrigeratorDoor[6000U];
 extern float verticesOfLightSourceInsideRefrigerator[108U];
 
 #endif

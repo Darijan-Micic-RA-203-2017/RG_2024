@@ -346,30 +346,63 @@ int main()
 			// Unbind UBO for safety reasons.
 			glBindBuffer(GL_UNIFORM_BUFFER, 0U);
 
+			// Bind (assign) the desired VAO to OpenGL's context.
+			glBindVertexArray(groceryVAO);
+
+			// Set the grocery inside freezer uniform.
+			groceryInsideFreezer = !groceryInsideFreezer;
+			shaderProgramForGrocery->setBoolUniform("groceryInsideFreezer", groceryInsideFreezer);
+
 			// The model matrix transforms the local-space coordinates to the world-space coordinates.
-			// The model matrix is simply an identity matrix, no transformation is applied.
 			glm::mat4 modelMatrix = glm::mat4(1.0F);
+			// The left fish sticks package is 0.25F TO THE LEFT and 0.45F CLOSER of the (0.0F, 0.0F, 0.0F).
+			modelMatrix = glm::translate(modelMatrix, glm::vec3(-0.25F, 0.0F, 0.45F));
 			// Set the model matrix. This matrix changes each frame.
 			shaderProgramForGrocery->setFloatMat4Uniform("modelMatrix", modelMatrix);
 
-			// Bind (assign) the desired VAO to OpenGL's context.
-			glBindVertexArray(groceriesVAO);
+			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
+			glDrawArrays(GL_TRIANGLES, 0, 36); // left fish sticks package
+
+			// The right fish sticks package is 0.5F TO THE RIGHT of the left fish sticks package.
+			modelMatrix = glm::mat4(1.0F);
+			modelMatrix = glm::translate(modelMatrix, glm::vec3(0.5F, 0.0F, 0.0F));
+			// The left fish sticks package is 0.25F TO THE LEFT and 0.45F CLOSER of the (0.0F, 0.0F, 0.0F).
+			modelMatrix = glm::translate(modelMatrix, glm::vec3(-0.25F, 0.0F, 0.45F));
+			// Set the model matrix. This matrix changes each frame.
+			shaderProgramForChamber->setFloatMat4Uniform("modelMatrix", modelMatrix);
+
+			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
+			glDrawArrays(GL_TRIANGLES, 0, 36); // right fish sticks package
 
 			// Set the grocery inside freezer uniform.
 			groceryInsideFreezer = !groceryInsideFreezer;
 			shaderProgramForGrocery->setBoolUniform("groceryInsideFreezer", groceryInsideFreezer);
 
-			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
-			glDrawArrays(GL_TRIANGLES, 0, 36);  // left fish sticks package
-			glDrawArrays(GL_TRIANGLES, 36, 36); // right fish sticks package
+			// The right milk carton box is 0.5F BELOW the right fish sticks package.
+			// Its width and depth are scaled DOWN 2 times.
+			modelMatrix = glm::mat4(1.0F);
+			modelMatrix = glm::translate(modelMatrix, glm::vec3(0.5F, -0.5F, 0.0F));
+			// The left fish sticks package is 0.25F TO THE LEFT and 0.45F CLOSER of the (0.0F, 0.0F, 0.0F).
+			modelMatrix = glm::translate(modelMatrix, glm::vec3(-0.25F, 0.0F, 0.45F));
+			modelMatrix = glm::scale(modelMatrix, glm::vec3(0.5F, 1.0F, 0.5F));
+			// Set the model matrix. This matrix changes each frame.
+			shaderProgramForChamber->setFloatMat4Uniform("modelMatrix", modelMatrix);
 
-			// Set the grocery inside freezer uniform.
-			groceryInsideFreezer = !groceryInsideFreezer;
-			shaderProgramForGrocery->setBoolUniform("groceryInsideFreezer", groceryInsideFreezer);
+			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
+			glDrawArrays(GL_TRIANGLES, 0, 36); // right milk carton box
+
+			// The left milk carton box is 0.5F TO THE LEFT of the right milk carton box.
+			// Its width and depth are scaled DOWN 2 times.
+			modelMatrix = glm::mat4(1.0F);
+			modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0F, -0.5F, 0.0F));
+			// The left fish sticks package is 0.25F TO THE LEFT and 0.45F CLOSER of the (0.0F, 0.0F, 0.0F).
+			modelMatrix = glm::translate(modelMatrix, glm::vec3(-0.25F, 0.0F, 0.45F));
+			modelMatrix = glm::scale(modelMatrix, glm::vec3(0.5F, 1.0F, 0.5F));
+			// Set the model matrix. This matrix changes each frame.
+			shaderProgramForChamber->setFloatMat4Uniform("modelMatrix", modelMatrix);
 
 			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
-			glDrawArrays(GL_TRIANGLES, 72, 36);  // left milk carton box
-			glDrawArrays(GL_TRIANGLES, 108, 36); // right milk carton box
+			glDrawArrays(GL_TRIANGLES, 0, 36); // left milk carton box
 
 			// Depending on whether the see-through mode is turned on or off and whether the door is not closed or
 			// is closed, render the chambers and the refrigerator door differently.
@@ -387,6 +420,7 @@ int main()
 			shaderProgramForChamber->useProgram();
 
 			// Set the model matrix. This matrix changes each frame.
+			modelMatrix = glm::mat4(1.0F);
 			shaderProgramForChamber->setFloatMat4Uniform("modelMatrix", modelMatrix);
 
 			// Set the current window width and height uniforms.
@@ -399,16 +433,25 @@ int main()
 				"currentTemperatureOfRefrigeratingChamber", currentTemperatureOfRefrigeratingChamber);
 
 			// Bind (assign) the desired VAO to OpenGL's context.
-			glBindVertexArray(chambersVAO);
+			glBindVertexArray(chamberVAO);
+
 			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
 			glDrawArrays(GL_TRIANGLES, 0, 180);   // see-through, blue-tinted freezing chamber plastic
-			glDrawArrays(GL_TRIANGLES, 180, 180); // see-through, blue-tinted refrigerating chamber plastic
+
+			// The refrigerating chamber is 0.5F BELOW the freezing chamber.
+			modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0F, -0.5F, 0.0F));
+			// Set the model matrix. This matrix changes each frame.
+			shaderProgramForChamber->setFloatMat4Uniform("modelMatrix", modelMatrix);
+
+			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
+			glDrawArrays(GL_TRIANGLES, 0, 180); // see-through, blue-tinted refrigerating chamber plastic
 
 			// Activate the desired shader program.
 			// Every shader and rendering call from now on will use this shader program object.
 			shaderProgramForRefrigerator->useProgram();
 
 			// Set the model matrix. This matrix changes each frame.
+			modelMatrix = glm::mat4(1.0F);
 			shaderProgramForRefrigerator->setFloatMat4Uniform("modelMatrix", modelMatrix);
 			// The normal matrix is a model matrix specifically tailored for normal vectors. Normal matrix is
 			// defined as the transpose of the inverse of the upper-left 3x3 part of the model matrix.
@@ -545,7 +588,7 @@ int main()
 			}
 
 			// Bind (assign) the desired VAO to OpenGL's context.
-			glBindVertexArray(refrigeratorDoorsVAO);
+			glBindVertexArray(refrigeratorDoorVAO);
 			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
 			glDrawArrays(GL_TRIANGLES, 0, 36);    // refrigerator (front side)
 
@@ -556,10 +599,10 @@ int main()
 			glDrawArrays(GL_TRIANGLES, 36, 36);  // digital clock rectangle widget
 			glDrawArrays(GL_TRIANGLES, 72, 36);  // see-through mode activation button
 			glDrawArrays(GL_TRIANGLES, 108, 6);  // rectangle symbol on the see-through mode activation button
-			glDrawArrays(GL_TRIANGLES, 114, 36); // doors handle, base
-			glDrawArrays(GL_TRIANGLES, 150, 36); // doors handle, lower connector
-			glDrawArrays(GL_TRIANGLES, 186, 36); // doors handle, upper connector
-			glDrawArrays(GL_TRIANGLES, 222, 36); // doors handle, actual handle
+			glDrawArrays(GL_TRIANGLES, 114, 36); // door handle, base
+			glDrawArrays(GL_TRIANGLES, 150, 36); // door handle, lower connector
+			glDrawArrays(GL_TRIANGLES, 186, 36); // door handle, upper connector
+			glDrawArrays(GL_TRIANGLES, 222, 36); // door handle, actual handle
 			glDrawArrays(GL_TRIANGLES, 258, 36); // "-" button, left of freezing chamber temperature widget
 			glDrawArrays(GL_LINES, 294, 2);      // line representing the "-" sign itself
 			glDrawArrays(GL_TRIANGLES, 296, 36); // freezing chamber temperature widget
