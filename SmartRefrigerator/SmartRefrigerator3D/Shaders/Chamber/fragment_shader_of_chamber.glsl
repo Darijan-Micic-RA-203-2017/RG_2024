@@ -28,6 +28,7 @@ in vec4 Color;
 
 out vec4 FragColor;
 
+uniform bool orthogonalProjectionTurnedOn;
 uniform bool seeThroughModeTurnedOn;
 uniform float windowWidth;
 uniform float windowHeight;
@@ -63,7 +64,7 @@ layout (std140) uniform RequiredLightingData
 void main()
 {
 	vec4 color = vec4(Color.xyz, 1.0F);
-	if (seeThroughModeTurnedOn)
+	if (orthogonalProjectionTurnedOn && seeThroughModeTurnedOn)
 	{
 		const float minTemperatureOfFreezingChamber = -40.0F;
 		const float maxTemperatureOfFreezingChamber = -18.0F;

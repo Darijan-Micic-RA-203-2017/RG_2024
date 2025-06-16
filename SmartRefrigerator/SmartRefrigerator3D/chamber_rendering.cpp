@@ -25,6 +25,8 @@ void renderChamber()
 	// Set the normal matrix. This matrix changes each frame.
 	shaderProgramForGrocery->setFloatMat3Uniform("normalMatrix", normalMatrix);
 
+	// Set the orthogonal projection mode uniform.
+	shaderProgramForChamber->setBoolUniform("orthogonalProjectionTurnedOn", orthogonalProjectionTurnedOn);
 	// Set the see-through mode uniform.
 	shaderProgramForChamber->setBoolUniform("seeThroughModeTurnedOn", seeThroughModeTurnedOn);
 	// Set the current window width and height uniforms.
@@ -74,7 +76,7 @@ void renderChamber()
 		// of number 2 (2, 4, 8, 16, 32, ...).
 		// Higher value results in a smaller, focused specular highlight. The light is reflected more properly.
 		// Lower value results in a larger, scattered specular highlight. The light is reflected less properly.
-		float shininessOfSpecularHighlight = 4.0F;
+		float shininessOfSpecularHighlight = 64.0F;
 		shaderProgramForChamber->setFloatUniform(
 			"material.shininessOfSpecularHighlight", shininessOfSpecularHighlight);
 	}

@@ -55,7 +55,7 @@ void renderGrocery()
 		// of number 2 (2, 4, 8, 16, 32, ...).
 		// Higher value results in a smaller, focused specular highlight. The light is reflected more properly.
 		// Lower value results in a larger, scattered specular highlight. The light is reflected less properly.
-		float shininessOfSpecularHighlight = 4.0F;
+		float shininessOfSpecularHighlight = 16.0F;
 		shaderProgramForGrocery->setFloatUniform(
 			"material.shininessOfSpecularHighlight", shininessOfSpecularHighlight);
 	}
