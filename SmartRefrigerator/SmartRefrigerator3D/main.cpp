@@ -450,18 +450,6 @@ int main()
 			// Every shader and rendering call from now on will use this shader program object.
 			shaderProgramForRefrigerator->useProgram();
 
-			// Set the model matrix. This matrix changes each frame.
-			modelMatrix = glm::mat4(1.0F);
-			shaderProgramForRefrigerator->setFloatMat4Uniform("modelMatrix", modelMatrix);
-			// The normal matrix is a model matrix specifically tailored for normal vectors. Normal matrix is
-			// defined as the transpose of the inverse of the upper-left 3x3 part of the model matrix.
-			// Non-uniform scaling would transform vertex in such a way that the normal vector would no longer be
-			// perpendicular to the vertex's surface. This means that the lighting of surface would be distorted.
-			// Non-uniform scaling is mitigated by multiplying the normal vector with normal matrix.
-			glm::mat3 normalMatrix = glm::mat3(glm::transpose(glm::inverse(modelMatrix)));
-			// Set the normal matrix. This matrix changes each frame.
-			shaderProgramForRefrigerator->setFloatMat3Uniform("normalMatrix", normalMatrix);
-
 			float currentAvgTemperatureOfRefrigerator = 
 				(currentTemperatureOfFreezingChamber + currentTemperatureOfRefrigeratingChamber) / 2.0F;
 			// Set the is scene lit uniform.
@@ -512,6 +500,22 @@ int main()
 
 			// Bind (assign) the desired VAO to OpenGL's context.
 			glBindVertexArray(refrigeratorVAO);
+
+			// The model matrix transforms the local-space coordinates to the world-space coordinates.
+			modelMatrix = glm::mat4(1.0F);
+			// The refrigerator is 0.15F FURTHER of the (0.0F, 0.0F, 0.0F).
+			modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0F, 0.0F, -0.15F));
+			// Set the model matrix. This matrix changes each frame.
+			shaderProgramForRefrigerator->setFloatMat4Uniform("modelMatrix", modelMatrix);
+			// The normal matrix is a model matrix specifically tailored for normal vectors. Normal matrix is
+			// defined as the transpose of the inverse of the upper-left 3x3 part of the model matrix.
+			// Non-uniform scaling would transform vertex in such a way that the normal vector would no longer be
+			// perpendicular to the vertex's surface. This means that the lighting of surface would be distorted.
+			// Non-uniform scaling is mitigated by multiplying the normal vector with normal matrix.
+			glm::mat3 normalMatrix = glm::mat3(glm::transpose(glm::inverse(modelMatrix)));
+			// Set the normal matrix. This matrix changes each frame.
+			shaderProgramForRefrigerator->setFloatMat3Uniform("normalMatrix", normalMatrix);
+
 			// Parameters: primitive; index of first vertex to be drawn; total number of vertices to be drawn.
 			glDrawArrays(GL_TRIANGLES, 0, 36);      // refrigerator (back side)
 			glDrawArrays(GL_TRIANGLES, 36, 36);     // refrigerator (left side)
