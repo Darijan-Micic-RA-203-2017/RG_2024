@@ -189,7 +189,6 @@
     <ClCompile Include="nonlogo_readings_text_rendering.cpp" />
     <ClCompile Include="nonlogo_signature_text_rendering.cpp" />
     <ClCompile Include="logo_text_rendering.cpp" />
-    <ClCompile Include="rendering.cpp" />
     <ClCompile Include="input_processing.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>

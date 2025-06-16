@@ -171,9 +171,6 @@
     <ClCompile Include="logo_text_rendering.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="rendering.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="input_processing.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
