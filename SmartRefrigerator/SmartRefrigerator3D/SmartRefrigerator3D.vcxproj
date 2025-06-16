@@ -165,7 +165,12 @@
     <ClInclude Include="nonlogo_signature_text_rendering.hpp" />
     <ClInclude Include="logo_text_rendering.hpp" />
     <ClInclude Include="rendering.hpp" />
+    <ClInclude Include="framebuffer_size_callback.hpp" />
+    <ClInclude Include="mouse_button_callback.hpp" />
+    <ClInclude Include="cursor_pos_callback.hpp" />
+    <ClInclude Include="scroll_callback.hpp" />
     <ClInclude Include="input_processing.hpp" />
+    <ClInclude Include="callbacks.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="window_dimensions.cpp" />
@@ -189,6 +194,10 @@
     <ClCompile Include="nonlogo_readings_text_rendering.cpp" />
     <ClCompile Include="nonlogo_signature_text_rendering.cpp" />
     <ClCompile Include="logo_text_rendering.cpp" />
+    <ClCompile Include="framebuffer_size_callback.cpp" />
+    <ClCompile Include="mouse_button_callback.cpp" />
+    <ClCompile Include="cursor_pos_callback.cpp" />
+    <ClCompile Include="scroll_callback.cpp" />
     <ClCompile Include="input_processing.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>

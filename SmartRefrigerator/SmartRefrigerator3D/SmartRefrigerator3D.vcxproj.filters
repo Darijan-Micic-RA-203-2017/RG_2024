@@ -103,7 +103,22 @@
     <ClInclude Include="rendering.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="framebuffer_size_callback.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mouse_button_callback.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cursor_pos_callback.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="scroll_callback.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="input_processing.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="callbacks.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -169,6 +184,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="logo_text_rendering.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="framebuffer_size_callback.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mouse_button_callback.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cursor_pos_callback.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="scroll_callback.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="input_processing.cpp">
