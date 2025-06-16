@@ -11,11 +11,16 @@
 #include "cursors_and_their_variables.hpp"
 #include "shader_programs.hpp"
 #include "array_and_buffer_objects.hpp"
+#include "textures.hpp"
 #include "camera.hpp"
 
 // REFERENCE: https://cplusplus.com/forum/general/131319/#msg707907
 // REFERENCE: https://stackoverflow.com/questions/56735173/variable-already-defined-in-obj-what-is-going-on-here
 
+extern glm::mat4 modelMatrix;
+extern glm::mat4 viewMatrix;
+extern glm::mat4 projectionMatrix;
+extern glm::mat4 normalMatrix;
 // All settings are kept in an instance of the camera class.
 extern Camera *camera;
 

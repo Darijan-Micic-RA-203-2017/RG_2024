@@ -138,6 +138,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="door_state.hpp" />
+    <ClInclude Include="grocery_rendering.hpp" />
+    <ClInclude Include="rendering.hpp" />
+    <ClInclude Include="textures.hpp" />
     <ClInclude Include="window_dimensions.hpp" />
     <ClInclude Include="temperature_variables.hpp" />
     <ClInclude Include="graphical_mode_variables.hpp" />
@@ -157,6 +160,8 @@
     <ClInclude Include="input_processing.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="grocery_rendering.cpp" />
+    <ClCompile Include="textures.cpp" />
     <ClCompile Include="window_dimensions.cpp" />
     <ClCompile Include="temperature_variables.cpp" />
     <ClCompile Include="graphical_mode_variables.cpp" />

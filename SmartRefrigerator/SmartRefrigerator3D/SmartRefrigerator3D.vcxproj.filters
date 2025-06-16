@@ -73,6 +73,15 @@
     <ClInclude Include="input_processing.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="grocery_rendering.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rendering.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="textures.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="window_dimensions.cpp">
@@ -112,6 +121,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="grocery_rendering.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="textures.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
