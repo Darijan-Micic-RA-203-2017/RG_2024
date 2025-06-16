@@ -143,6 +143,7 @@
     <ClInclude Include="grocery_rendering.hpp" />
     <ClInclude Include="light_source_inside_refrigerator_rendering.hpp" />
     <ClInclude Include="nonlogo_readings_text_rendering.hpp" />
+    <ClInclude Include="nonlogo_signature_text_rendering.hpp" />
     <ClInclude Include="refrigerator_door_rendering.hpp" />
     <ClInclude Include="refrigerator_rendering.hpp" />
     <ClInclude Include="rendering.hpp" />
@@ -171,6 +172,7 @@
     <ClCompile Include="grocery_rendering.cpp" />
     <ClCompile Include="light_source_inside_refrigerator_rendering.cpp" />
     <ClCompile Include="nonlogo_readings_text_rendering.cpp" />
+    <ClCompile Include="nonlogo_signature_text_rendering.cpp" />
     <ClCompile Include="refrigerator_door_rendering.cpp" />
     <ClCompile Include="refrigerator_rendering.cpp" />
     <ClCompile Include="textures.cpp" />
