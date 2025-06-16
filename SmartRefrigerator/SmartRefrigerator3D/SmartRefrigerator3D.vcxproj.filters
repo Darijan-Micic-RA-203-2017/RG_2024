@@ -91,6 +91,9 @@
     <ClInclude Include="refrigerator_door_rendering.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="light_source_inside_refrigerator_rendering.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="window_dimensions.cpp">
@@ -145,6 +148,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="refrigerator_door_rendering.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="light_source_inside_refrigerator_rendering.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

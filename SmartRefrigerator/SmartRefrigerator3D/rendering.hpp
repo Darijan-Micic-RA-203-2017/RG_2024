@@ -8,5 +8,6 @@
 #include "chamber_rendering.hpp"
 #include "refrigerator_rendering.hpp"
 #include "refrigerator_door_rendering.hpp"
+#include "light_source_inside_refrigerator_rendering.hpp"
 
 #endif
