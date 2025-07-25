@@ -2,10 +2,12 @@
 
 void renderRefrigeratorDoor()
 {
+	// The model matrix transforms the local-space coordinates to the world-space coordinates.
+	modelMatrix = glm::mat4(1.0F);
+
 	if (doorState == DoorState::OPENING)
 	{
-		// The model matrix transforms the local-space coordinates to the world-space coordinates.
-		modelMatrix = glm::mat4(1.0F);
+		/*
 		doorXTranslation += 0.2F * deltaTime;
 		if (doorXTranslation > maxDoorXTranslation)
 		{
@@ -17,8 +19,11 @@ void renderRefrigeratorDoor()
 			doorZTranslation = maxDoorZTranslation;
 		}
 		modelMatrix = glm::translate(modelMatrix, glm::vec3(doorXTranslation, 0.0F, doorZTranslation));
-		// The refrigerator door is 1.0875F CLOSER of the (0.0F, 0.0F, 0.0F).
-		modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0F, 0.0F, 1.0875F));
+		*/
+		// The refrigerator door is 1.0125F CLOSER of the (0.0F, 0.0F, 0.0F).
+		// Also, movement of the rotation axis has to be countered in order for the door to stay connected to
+		// the right side of the refrigerator.
+		modelMatrix = glm::translate(modelMatrix, glm::vec3(0.9F, 0.0F, 1.0125F));
 		doorAngle += 0.2F * deltaTime;
 		if (doorAngle > maxDoorAngle)
 		{
@@ -26,6 +31,11 @@ void renderRefrigeratorDoor()
 			doorState = DoorState::OPEN;
 		}
 		modelMatrix = glm::rotate(modelMatrix, doorAngle, glm::vec3(0.0F, 1.0F, 0.0F));
+		// The rotation axis needs to be moved to the right side of the refrigerator door.
+		// By the try-out method, I determined that this the rotation axis moves in the direction OPPOSITE of
+		// what is specified in the translation vector. Therefore, the x-value of translation vector needs to be
+		// half of door's width (-0.9F).
+		modelMatrix = glm::translate(modelMatrix, glm::vec3(-0.9F, 0.0F, 0.0F));
 		// Set the model matrix. This matrix changes each frame.
 		shaderProgramForRefrigerator->setFloatMat4Uniform("modelMatrix", modelMatrix);
 
@@ -36,8 +46,7 @@ void renderRefrigeratorDoor()
 	}
 	else if (doorState == DoorState::CLOSING)
 	{
-		// The model matrix transforms the local-space coordinates to the world-space coordinates.
-		modelMatrix = glm::mat4(1.0F);
+		/*
 		doorXTranslation -= 0.2F * deltaTime;
 		if (doorXTranslation < minDoorXTranslation)
 		{
@@ -49,8 +58,11 @@ void renderRefrigeratorDoor()
 			doorZTranslation = minDoorZTranslation;
 		}
 		modelMatrix = glm::translate(modelMatrix, glm::vec3(doorXTranslation, 0.0F, doorZTranslation));
-		// The refrigerator door is 1.0875F CLOSER of the (0.0F, 0.0F, 0.0F).
-		modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0F, 0.0F, 1.0875F));
+		*/
+		// The refrigerator door is 1.0125F CLOSER of the (0.0F, 0.0F, 0.0F).
+		// Also, movement of the rotation axis has to be countered in order for the door to stay connected to
+		// the right side of the refrigerator.
+		modelMatrix = glm::translate(modelMatrix, glm::vec3(0.9F, 0.0F, 1.0125F));
 		doorAngle -= 0.2F * deltaTime;
 		if (doorAngle < minDoorAngle)
 		{
@@ -58,6 +70,11 @@ void renderRefrigeratorDoor()
 			doorState = DoorState::CLOSED;
 		}
 		modelMatrix = glm::rotate(modelMatrix, doorAngle, glm::vec3(0.0F, 1.0F, 0.0F));
+		// The rotation axis needs to be moved to the right side of the refrigerator door.
+		// By the try-out method, I determined that this the rotation axis moves in the direction OPPOSITE of
+		// what is specified in the translation vector. Therefore, the x-value of translation vector needs to be
+		// half of door's width (-0.9F).
+		modelMatrix = glm::translate(modelMatrix, glm::vec3(-0.9F, 0.0F, 0.0F));
 		// Set the model matrix. This matrix changes each frame.
 		shaderProgramForRefrigerator->setFloatMat4Uniform("modelMatrix", modelMatrix);
 
@@ -68,15 +85,22 @@ void renderRefrigeratorDoor()
 	}
 	else if (doorState == DoorState::OPEN)
 	{
-		// The model matrix transforms the local-space coordinates to the world-space coordinates.
-		modelMatrix = glm::mat4(1.0F);
+		/*
 		doorXTranslation = maxDoorXTranslation;
 		doorZTranslation = maxDoorZTranslation;
 		modelMatrix = glm::translate(modelMatrix, glm::vec3(doorXTranslation, 0.0F, doorZTranslation));
-		// The refrigerator door is 1.0875F CLOSER of the (0.0F, 0.0F, 0.0F).
-		modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0F, 0.0F, 1.0875F));
+		*/
+		// The refrigerator door is 1.0125F CLOSER of the (0.0F, 0.0F, 0.0F).
+		// Also, movement of the rotation axis has to be countered in order for the door to stay connected to
+		// the right side of the refrigerator.
+		modelMatrix = glm::translate(modelMatrix, glm::vec3(0.9F, 0.0F, 1.0125F));
 		doorAngle = maxDoorAngle;
 		modelMatrix = glm::rotate(modelMatrix, doorAngle, glm::vec3(0.0F, 1.0F, 0.0F));
+		// The rotation axis needs to be moved to the right side of the refrigerator door.
+		// By the try-out method, I determined that this the rotation axis moves in the direction OPPOSITE of
+		// what is specified in the translation vector. Therefore, the x-value of translation vector needs to be
+		// half of door's width (-0.9F).
+		modelMatrix = glm::translate(modelMatrix, glm::vec3(-0.9F, 0.0F, 0.0F));
 		// Set the model matrix. This matrix changes each frame.
 		shaderProgramForRefrigerator->setFloatMat4Uniform("modelMatrix", modelMatrix);
 
@@ -93,10 +117,8 @@ void renderRefrigeratorDoor()
 			sceneLit = false;
 		}
 
-		// The model matrix transforms the local-space coordinates to the world-space coordinates.
-		modelMatrix = glm::mat4(1.0F);
-		// The refrigerator door is 1.0875F CLOSER of the (0.0F, 0.0F, 0.0F).
-		modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0F, 0.0F, 1.0875F));
+		// The refrigerator door is 1.0125F CLOSER of the (0.0F, 0.0F, 0.0F).
+		modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0F, 0.0F, 1.0125F));
 		// Set the model matrix. This matrix changes each frame.
 		shaderProgramForRefrigerator->setFloatMat4Uniform("modelMatrix", modelMatrix);
 
