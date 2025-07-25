@@ -36,13 +36,6 @@ void renderRefrigeratorDoor()
 		// what is specified in the translation vector. Therefore, the x-value of translation vector needs to be
 		// half of door's width (-0.9F).
 		modelMatrix = glm::translate(modelMatrix, glm::vec3(-0.9F, 0.0F, 0.0F));
-		// Set the model matrix. This matrix changes each frame.
-		shaderProgramForRefrigerator->setFloatMat4Uniform("modelMatrix", modelMatrix);
-
-		// The normal matrix is a model matrix specifically tailored for normal vectors.
-		normalMatrix = glm::mat3(glm::transpose(glm::inverse(modelMatrix)));
-		// Set the normal matrix. This matrix changes each frame.
-		shaderProgramForRefrigerator->setFloatMat3Uniform("normalMatrix", normalMatrix);
 	}
 	else if (doorState == DoorState::CLOSING)
 	{
@@ -75,13 +68,6 @@ void renderRefrigeratorDoor()
 		// what is specified in the translation vector. Therefore, the x-value of translation vector needs to be
 		// half of door's width (-0.9F).
 		modelMatrix = glm::translate(modelMatrix, glm::vec3(-0.9F, 0.0F, 0.0F));
-		// Set the model matrix. This matrix changes each frame.
-		shaderProgramForRefrigerator->setFloatMat4Uniform("modelMatrix", modelMatrix);
-
-		// The normal matrix is a model matrix specifically tailored for normal vectors.
-		normalMatrix = glm::mat3(glm::transpose(glm::inverse(modelMatrix)));
-		// Set the normal matrix. This matrix changes each frame.
-		shaderProgramForRefrigerator->setFloatMat3Uniform("normalMatrix", normalMatrix);
 	}
 	else if (doorState == DoorState::OPEN)
 	{
@@ -101,13 +87,6 @@ void renderRefrigeratorDoor()
 		// what is specified in the translation vector. Therefore, the x-value of translation vector needs to be
 		// half of door's width (-0.9F).
 		modelMatrix = glm::translate(modelMatrix, glm::vec3(-0.9F, 0.0F, 0.0F));
-		// Set the model matrix. This matrix changes each frame.
-		shaderProgramForRefrigerator->setFloatMat4Uniform("modelMatrix", modelMatrix);
-
-		// The normal matrix is a model matrix specifically tailored for normal vectors.
-		normalMatrix = glm::mat3(glm::transpose(glm::inverse(modelMatrix)));
-		// Set the normal matrix. This matrix changes each frame.
-		shaderProgramForRefrigerator->setFloatMat3Uniform("normalMatrix", normalMatrix);
 	}
 	else
 	{
@@ -119,14 +98,15 @@ void renderRefrigeratorDoor()
 
 		// The refrigerator door is 1.0125F CLOSER of the (0.0F, 0.0F, 0.0F).
 		modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0F, 0.0F, 1.0125F));
-		// Set the model matrix. This matrix changes each frame.
-		shaderProgramForRefrigerator->setFloatMat4Uniform("modelMatrix", modelMatrix);
-
-		// The normal matrix is a model matrix specifically tailored for normal vectors.
-		normalMatrix = glm::mat3(glm::transpose(glm::inverse(modelMatrix)));
-		// Set the normal matrix. This matrix changes each frame.
-		shaderProgramForRefrigerator->setFloatMat3Uniform("normalMatrix", normalMatrix);
 	}
+
+	// Set the model matrix. This matrix changes each frame.
+	shaderProgramForRefrigerator->setFloatMat4Uniform("modelMatrix", modelMatrix);
+
+	// The normal matrix is a model matrix specifically tailored for normal vectors.
+	normalMatrix = glm::mat3(glm::transpose(glm::inverse(modelMatrix)));
+	// Set the normal matrix. This matrix changes each frame.
+	shaderProgramForRefrigerator->setFloatMat3Uniform("normalMatrix", normalMatrix);
 
 	// Bind (assign) the desired VAO to OpenGL's context.
 	glBindVertexArray(refrigeratorDoorVAO);
