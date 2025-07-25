@@ -58,6 +58,12 @@ void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 			return;
 		}
 
+		// Do not continue processing mouse clicks if the refrigerator door is not closed.
+		if (doorState != DoorState::CLOSED)
+		{
+			return;
+		}
+
 		// see-through mode activation button
 		if (xpos >= 0.2225 * windowWidth && xpos <= 0.33 * windowWidth 
 			&& ypos >= 0.236667 * windowHeight && ypos <= 0.286667 * windowHeight)

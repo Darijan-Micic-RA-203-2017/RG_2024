@@ -29,6 +29,9 @@ void renderRefrigeratorDoor()
 		{
 			doorAngle = maxDoorAngle;
 			doorState = DoorState::OPEN;
+
+			// See-through mode should be turned off when the door is open.
+			seeThroughModeTurnedOn = false;
 		}
 		modelMatrix = glm::rotate(modelMatrix, doorAngle, glm::vec3(0.0F, 1.0F, 0.0F));
 		// The rotation axis needs to be moved to the right side of the refrigerator door.

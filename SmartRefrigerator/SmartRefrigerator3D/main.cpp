@@ -253,7 +253,6 @@ int main()
 
 			// If 5 seconds have passed since the graphical mode was activated and no left click was registered, the
 			// application should switch to the logo mode.
-			// LOGO MODE IS TEMPORARILY DISABLED IN ORDER TO MAKE THE DEVELOPMENT EASIER (NO CLICKING REQUIRED)!!!
 			if (orthogonalProjectionTurnedOn && currentFrameTime - timeWhenGraphicalModeWasActivated > 5.0F)
 			{
 				logoModeTurnedOn = true;
