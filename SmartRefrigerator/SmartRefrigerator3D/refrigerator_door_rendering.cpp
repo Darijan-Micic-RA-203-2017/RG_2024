@@ -13,13 +13,13 @@ void renderRefrigeratorDoor()
 		{
 			doorXTranslation = maxDoorXTranslation;
 		}
+		*/
 		doorZTranslation += 0.2F * deltaTime;
 		if (doorZTranslation > maxDoorZTranslation)
 		{
 			doorZTranslation = maxDoorZTranslation;
 		}
-		modelMatrix = glm::translate(modelMatrix, glm::vec3(doorXTranslation, 0.0F, doorZTranslation));
-		*/
+		modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0F, 0.0F, -doorZTranslation));
 		// The refrigerator door is 1.0125F CLOSER of the (0.0F, 0.0F, 0.0F).
 		// Also, movement of the rotation axis has to be countered in order for the door to stay connected to
 		// the right side of the refrigerator.
@@ -45,13 +45,13 @@ void renderRefrigeratorDoor()
 		{
 			doorXTranslation = minDoorXTranslation;
 		}
+		*/
 		doorZTranslation -= 0.2F * deltaTime;
 		if (doorZTranslation < minDoorZTranslation)
 		{
 			doorZTranslation = minDoorZTranslation;
 		}
-		modelMatrix = glm::translate(modelMatrix, glm::vec3(doorXTranslation, 0.0F, doorZTranslation));
-		*/
+		modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0F, 0.0F, -doorZTranslation));
 		// The refrigerator door is 1.0125F CLOSER of the (0.0F, 0.0F, 0.0F).
 		// Also, movement of the rotation axis has to be countered in order for the door to stay connected to
 		// the right side of the refrigerator.
@@ -71,11 +71,9 @@ void renderRefrigeratorDoor()
 	}
 	else if (doorState == DoorState::OPEN)
 	{
-		/*
-		doorXTranslation = maxDoorXTranslation;
+		// doorXTranslation = maxDoorXTranslation;
 		doorZTranslation = maxDoorZTranslation;
-		modelMatrix = glm::translate(modelMatrix, glm::vec3(doorXTranslation, 0.0F, doorZTranslation));
-		*/
+		modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0F, 0.0F, -doorZTranslation));
 		// The refrigerator door is 1.0125F CLOSER of the (0.0F, 0.0F, 0.0F).
 		// Also, movement of the rotation axis has to be countered in order for the door to stay connected to
 		// the right side of the refrigerator.
